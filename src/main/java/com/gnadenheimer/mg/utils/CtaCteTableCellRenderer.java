@@ -5,7 +5,7 @@
  */
 package com.gnadenheimer.mg.utils;
 
-import com.parah.utils.FormatCtaCte;
+import com.gnadenheimer.utils.FormatCtaCte;
 
 /**
  *

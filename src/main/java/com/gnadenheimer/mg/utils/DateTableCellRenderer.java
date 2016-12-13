@@ -5,7 +5,6 @@
  */
 package com.gnadenheimer.mg.utils;
 
-import com.parah.mg.frames.operaciones.egresos.FrameAsientosManuales;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;

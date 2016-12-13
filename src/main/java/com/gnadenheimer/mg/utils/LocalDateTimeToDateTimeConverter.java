@@ -5,7 +5,6 @@
  */
 package com.gnadenheimer.mg.utils;
 
-import com.parah.mg.frames.operaciones.egresos.FrameAsientosManuales;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
