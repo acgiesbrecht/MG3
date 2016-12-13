@@ -1,0 +1,1 @@
+INSERT INTO MG.TBL_MIEMBROS_CATEGORIAS_DE_PAGO (DESCRIPCION) VALUES ('Exonerado de Aportes por Isolvencia');

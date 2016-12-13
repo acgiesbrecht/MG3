@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2016-04-29T17:08:51 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="libro_mayor_saldo_anterior" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="59aee2f8-0e6a-4948-9875-e8cfccd96688">
+	<parameter name="ctaContable" class="java.lang.Integer"/>
+	<parameter name="fechaDesde" class="java.sql.Timestamp"/>
+        <parameter name="centroDeCosto" class="java.lang.Integer"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT COALESCE(SUM(S.SALDO_ANTERIOR),0) AS SALDO_ANTERIOR_SUMA FROM (
+        SELECT A.MONTO AS SALDO_ANTERIOR
+        FROM TBL_ASIENTOS A
+        WHERE ID_CUENTA_CONTABLE_DEBE =  $P{ctaContable}
+        AND A.FECHAHORA < $P{fechaDesde}
+        AND A.ID_CENTRO_DE_COSTO_DEBE = $P{centroDeCosto}
+        UNION ALL
+        SELECT -A.MONTO AS SALDO_ANTERIOR
+        FROM TBL_ASIENTOS A
+        WHERE ID_CUENTA_CONTABLE_HABER =  $P{ctaContable}
+        AND A.FECHAHORA < $P{fechaDesde}
+        AND A.ID_CENTRO_DE_COSTO_HABER = $P{centroDeCosto}
+        ) AS S]]>
+	</queryString>
+	<field name="SALDO_ANTERIOR_SUMA" class="java.lang.Integer"/>
+	<variable name="SALDO_ANTERIOR_SUMA" class="java.lang.Integer">
+		<variableExpression><![CDATA[$F{SALDO_ANTERIOR_SUMA}]]></variableExpression>
+	</variable>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField pattern="#,##0.###">
+				<reportElement x="390" y="0" width="80" height="20" uuid="0478e450-09e3-4273-a256-163e494b3123">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box padding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SALDO_ANTERIOR_SUMA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="310" y="0" width="80" height="20" uuid="d3c806a8-3576-46be-8f94-c11247024d4e">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[SALDO ANTERIOR  ]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

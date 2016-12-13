@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.0.1.final using JasperReports Library version 6.0.0  -->
+<!-- 2015-05-29T07:45:01 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="transferencia" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="78c20e98-1bd9-416f-bdbe-337f3341ab83">
+    <property name="com.jaspersoft.studio.data.defaultdataadapter" value="RematePG"/>
+    <parameter name="recibo_id" class="java.lang.Integer"/>
+    <queryString language="SQL">
+		<![CDATA[SELECT r.*, i.nombre as iglesia_nombre, i.RUC_SIN_DV as iglesia_ruc FROM MG.RECIBO r, MG.TBL_IGLESIA i WHERE r.id = $P{recibo_id}]]>
+    </queryString>
+    <field name="id" class="java.lang.Integer"/>
+    <field name="fechahora" class="java.sql.Date"/>
+    <field name="monto" class="java.lang.Integer"/>
+    <field name="nombre" class="java.lang.String"/>
+    <field name="concepto" class="java.lang.String"/>
+    <field name="iglesia_nombre" class="java.lang.String"/>
+    <field name="iglesia_ruc" class="java.lang.Integer"/>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <detail>
+        <band height="801" splitType="Stretch">
+            <rectangle radius="5">
+                <reportElement mode="Transparent" x="-1" y="280" width="557" height="240" uuid="dc40ba44-90f1-4354-a683-77585028da52"/>
+                <graphicElement>
+                    <pen lineWidth="0.5"/>
+                </graphicElement>
+            </rectangle>
+            <rectangle radius="5">
+                <reportElement mode="Transparent" x="0" y="0" width="557" height="240" uuid="90a5639e-c2b6-4592-b590-6176a1f7a972"/>
+                <graphicElement>
+                    <pen lineWidth="0.5"/>
+                </graphicElement>
+            </rectangle>
+            <staticText>
+                <reportElement x="307" y="21" width="220" height="20" uuid="a3e4e4d4-64fd-4692-aa38-64528c2cdca3"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="16" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Recibo de Dinero]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="25" y="80" width="44" height="20" uuid="c43050b3-885c-4476-95dd-2563ac0129bb">
+                    <property name="local_mesure_unitheight" value="mm"/>
+                </reportElement>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="false"/>
+                </textElement>
+                <text><![CDATA[Fecha:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="26" y="111" width="52" height="20" uuid="8cd2eb5d-50e1-42e3-98de-6ec32ed05829"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="false"/>
+                </textElement>
+                <text><![CDATA[Recibì de:  ]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="26" y="131" width="106" height="20" uuid="0e7324f6-ee53-4670-9865-13073f402bb0"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="false"/>
+                </textElement>
+                <text><![CDATA[la suma de Guaraníes: ]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="26" y="151" width="106" height="20" uuid="fa981161-27df-403d-8d98-97b4ca89deb3"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="false"/>
+                </textElement>
+                <text><![CDATA[En concepto de:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="30" y="206" width="44" height="16" uuid="973c11c1-c6fe-49b8-b050-df9e80d444d2"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Times New Roman" size="12" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Gs.- ]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="400" y="209" width="106" height="14" uuid="94e04b25-41a8-48e9-9dd0-9d9308b8f785"/>
+                <textElement textAlignment="Left">
+                    <font fontName="Times New Roman" size="10" isBold="false"/>
+                </textElement>
+                <text><![CDATA[Firma:  ___________________________]]></text>
+            </staticText>
+            <rectangle radius="5">
+                <reportElement mode="Transparent" x="30" y="200" width="143" height="23" uuid="8bc4f6bb-d08c-485d-b26f-747e4863e0ef"/>
+                <graphicElement>
+                    <pen lineWidth="0.5"/>
+                </graphicElement>
+            </rectangle>
+            <line>
+                <reportElement x="430" y="220" width="86" height="1" uuid="5b81183c-f3fb-41b4-b459-b219f3a540b3">
+                    <property name="local_mesure_unitwidth" value="pixel"/>
+                    <property name="com.jaspersoft.studio.unit.width" value="px"/>
+                    <property name="local_mesure_unitheight" value="pixel"/>
+                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                </reportElement>
+                <graphicElement>
+                    <pen lineWidth="0.5"/>
+                </graphicElement>
+            </line>
+            <textField pattern="dd/MM/yyyy">
+                <reportElement x="69" y="80" width="220" height="20" uuid="9b4148f0-4518-4f5e-89a1-3bacbc918afe"/>
+                <box padding="0">
+                    <topPen lineWidth="0.0"/>
+                    <leftPen lineWidth="0.0"/>
+                    <bottomPen lineWidth="0.0"/>
+                    <rightPen lineWidth="0.0"/>
+                </box>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{fechahora}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="70" y="111" width="452" height="20" uuid="9b4148f0-4518-4f5e-89a1-3bacbc918afe"/>
+                <box padding="0">
+                    <topPen lineWidth="0.0"/>
+                    <leftPen lineWidth="0.0"/>
+                    <bottomPen lineWidth="0.5"/>
+                    <rightPen lineWidth="0.0"/>
+                </box>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+            </textField>
+            <textField pattern="">
+                <reportElement x="120" y="131" width="402" height="20" uuid="e83d7c4d-3770-4af7-9090-c4afad1c9142"/>
+                <box padding="0">
+                    <topPen lineWidth="0.0"/>
+                    <leftPen lineWidth="0.0"/>
+                    <bottomPen lineWidth="0.5"/>
+                    <rightPen lineWidth="0.0"/>
+                </box>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[com.parah.utils.NumeroALetras.convertNumberToLetter($F{monto})]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="100" y="151" width="422" height="20" uuid="208f290e-f970-4d6c-8976-c8221bd1fc1d"/>
+                <box padding="0">
+                    <topPen lineWidth="0.0"/>
+                    <leftPen lineWidth="0.0"/>
+                    <bottomPen lineWidth="0.5"/>
+                    <rightPen lineWidth="0.0"/>
+                </box>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{concepto}]]></textFieldExpression>
+            </textField>
+            <textField pattern="#,##0">
+                <reportElement x="68" y="206" width="100" height="17" uuid="6c3699fc-2b5e-4ea7-b3da-7f6d5b6fd866"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Times New Roman" size="12" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[new DecimalFormat("#,##0").format($F{monto})]]></textFieldExpression>
+            </textField>
+            <rectangle radius="5">
+                <reportElement mode="Transparent" x="29" y="480" width="143" height="23" uuid="591ea208-1e9c-4171-94f0-d564bb5a37b8"/>
+                <graphicElement>
+                    <pen lineWidth="0.5"/>
+                </graphicElement>
+            </rectangle>
+            <line>
+                <reportElement x="429" y="500" width="86" height="1" uuid="64269dae-0f5d-4e3a-a805-c705caa1ac51">
+                    <property name="local_mesure_unitwidth" value="pixel"/>
+                    <property name="com.jaspersoft.studio.unit.width" value="px"/>
+                    <property name="local_mesure_unitheight" value="pixel"/>
+                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                </reportElement>
+                <graphicElement>
+                    <pen lineWidth="0.5"/>
+                </graphicElement>
+            </line>
+            <staticText>
+                <reportElement x="29" y="486" width="44" height="16" uuid="4c52047b-645f-4aa2-ba94-0f336c6fbc8a"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Times New Roman" size="12" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Gs.- ]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="25" y="411" width="106" height="20" uuid="3fe4d16a-c78c-479a-ab9b-96fc02b1e5ad"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="false"/>
+                </textElement>
+                <text><![CDATA[la suma de Guaraníes: ]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="399" y="489" width="106" height="14" uuid="1f67018d-0ec0-46c0-a87c-bc582002c916"/>
+                <textElement textAlignment="Left">
+                    <font fontName="Times New Roman" size="10" isBold="false"/>
+                </textElement>
+                <text><![CDATA[Firma:  ___________________________]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="99" y="431" width="422" height="20" uuid="77f40cf5-1c4c-4d86-a94b-a2ceaf204bbf"/>
+                <box padding="0">
+                    <topPen lineWidth="0.0"/>
+                    <leftPen lineWidth="0.0"/>
+                    <bottomPen lineWidth="0.5"/>
+                    <rightPen lineWidth="0.0"/>
+                </box>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{concepto}]]></textFieldExpression>
+            </textField>
+            <textField pattern="dd/MM/yyyy">
+                <reportElement x="69" y="351" width="220" height="20" uuid="4a5dd3e0-130f-4654-b84d-80f020720270"/>
+                <box padding="0">
+                    <topPen lineWidth="0.0"/>
+                    <leftPen lineWidth="0.0"/>
+                    <bottomPen lineWidth="0.0"/>
+                    <rightPen lineWidth="0.0"/>
+                </box>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{fechahora}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="25" y="431" width="106" height="20" uuid="f363c49f-f851-4dd8-a576-6b4a5f7e9566"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="false"/>
+                </textElement>
+                <text><![CDATA[En concepto de:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="25" y="351" width="44" height="20" uuid="79fe24ab-4c90-4d4d-958a-3e1b8bdebbd9">
+                    <property name="local_mesure_unitheight" value="mm"/>
+                </reportElement>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="false"/>
+                </textElement>
+                <text><![CDATA[Fecha:]]></text>
+            </staticText>
+            <textField pattern="#,##0">
+                <reportElement x="67" y="486" width="100" height="17" uuid="ffd98d43-4b0c-487b-99a7-5e4138a42fe8"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Times New Roman" size="12" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[new DecimalFormat("#,##0").format($F{monto})]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="69" y="391" width="452" height="20" uuid="ac788a64-f51e-49d1-939f-97872ade2295"/>
+                <box padding="0">
+                    <topPen lineWidth="0.0"/>
+                    <leftPen lineWidth="0.0"/>
+                    <bottomPen lineWidth="0.5"/>
+                    <rightPen lineWidth="0.0"/>
+                </box>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="25" y="391" width="52" height="20" uuid="f01785ef-686f-4baf-98d4-1e5fced09d02"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="false"/>
+                </textElement>
+                <text><![CDATA[Recibì de:  ]]></text>
+            </staticText>
+            <textField pattern="">
+                <reportElement x="119" y="411" width="402" height="20" uuid="7a65d518-1481-4a7b-a52a-45c1e1786905"/>
+                <box padding="0">
+                    <topPen lineWidth="0.0"/>
+                    <leftPen lineWidth="0.0"/>
+                    <bottomPen lineWidth="0.5"/>
+                    <rightPen lineWidth="0.0"/>
+                </box>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[com.parah.utils.NumeroALetras.convertNumberToLetter($F{monto})]]></textFieldExpression>
+            </textField>
+            <textField pattern="">
+                <reportElement x="25" y="20" width="375" height="20" uuid="e9c030c0-7389-479e-b406-fdfc5897cc2b"/>
+                <box padding="0">
+                    <topPen lineWidth="0.0"/>
+                    <leftPen lineWidth="0.0"/>
+                    <bottomPen lineWidth="0.0"/>
+                    <rightPen lineWidth="0.0"/>
+                </box>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="12" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{iglesia_nombre}]]></textFieldExpression>
+            </textField>
+            <textField pattern="">
+                <reportElement x="25" y="40" width="175" height="20" uuid="1adc7f3a-3acb-430e-853c-4a1a6ce5afec"/>
+                <box padding="0">
+                    <topPen lineWidth="0.0"/>
+                    <leftPen lineWidth="0.0"/>
+                    <bottomPen lineWidth="0.0"/>
+                    <rightPen lineWidth="0.0"/>
+                </box>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="12" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA["RUC: "+$F{iglesia_ruc}+"-"+com.parah.utils.CalcDV.Pa_Calcular_Dv_11_A($F{iglesia_ruc}.toString(), 11)]]></textFieldExpression>
+            </textField>
+            <textField pattern="">
+                <reportElement x="25" y="298" width="375" height="20" uuid="6b95288c-fdd2-42d8-b274-19caca308a8f"/>
+                <box padding="0">
+                    <topPen lineWidth="0.0"/>
+                    <leftPen lineWidth="0.0"/>
+                    <bottomPen lineWidth="0.0"/>
+                    <rightPen lineWidth="0.0"/>
+                </box>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="12" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{iglesia_nombre}]]></textFieldExpression>
+            </textField>
+            <textField pattern="">
+                <reportElement x="25" y="318" width="175" height="20" uuid="9b77688b-3828-4a1d-bf7c-c46277ef25de"/>
+                <box padding="0">
+                    <topPen lineWidth="0.0"/>
+                    <leftPen lineWidth="0.0"/>
+                    <bottomPen lineWidth="0.0"/>
+                    <rightPen lineWidth="0.0"/>
+                </box>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="12" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA["RUC: "+$F{iglesia_ruc}+"-"+com.parah.utils.CalcDV.Pa_Calcular_Dv_11_A($F{iglesia_ruc}.toString(), 11)]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="317" y="299" width="220" height="20" uuid="7dc34559-49b8-406d-9783-3a2bbf4c9a70"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="16" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Recibo de Dinero]]></text>
+            </staticText>
+            <textField pattern="#00000" isBlankWhenNull="false">
+                <reportElement x="404" y="42" width="67" height="24" uuid="ce39e026-ceda-41ab-9cf1-d53443089283"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Times New Roman" size="16"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Nº"]]></textFieldExpression>
+            </textField>
+            <textField pattern="#00000" isBlankWhenNull="false">
+                <reportElement x="471" y="42" width="56" height="24" uuid="8e001246-49f6-4bc3-b931-bbd496e29651"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Times New Roman" size="16"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+            </textField>
+            <textField pattern="#00000" isBlankWhenNull="false">
+                <reportElement x="413" y="320" width="67" height="24" uuid="272b3ce7-2c05-4a96-a2e5-36d1174b0bb1"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Times New Roman" size="16"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Nº"]]></textFieldExpression>
+            </textField>
+            <textField pattern="#00000" isBlankWhenNull="false">
+                <reportElement x="480" y="320" width="56" height="24" uuid="ff8c29cd-d43c-45c0-9936-2725d6f0a4f2"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Times New Roman" size="16"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+</jasperReport>

@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.0.1.final using JasperReports Library version 6.0.0  -->
+<!-- 2016-06-16T19:23:35 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pendientes" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="59aee2f8-0e6a-4948-9875-e8cfccd96593">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<style name="Crosstab_CH" mode="Opaque" backcolor="#FFFFFF">
+		<box padding="1">
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab_CG" mode="Opaque" backcolor="#FFFFFF">
+		<box padding="1">
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab_CT" mode="Opaque" backcolor="#FFFFFF">
+		<box padding="1">
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab_CD" mode="Opaque" backcolor="#FFFFFF">
+		<box padding="1">
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="subdataset" uuid="34ec0f72-7332-4b91-890a-a8ada2996a19">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MGCB"/>
+		<parameter name="mes" class="java.lang.Integer"/>
+		<parameter name="ano" class="java.lang.Integer"/>
+		<queryString>
+			<![CDATA[SELECT e.FECHA, SUM(ed.MONTO) AS SUMA, m.APELLIDOS, m.NOMBRES, m.CTACTE FROM tbl_eventos e, tbl_evento_detalle ed, tbl_entidades m
+where ed.id_evento = e.id AND ed.id_entidad = m.id
+AND MONTH(e.fecha) = $P{mes} AND YEAR(e.fecha) = $P{ano}
+AND e.ID_EVENTO_TIPO = 2
+GROUP BY e.FECHA, m.CTACTE, m.APELLIDOS, m.NOMBRES
+ORDER BY e.FECHA, m.CTACTE]]>
+		</queryString>
+		<field name="FECHA" class="java.sql.Timestamp"/>
+		<field name="SUMA" class="java.lang.Integer"/>
+		<field name="APELLIDOS" class="java.lang.String"/>
+		<field name="NOMBRES" class="java.lang.String"/>
+		<field name="CTACTE" class="java.lang.Integer"/>
+		<group name="nombre">
+			<groupExpression><![CDATA[$F{APELLIDOS} + " " + $F{NOMBRES}]]></groupExpression>
+		</group>
+	</subDataset>
+	<parameter name="mes" class="java.lang.Integer"/>
+	<parameter name="ano" class="java.lang.Integer"/>
+	<parameter name="user" class="java.lang.String"/>
+	<parameter name="subreportHeader" class="net.sf.jasperreports.engine.JasperReport"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT DISTINCT ID_EVENTO_TIPO FROM TBL_EVENTOS WHERE ID_EVENTO_TIPO = 2]]>
+	</queryString>
+	<field name="ID_EVENTO_TIPO" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="92" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="30" width="800" height="30" uuid="a63323e5-1d25-45b0-bc23-c36c39a4393e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Detalle de Colectas]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="0" y="60" width="800" height="30" uuid="79fbe419-da3e-420c-b64a-a54a1d5d674c"/>
+				<box padding="2">
+					<topPen lineWidth="0.4" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.4" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.4" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.4" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("MMMM YYYY").format(new java.text.SimpleDateFormat("yy/MM/yyyy").parse("01/"+$P{mes}+"/"+$P{ano})).toUpperCase()]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="0" y="0" width="800" height="20" uuid="e3d4dc27-5db1-48be-ab9f-5dbed0fab1d6">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{subreportHeader}]]></subreportExpression>
+			</subreport>
+		</band>
+	</title>
+	<detail>
+		<band height="63" splitType="Stretch">
+			<crosstab>
+				<reportElement x="0" y="0" width="800" height="60" uuid="9992c8e8-d4b2-4424-a6dd-f8dcce08d1df"/>
+				<crosstabDataset>
+					<dataset>
+						<datasetRun subDataset="subdataset" uuid="d8c9f55e-ed53-44b8-b801-8f2f4a235dee">
+							<datasetParameter name="ano">
+								<datasetParameterExpression><![CDATA[$P{ano}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="mes">
+								<datasetParameterExpression><![CDATA[$P{mes}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+					</dataset>
+				</crosstabDataset>
+				<rowGroup name="CTACTE1" width="54" totalPosition="End">
+					<bucket class="java.lang.Integer">
+						<bucketExpression><![CDATA[$F{CTACTE}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents mode="Opaque" style="Crosstab_CH">
+							<textField>
+								<reportElement x="0" y="0" width="50" height="16" uuid="e406788e-6875-4097-96e6-3682c80698cc"/>
+								<box leftPadding="2" rightPadding="2"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[com.parah.utils.FormatCtaCte.format($V{CTACTE1})]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents mode="Opaque" style="Crosstab_CT">
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="16" uuid="53a8e94e-445d-43bf-a1a8-96447c1e7adb"/>
+								<box leftPadding="2" rightPadding="2"/>
+								<textElement verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Total CTACTE1]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<rowGroup name="APELLIDOS1" width="190">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{APELLIDOS} + " " + $F{NOMBRES}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents mode="Opaque" style="Crosstab_CH">
+							<textField>
+								<reportElement x="0" y="0" width="186" height="16" uuid="e406788e-6875-4097-96e6-3682c80698cc"/>
+								<box leftPadding="2" rightPadding="2"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{APELLIDOS1}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents/>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="FECHA1" height="20" totalPosition="End">
+					<bucket class="java.sql.Timestamp">
+						<bucketExpression><![CDATA[$F{FECHA}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents mode="Opaque" style="Crosstab_CH">
+							<textField pattern="yyyy-MM-dd">
+								<reportElement x="0" y="0" width="60" height="16" uuid="93b93459-c8c3-4dc0-801c-91cca30aca8f"/>
+								<box leftPadding="2" rightPadding="2"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{FECHA1}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents mode="Opaque" style="Crosstab_CT">
+							<staticText>
+								<reportElement x="0" y="0" width="60" height="16" uuid="0913aa39-78e8-4e86-9c2c-dfacb8953c4c"/>
+								<box leftPadding="2" rightPadding="2"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Total FECHA1]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="SUMA_MEASURE1" class="java.lang.Integer" calculation="Sum">
+					<measureExpression><![CDATA[$F{SUMA}]]></measureExpression>
+				</measure>
+				<crosstabCell width="64" height="20">
+					<cellContents mode="Opaque" style="Crosstab_CD">
+						<textField pattern="#,##0">
+							<reportElement x="0" y="0" width="60" height="16" uuid="b35f0820-5029-4cbf-9482-7ef512beadc7"/>
+							<box leftPadding="0" rightPadding="0"/>
+							<textElement textAlignment="Right" verticalAlignment="Middle"/>
+							<textFieldExpression><![CDATA[$V{SUMA_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="64" height="20" columnTotalGroup="FECHA1">
+					<cellContents mode="Opaque" style="Crosstab_CT">
+						<textField pattern="#,##0">
+							<reportElement x="0" y="0" width="60" height="16" uuid="f06f9d90-e874-4738-9f90-63025e5d7246"/>
+							<box leftPadding="0" rightPadding="0"/>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{SUMA_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="64" height="20" rowTotalGroup="CTACTE1">
+					<cellContents mode="Opaque" style="Crosstab_CT">
+						<textField pattern="#,##0">
+							<reportElement x="0" y="0" width="60" height="16" uuid="c13687a2-d910-4c16-a3e4-c9425911d7f2"/>
+							<box leftPadding="0" rightPadding="0"/>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{SUMA_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="64" height="20" rowTotalGroup="CTACTE1" columnTotalGroup="FECHA1">
+					<cellContents mode="Opaque" style="Crosstab_CT">
+						<textField pattern="#,##0">
+							<reportElement x="0" y="0" width="60" height="16" uuid="f3783bec-0ad3-46a7-abea-a0b4d8892000"/>
+							<box leftPadding="0" rightPadding="0"/>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{SUMA_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="28" splitType="Stretch">
+			<textField>
+				<reportElement x="554" y="0" width="245" height="13" uuid="e6915b5d-ce5f-4459-8cb8-759d13001e66"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Creado por: " + $P{user}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH:mm">
+				<reportElement x="555" y="13" width="245" height="13" uuid="fbeebc07-ac09-422e-8c57-674edb2dd3e1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="7" width="245" height="13" uuid="e6794147-4c15-43f5-b8dd-76762cf2e6b1"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Pág. " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="15" y="7" width="245" height="13" uuid="e6794147-4c15-43f5-b8dd-76762cf2e6b1"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

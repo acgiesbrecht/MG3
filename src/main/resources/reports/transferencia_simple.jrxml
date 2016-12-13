@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.0.1.final using JasperReports Library version 6.0.0  -->
+<!-- 2015-10-16T10:24:44 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="transferencia" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="78c20e98-1bd9-416f-bdbe-337f3341ab83">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="RematePG"/>
+	<parameter name="transferencia_id" class="java.lang.Integer"/>
+	<parameter name="logo" class="java.io.InputStream"/>
+	<parameter name="logo2" class="java.io.InputStream"/>
+	<parameter name="logo3" class="java.io.InputStream"/>
+	<parameter name="copia" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT * FROM MG.TRANSFERENCIA WHERE ID =  $P{transferencia_id}]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="fechahora" class="java.sql.Date"/>
+	<field name="cta_debito" class="java.lang.Integer"/>
+	<field name="cta_credito" class="java.lang.Integer"/>
+	<field name="monto" class="java.lang.Integer"/>
+	<field name="concepto" class="java.lang.String"/>
+	<field name="d_nombre" class="java.lang.String"/>
+	<field name="c_nombre" class="java.lang.String"/>
+	<field name="d_domicilio" class="java.lang.String"/>
+	<field name="c_domicilio" class="java.lang.String"/>
+	<field name="d_box" class="java.lang.Integer"/>
+	<field name="c_box" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="261" splitType="Stretch">
+			<rectangle radius="5">
+				<reportElement mode="Transparent" x="0" y="0" width="557" height="240" uuid="90a5639e-c2b6-4592-b590-6176a1f7a972"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle radius="5">
+				<reportElement mode="Transparent" x="6" y="140" width="267" height="38" uuid="2bb88a68-c081-4e71-9072-61a342ce60cb"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle radius="5">
+				<reportElement mode="Transparent" x="6" y="97" width="267" height="38" uuid="31694e0f-856d-4d80-a85f-4f440a1ec765"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<image onErrorType="Blank">
+				<reportElement x="6" y="10" width="76" height="45" uuid="50ec1bf0-c976-4176-b307-e5fd8d3905aa"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="78" y="10" width="220" height="20" uuid="43c019eb-84e2-4af5-afb4-d7f0cfb070fe"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COOPERATIVA CHORTITZER LTDA.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="78" y="26" width="220" height="10" uuid="220b36a5-c6f7-4831-94d8-736ec19bb1d8"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AGROINDUSTRIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="78" y="37" width="220" height="10" uuid="e36ab960-4575-46ae-818d-16b0cef3d415"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[LOMA PLATA (CHACO)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="212" y="54" width="220" height="20" uuid="a3e4e4d4-64fd-4692-aa38-64528c2cdca3"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Orden de Transferencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="212" y="74" width="220" height="10" uuid="3e28bcf8-0c36-40f2-918b-d57d67f60e11"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[(Uso Interno)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="80" width="36" height="25" uuid="c43050b3-885c-4476-95dd-2563ac0129bb">
+					<property name="local_mesure_unitheight" value="mm"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Serif" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[FECHA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="100" width="106" height="10" uuid="8cd2eb5d-50e1-42e3-98de-6ec32ed05829"/>
+				<textElement textAlignment="Left">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[DEBITESE en CTA. CTE. Nº:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="112" width="106" height="10" uuid="57801e89-580b-47ae-8865-bf5ab8072bb6"/>
+				<textElement textAlignment="Left">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[NOMBRE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="124" width="106" height="10" uuid="6af7e066-e826-4319-8900-1ae402938a76"/>
+				<textElement textAlignment="Left">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[DOMICILIO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="167" width="106" height="10" uuid="7cec849f-fe74-493b-aab8-5b15a5e03344"/>
+				<textElement textAlignment="Left">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[DOMICILIO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="155" width="106" height="10" uuid="0fc6ec3a-56ff-4abd-a66c-aee1ecc3475f"/>
+				<textElement textAlignment="Left">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[NOMBRE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="143" width="106" height="10" uuid="391e5e3a-6a35-4d21-8c67-0305275c7f45">
+					<property name="local_mesure_unitx" value="mm"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ACREDITESE en CTA. CTE. Nº:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="192" width="106" height="10" uuid="0e7324f6-ee53-4670-9865-13073f402bb0"/>
+				<textElement textAlignment="Left">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Son Guaraníes:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="217" width="106" height="10" uuid="fa981161-27df-403d-8d98-97b4ca89deb3"/>
+				<textElement textAlignment="Left">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[En concepto de:]]></text>
+			</staticText>
+			<rectangle radius="5">
+				<reportElement mode="Transparent" x="282" y="97" width="271" height="81" uuid="7a9eb36f-c16e-4ea4-a9e7-ad43d927d00e"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="294" y="100" width="114" height="10" uuid="c9c3f229-e081-4c92-942a-0342d58d8eb9"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[DETALLE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="429" y="100" width="118" height="10" uuid="29df305d-a5c5-4991-ac95-af4311c4fd85"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[IMPORTE]]></text>
+			</staticText>
+			<line>
+				<reportElement x="419" y="97" width="1" height="81" uuid="4d348974-0f1a-43d3-83bf-465089bc19e8">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="282" y="110" width="269" height="1" uuid="3fd7d1a0-4b73-42ee-a534-0df9940fdf16">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="297" y="186" width="114" height="10" uuid="973c11c1-c6fe-49b8-b050-df9e80d444d2"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="435" y="224" width="106" height="10" uuid="94e04b25-41a8-48e9-9dd0-9d9308b8f785"/>
+				<textElement textAlignment="Left">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Firma:  ___________________________]]></text>
+			</staticText>
+			<rectangle radius="5">
+				<reportElement mode="Transparent" x="419" y="183" width="133" height="15" uuid="8bc4f6bb-d08c-485d-b26f-747e4863e0ef"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<line>
+				<reportElement x="458" y="234" width="86" height="1" uuid="5b81183c-f3fb-41b4-b459-b219f3a540b3">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField pattern="#00000" isBlankWhenNull="false">
+				<reportElement x="427" y="10" width="117" height="27" uuid="11667fbe-73fb-4c74-b05e-5c57dbd2389e"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="116" y="100" width="156" height="10" uuid="70e31014-d9d7-43f7-af3c-3cc1bf11e76a">
+					<property name="local_mesure_unitx" value="mm"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[com.parah.utils.FormatCtaCte.format($F{cta_debito})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="116" y="112" width="156" height="10" uuid="2db2791e-b29e-43aa-ad78-1a4e9ae34474"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{d_nombre}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="116" y="124" width="156" height="10" uuid="5e081ea9-0e41-46b9-9ef5-5c318ffd224c"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{d_domicilio}==null || $F{d_box}==null ? "" : $F{d_domicilio} + " - C.d.C. " + $F{d_box}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="42" y="80" width="166" height="25" uuid="9b4148f0-4518-4f5e-89a1-3bacbc918afe"/>
+				<textElement>
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechahora}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="61" y="192" width="212" height="25" uuid="e83d7c4d-3770-4af7-9090-c4afad1c9142"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[com.parah.utils.NumeroALetras.convertNumberToLetter($F{monto})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="61" y="217" width="210" height="10" uuid="208f290e-f970-4d6c-8976-c8221bd1fc1d"/>
+				<textElement textAlignment="Left">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{concepto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="291" y="114" width="106" height="10" uuid="fe8a2028-6fea-4583-baae-2fd0de75720c"/>
+				<textElement textAlignment="Left">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Transferencia 0,00%]]></text>
+			</staticText>
+			<textField pattern="#.##0">
+				<reportElement x="447" y="114" width="100" height="10" uuid="96db93cd-68d5-49cb-a053-27858ab2eeba"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new DecimalFormat("#,##0").format($F{monto})]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="447" y="183" width="100" height="17" uuid="6c3699fc-2b5e-4ea7-b3da-7f6d5b6fd866"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new DecimalFormat("#,##0").format($F{monto})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="116" y="167" width="156" height="10" uuid="54ca1d39-e0ab-4f3a-930c-2685bf84fb04"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{c_domicilio} + " - C.d.C. " + $F{c_box}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="116" y="155" width="156" height="10" uuid="304257c4-4f48-4696-bd31-aebc9147fe63"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{c_nombre}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="116" y="143" width="156" height="10" uuid="68e961eb-9572-4343-937a-63a3d51bf0f3"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[com.parah.utils.FormatCtaCte.format($F{cta_credito})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="6" y="229" width="100" height="10" uuid="a7a2a9bc-00e9-4cdf-ba3f-3e260989c2fd"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{copia}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

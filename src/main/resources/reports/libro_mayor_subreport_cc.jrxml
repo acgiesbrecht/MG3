@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
+<!-- 2016-11-03T14:32:10 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="libro_mayor_subreport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="eb6130fa-49c5-4919-b5f4-270d4548b962">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="subSubreportObject" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="ctaContable" class="java.lang.Integer"/>
+	<parameter name="fechaDesde" class="java.sql.Timestamp"/>
+	<parameter name="fechaHasta" class="java.sql.Timestamp"/>
+	<parameter name="centroDeCosto" class="java.lang.Integer"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT 'ASIENTO MANUAL' AS NRO, A.FECHAHORA, A.MONTO AS IMPORTE
+FROM TBL_ASIENTOS A
+WHERE A.ID NOT IN (SELECT ID_ASIENTO FROM TBL_FACTURAS_COMPRA_ASIENTOS)
+    AND A.ID NOT IN (SELECT ID_ASIENTO FROM TBL_FACTURAS_ASIENTOS)
+    AND A.ID NOT IN (SELECT ID_ASIENTO FROM TBL_NOTAS_DE_CREDITO_ASIENTOS)
+    AND A.ID NOT IN (SELECT ID_ASIENTO FROM TBL_AUTOFACTURAS_ASIENTOS)
+    AND A.ID NOT IN (SELECT ID_ASIENTO FROM TBL_RECIBOS_COMPRA_ASIENTOS)
+    AND A.ID NOT IN (SELECT ID_ASIENTO FROM TBL_NOTAS_DE_CREDITO_COMPRAS_ASIENTOS)
+    AND A.ID NOT IN (SELECT ID_ASIENTO FROM TBL_EVENTO_DETALLE_ASIENTOS)    
+AND A.ID_CUENTA_CONTABLE_DEBE =  $P{ctaContable}
+AND A.FECHAHORA BETWEEN $P{fechaDesde} AND $P{fechaHasta}
+AND A.MONTO > 0
+AND A.ID_CENTRO_DE_COSTO_DEBE = $P{centroDeCosto}
+UNION ALL
+SELECT 'ASIENTO MANUAL' AS NRO, A.FECHAHORA, -A.MONTO AS IMPORTE
+FROM TBL_ASIENTOS A
+WHERE A.ID NOT IN (SELECT ID_ASIENTO FROM TBL_FACTURAS_COMPRA_ASIENTOS)
+    AND A.ID NOT IN (SELECT ID_ASIENTO FROM TBL_FACTURAS_ASIENTOS)
+    AND A.ID NOT IN (SELECT ID_ASIENTO FROM TBL_NOTAS_DE_CREDITO_ASIENTOS)
+    AND A.ID NOT IN (SELECT ID_ASIENTO FROM TBL_AUTOFACTURAS_ASIENTOS)
+    AND A.ID NOT IN (SELECT ID_ASIENTO FROM TBL_RECIBOS_COMPRA_ASIENTOS)
+    AND A.ID NOT IN (SELECT ID_ASIENTO FROM TBL_NOTAS_DE_CREDITO_COMPRAS_ASIENTOS)
+    AND A.ID NOT IN (SELECT ID_ASIENTO FROM TBL_EVENTO_DETALLE_ASIENTOS)    
+AND A.ID_CUENTA_CONTABLE_HABER =  $P{ctaContable}
+AND A.FECHAHORA BETWEEN $P{fechaDesde} AND $P{fechaHasta}
+AND A.MONTO > 0
+AND A.ID_CENTRO_DE_COSTO_HABER = $P{centroDeCosto}
+UNION ALL
+SELECT 'Factura Compra - ' || C.NRO AS NRO, A.FECHAHORA, A.MONTO AS IMPORTE
+FROM TBL_ASIENTOS A, TBL_FACTURAS_COMPRA_ASIENTOS CA, TBL_FACTURAS_COMPRA C
+WHERE C.ID = CA.ID_FACTURA_COMPRA AND A.ID = CA.ID_ASIENTO
+AND ID_CUENTA_CONTABLE_DEBE =  $P{ctaContable}
+AND A.FECHAHORA BETWEEN $P{fechaDesde} AND $P{fechaHasta}
+AND A.MONTO > 0
+AND A.ID_CENTRO_DE_COSTO_DEBE = $P{centroDeCosto}
+UNION ALL
+SELECT 'Factura Compra - ' || C.NRO AS NRO, A.FECHAHORA, -A.MONTO AS IMPORTE
+FROM TBL_ASIENTOS A, TBL_FACTURAS_COMPRA_ASIENTOS CA, TBL_FACTURAS_COMPRA C
+WHERE C.ID = CA.ID_FACTURA_COMPRA AND A.ID = CA.ID_ASIENTO
+AND ID_CUENTA_CONTABLE_HABER =  $P{ctaContable}
+AND A.FECHAHORA BETWEEN $P{fechaDesde} AND $P{fechaHasta}
+AND A.MONTO > 0
+AND A.ID_CENTRO_DE_COSTO_HABER = $P{centroDeCosto}
+UNION ALL
+SELECT 'Factura Venta - ' || CAST(C.NRO AS CHAR(10)) AS NRO, A.FECHAHORA, A.MONTO AS IMPORTE
+FROM TBL_ASIENTOS A, TBL_FACTURAS_ASIENTOS FA, TBL_FACTURAS C
+WHERE C.NRO = FA.NRO_FACTURA AND A.ID = FA.ID_ASIENTO
+AND ID_CUENTA_CONTABLE_DEBE =  $P{ctaContable}
+AND A.FECHAHORA BETWEEN $P{fechaDesde} AND $P{fechaHasta}
+AND A.MONTO > 0
+AND A.ID_CENTRO_DE_COSTO_DEBE = $P{centroDeCosto}
+UNION ALL
+SELECT 'Factura Venta - ' || CAST(C.NRO AS CHAR(10)) AS NRO, A.FECHAHORA, -A.MONTO AS IMPORTE
+FROM TBL_ASIENTOS A, TBL_FACTURAS_ASIENTOS FA, TBL_FACTURAS C
+WHERE C.NRO = FA.NRO_FACTURA AND A.ID = FA.ID_ASIENTO
+AND ID_CUENTA_CONTABLE_HABER =  $P{ctaContable}
+AND A.FECHAHORA BETWEEN $P{fechaDesde} AND $P{fechaHasta}
+AND A.MONTO > 0
+AND A.ID_CENTRO_DE_COSTO_HABER = $P{centroDeCosto}
+UNION ALL
+SELECT 'Aportes, Colectas y Remates - ' || CAST(C.ID AS CHAR(10)) AS NRO, A.FECHAHORA, A.MONTO AS IMPORTE
+FROM TBL_ASIENTOS A, TBL_EVENTO_DETALLE_ASIENTOS FA, TBL_EVENTO_DETALLE C
+WHERE C.ID = FA.ID_EVENTO_DETALLE AND A.ID = FA.ID_ASIENTO
+AND ID_CUENTA_CONTABLE_DEBE =  $P{ctaContable}
+AND A.FECHAHORA BETWEEN $P{fechaDesde} AND $P{fechaHasta}
+AND A.MONTO > 0
+AND A.ID_CENTRO_DE_COSTO_DEBE = $P{centroDeCosto}
+UNION ALL
+SELECT 'Aportes, Colectas y Remates - ' || CAST(C.ID AS CHAR(10)) AS NRO, A.FECHAHORA, -A.MONTO AS IMPORTE
+FROM TBL_ASIENTOS A, TBL_EVENTO_DETALLE_ASIENTOS FA, TBL_EVENTO_DETALLE C
+WHERE C.ID = FA.ID_EVENTO_DETALLE AND A.ID = FA.ID_ASIENTO
+AND ID_CUENTA_CONTABLE_HABER =  $P{ctaContable}
+AND A.FECHAHORA BETWEEN $P{fechaDesde} AND $P{fechaHasta}
+AND A.MONTO > 0
+AND A.ID_CENTRO_DE_COSTO_HABER = $P{centroDeCosto}
+UNION ALL
+SELECT 'Nota de Credito Venta - ' || CAST(N.NRO AS CHAR(15)) AS NRO, A.FECHAHORA, A.MONTO AS IMPORTE
+FROM TBL_ASIENTOS A, TBL_NOTAS_DE_CREDITO_ASIENTOS NA, TBL_NOTAS_DE_CREDITO N
+WHERE N.ID = NA.ID_NOTA_DE_CREDITO AND A.ID = NA.ID_ASIENTO
+AND ID_CUENTA_CONTABLE_DEBE =  $P{ctaContable}
+AND A.FECHAHORA BETWEEN $P{fechaDesde} AND $P{fechaHasta}
+AND A.MONTO > 0
+AND A.ID_CENTRO_DE_COSTO_DEBE = $P{centroDeCosto}
+UNION ALL
+SELECT 'Nota de Credito Venta - ' || CAST(N.NRO AS CHAR(15)) AS NRO, A.FECHAHORA, -A.MONTO AS IMPORTE
+FROM TBL_ASIENTOS A, TBL_NOTAS_DE_CREDITO_ASIENTOS NA, TBL_NOTAS_DE_CREDITO N
+WHERE N.ID = NA.ID_NOTA_DE_CREDITO AND A.ID = NA.ID_ASIENTO
+AND ID_CUENTA_CONTABLE_HABER =  $P{ctaContable}
+AND A.FECHAHORA BETWEEN $P{fechaDesde} AND $P{fechaHasta}
+AND A.MONTO > 0
+AND A.ID_CENTRO_DE_COSTO_HABER = $P{centroDeCosto}
+UNION ALL
+SELECT 'Autofactura - ' || CAST(N.NRO AS CHAR(15)) AS NRO, A.FECHAHORA, A.MONTO AS IMPORTE
+FROM TBL_ASIENTOS A, TBL_AUTOFACTURAS_ASIENTOS NA, TBL_AUTOFACTURAS N
+WHERE N.ID = NA.ID_AUTOFACTURA AND A.ID = NA.ID_ASIENTO
+AND ID_CUENTA_CONTABLE_DEBE =  $P{ctaContable}
+AND A.FECHAHORA BETWEEN $P{fechaDesde} AND $P{fechaHasta}
+AND A.MONTO > 0
+AND A.ID_CENTRO_DE_COSTO_DEBE = $P{centroDeCosto}
+UNION ALL
+SELECT 'Autofactura - ' || CAST(N.NRO AS CHAR(15)) AS NRO, A.FECHAHORA, -A.MONTO AS IMPORTE
+FROM TBL_ASIENTOS A, TBL_AUTOFACTURAS_ASIENTOS NA, TBL_AUTOFACTURAS N
+WHERE N.ID = NA.ID_AUTOFACTURA AND A.ID = NA.ID_ASIENTO
+AND ID_CUENTA_CONTABLE_HABER =  $P{ctaContable}
+AND A.FECHAHORA BETWEEN $P{fechaDesde} AND $P{fechaHasta}
+AND A.MONTO > 0
+AND A.ID_CENTRO_DE_COSTO_HABER = $P{centroDeCosto}
+ORDER BY FECHAHORA, NRO]]>
+	</queryString>
+	<field name="NRO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FECHAHORA" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IMPORTE" class="java.lang.Integer"/>
+	<variable name="SALDO_ANTERIOR" class="java.lang.Integer" calculation="System"/>
+	<variable name="SUM_ACUMULADO" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{IMPORTE}]]></variableExpression>
+	</variable>
+	<variable name="SALDO_ACUMULADO" class="java.lang.Integer">
+		<variableExpression><![CDATA[$V{SUM_ACUMULADO}+$V{SALDO_ANTERIOR}]]></variableExpression>
+	</variable>
+	<variable name="SUM_DEBE" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{IMPORTE}>0?$F{IMPORTE}:0]]></variableExpression>
+	</variable>
+	<variable name="SUM_HABER" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{IMPORTE}<0?$F{IMPORTE}:0]]></variableExpression>
+	</variable>
+	<group name="Group1">
+		<groupHeader>
+			<band height="20">
+				<subreport>
+					<reportElement x="0" y="0" width="470" height="20" uuid="d2a3e78e-f05e-418d-a9d4-1d3b98d67e06">
+						<property name="local_mesure_unitx" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<subreportParameter name="ctaContable">
+						<subreportParameterExpression><![CDATA[$P{ctaContable}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="fechaDesde">
+						<subreportParameterExpression><![CDATA[$P{fechaDesde}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="centroDeCosto">
+						<subreportParameterExpression><![CDATA[$P{centroDeCosto}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<returnValue subreportVariable="SALDO_ANTERIOR_SUMA" toVariable="SALDO_ANTERIOR" calculation="First"/>
+					<subreportExpression><![CDATA[$P{subSubreportObject}]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<staticText>
+					<reportElement x="0" y="0" width="180" height="20" uuid="95cfc316-895c-4641-857f-ac8294465c1f"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[TOTAL ACUMULADO]]></text>
+				</staticText>
+				<textField pattern="#,##0.###">
+					<reportElement x="230" y="0" width="80" height="20" uuid="f8f47d05-a7c5-4b08-aaf3-89e12894a44f"/>
+					<box padding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{SUM_DEBE}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.###">
+					<reportElement x="310" y="0" width="80" height="20" uuid="95ca57a0-aa2a-40c7-a6e6-590a55d2c32d"/>
+					<box padding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[-$V{SUM_HABER}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.###">
+					<reportElement x="390" y="0" width="80" height="20" uuid="35d826cf-e16e-4b9c-9354-760066ded448"/>
+					<box padding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{SALDO_ACUMULADO}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<columnHeader>
+		<band height="20">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement x="390" y="0" width="80" height="20" uuid="69887ea8-48d4-4d19-b52c-f476dca6e99f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SALDO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="0" width="80" height="20" uuid="3861aba2-e4aa-4728-8709-154ef0c90a06"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[HABER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="230" y="0" width="80" height="20" uuid="c0fe6551-0042-4427-8bc5-a794f3b3b740"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DEBE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="0" width="160" height="20" uuid="09bdc594-82a3-4518-b4a2-c349b4dbd515"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DOCUMENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="70" height="20" uuid="07270449-a510-449c-8919-58602feb16f8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="0" y="0" width="70" height="20" uuid="e6ba678c-5819-4e32-9624-ad794b6edbf4"/>
+				<box padding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECHAHORA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="0" width="160" height="20" uuid="d9dc3a2f-9c21-403e-bc89-fefe30c81f89"/>
+				<box padding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NRO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###">
+				<reportElement x="230" y="0" width="80" height="20" uuid="0478e450-09e3-4273-a256-163e494b3619"/>
+				<box padding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{IMPORTE}>0?$F{IMPORTE}:""]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###">
+				<reportElement x="310" y="0" width="80" height="20" uuid="c6c4c6ea-c88e-4c11-86eb-86df7fc6aad0"/>
+				<box padding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{IMPORTE}<0?-$F{IMPORTE}:""]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###">
+				<reportElement x="390" y="0" width="80" height="20" uuid="faa123f1-e1e1-4ccb-9fcf-ec8aac1c9f49"/>
+				<box padding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SALDO_ACUMULADO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

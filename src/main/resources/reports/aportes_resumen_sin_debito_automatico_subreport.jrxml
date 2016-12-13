@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.0.1.final using JasperReports Library version 6.0.0  -->
+<!-- 2016-09-01T19:10:52 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pendientes" pageWidth="700" pageHeight="595" orientation="Landscape" columnWidth="700" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="59aee2f8-0e6a-4948-9875-e8cfccd96593">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="mg"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="id_entidad" class="java.lang.Integer"/>
+	<parameter name="ano" class="java.lang.Integer"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT * FROM
+    (SELECT
+    COALESCE(SUM(ed.monto),0) as enero
+    FROM MG.TBL_EVENTO_DETALLE ed LEFT JOIN MG.TBL_EVENTOS ev ON ed.ID_EVENTO = ev.ID WHERE ev.ID_EVENTO_TIPO = 3
+    AND MONTH(ev.FECHA) = 1 AND YEAR(ev.FECHA) = $P{ano}
+    AND ed.ID_ENTIDAD = $P{id_entidad}) enero,
+(SELECT
+    COALESCE(SUM(ed.monto),0) as febrero
+    FROM MG.TBL_EVENTO_DETALLE ed LEFT JOIN MG.TBL_EVENTOS ev ON ed.ID_EVENTO = ev.ID WHERE ev.ID_EVENTO_TIPO = 3
+    AND MONTH(ev.FECHA) = 2 AND YEAR(ev.FECHA) = $P{ano}
+    AND ed.ID_ENTIDAD = $P{id_entidad}) febrero,
+(SELECT
+    COALESCE(SUM(ed.monto),0) as marzo
+    FROM MG.TBL_EVENTO_DETALLE ed LEFT JOIN MG.TBL_EVENTOS ev ON ed.ID_EVENTO = ev.ID WHERE ev.ID_EVENTO_TIPO = 3
+    AND MONTH(ev.FECHA) = 3 AND YEAR(ev.FECHA) = $P{ano}
+    AND ed.ID_ENTIDAD = $P{id_entidad}) marzo,
+(SELECT
+    COALESCE(SUM(ed.monto),0) as abril
+    FROM MG.TBL_EVENTO_DETALLE ed LEFT JOIN MG.TBL_EVENTOS ev ON ed.ID_EVENTO = ev.ID WHERE ev.ID_EVENTO_TIPO = 3
+    AND MONTH(ev.FECHA) = 4 AND YEAR(ev.FECHA) = $P{ano}
+    AND ed.ID_ENTIDAD = $P{id_entidad}) abril,
+(SELECT
+    COALESCE(SUM(ed.monto),0) as mayo
+    FROM MG.TBL_EVENTO_DETALLE ed LEFT JOIN MG.TBL_EVENTOS ev ON ed.ID_EVENTO = ev.ID WHERE ev.ID_EVENTO_TIPO = 3
+    AND MONTH(ev.FECHA) = 5 AND YEAR(ev.FECHA) = $P{ano}
+    AND ed.ID_ENTIDAD = $P{id_entidad}) mayo,
+(SELECT
+    COALESCE(SUM(ed.monto),0) as junio
+    FROM MG.TBL_EVENTO_DETALLE ed LEFT JOIN MG.TBL_EVENTOS ev ON ed.ID_EVENTO = ev.ID WHERE ev.ID_EVENTO_TIPO = 3
+    AND MONTH(ev.FECHA) = 6 AND YEAR(ev.FECHA) = $P{ano}
+    AND ed.ID_ENTIDAD = $P{id_entidad}) junio,
+(SELECT
+    COALESCE(SUM(ed.monto),0) as julio
+    FROM MG.TBL_EVENTO_DETALLE ed LEFT JOIN MG.TBL_EVENTOS ev ON ed.ID_EVENTO = ev.ID WHERE ev.ID_EVENTO_TIPO = 3
+    AND MONTH(ev.FECHA) = 7 AND YEAR(ev.FECHA) = $P{ano}
+    AND ed.ID_ENTIDAD = $P{id_entidad}) julio,
+(SELECT
+    COALESCE(SUM(ed.monto),0) as agosto
+    FROM MG.TBL_EVENTO_DETALLE ed LEFT JOIN MG.TBL_EVENTOS ev ON ed.ID_EVENTO = ev.ID WHERE ev.ID_EVENTO_TIPO = 3
+    AND MONTH(ev.FECHA) = 8 AND YEAR(ev.FECHA) = $P{ano}
+    AND ed.ID_ENTIDAD = $P{id_entidad}) agosto,
+(SELECT
+    COALESCE(SUM(ed.monto),0) as setiembre
+    FROM MG.TBL_EVENTO_DETALLE ed LEFT JOIN MG.TBL_EVENTOS ev ON ed.ID_EVENTO = ev.ID WHERE ev.ID_EVENTO_TIPO = 3
+    AND MONTH(ev.FECHA) = 9 AND YEAR(ev.FECHA) = $P{ano}
+    AND ed.ID_ENTIDAD = $P{id_entidad}) setiembre,
+(SELECT
+    COALESCE(SUM(ed.monto),0) as octubre
+    FROM MG.TBL_EVENTO_DETALLE ed LEFT JOIN MG.TBL_EVENTOS ev ON ed.ID_EVENTO = ev.ID WHERE ev.ID_EVENTO_TIPO = 3
+    AND MONTH(ev.FECHA) = 10 AND YEAR(ev.FECHA) = $P{ano}
+    AND ed.ID_ENTIDAD = $P{id_entidad}) octubre,
+(SELECT
+    COALESCE(SUM(ed.monto),0) as noviembre
+    FROM MG.TBL_EVENTO_DETALLE ed LEFT JOIN MG.TBL_EVENTOS ev ON ed.ID_EVENTO = ev.ID WHERE ev.ID_EVENTO_TIPO = 3
+    AND MONTH(ev.FECHA) = 11 AND YEAR(ev.FECHA) = $P{ano}
+    AND ed.ID_ENTIDAD = $P{id_entidad}) noviembre,
+(SELECT
+    COALESCE(SUM(ed.monto),0) as diciembre
+    FROM MG.TBL_EVENTO_DETALLE ed LEFT JOIN MG.TBL_EVENTOS ev ON ed.ID_EVENTO = ev.ID WHERE ev.ID_EVENTO_TIPO = 3
+    AND MONTH(ev.FECHA) = 12 AND YEAR(ev.FECHA) = $P{ano}
+    AND ed.ID_ENTIDAD = $P{id_entidad}) diciembre,
+(SELECT
+    COALESCE(SUM(ed.monto),0) as total
+    FROM MG.TBL_EVENTO_DETALLE ed LEFT JOIN MG.TBL_EVENTOS ev ON ed.ID_EVENTO = ev.ID WHERE ev.ID_EVENTO_TIPO = 3
+    AND YEAR(ev.FECHA) = $P{ano}
+    AND ed.ID_ENTIDAD = $P{id_entidad}) total,
+(SELECT
+    SUM(COALESCE(e.APORTE_MENSUAL * (SELECT COUNT(*) FROM MG.TBL_EVENTOS ev
+    WHERE ev.ID_EVENTO_TIPO = 3
+    AND YEAR(ev.FECHA) = $P{ano}), 0)) as total_comprometido
+    FROM TBL_ENTIDADES e
+    WHERE e.ID = $P{id_entidad} OR e.ID_ENTIDAD_PAGANTE_APORTES = $P{id_entidad}) saldo]]>
+	</queryString>
+	<field name="ENERO" class="java.lang.Integer"/>
+	<field name="FEBRERO" class="java.lang.Integer"/>
+	<field name="MARZO" class="java.lang.Integer"/>
+	<field name="ABRIL" class="java.lang.Integer"/>
+	<field name="MAYO" class="java.lang.Integer"/>
+	<field name="JUNIO" class="java.lang.Integer"/>
+	<field name="JULIO" class="java.lang.Integer"/>
+	<field name="AGOSTO" class="java.lang.Integer"/>
+	<field name="SETIEMBRE" class="java.lang.Integer"/>
+	<field name="OCTUBRE" class="java.lang.Integer"/>
+	<field name="NOVIEMBRE" class="java.lang.Integer"/>
+	<field name="DICIEMBRE" class="java.lang.Integer"/>
+	<field name="TOTAL" class="java.lang.Integer"/>
+	<field name="TOTAL_COMPROMETIDO" class="java.lang.Integer"/>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField pattern="#,##0.###">
+				<reportElement x="0" y="0" width="50" height="20" uuid="465b7a77-8b4c-46af-b098-038a15a17c78">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box padding="3">
+					<topPen lineWidth="0.4"/>
+					<leftPen lineWidth="0.4"/>
+					<bottomPen lineWidth="0.4"/>
+					<rightPen lineWidth="0.4"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ENERO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###">
+				<reportElement x="50" y="0" width="50" height="20" uuid="be31ad5e-1b00-4c2e-9dc3-622318ee54b1">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box padding="3">
+					<topPen lineWidth="0.4"/>
+					<leftPen lineWidth="0.4"/>
+					<bottomPen lineWidth="0.4"/>
+					<rightPen lineWidth="0.4"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FEBRERO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###">
+				<reportElement x="100" y="0" width="50" height="20" uuid="c1738034-2ae4-4d07-99a1-e6b221395869">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box padding="3">
+					<topPen lineWidth="0.4"/>
+					<leftPen lineWidth="0.4"/>
+					<bottomPen lineWidth="0.4"/>
+					<rightPen lineWidth="0.4"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MARZO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###">
+				<reportElement x="150" y="0" width="50" height="20" uuid="2466e17a-365a-4578-8cf1-01ed1df978d8">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box padding="3">
+					<topPen lineWidth="0.4"/>
+					<leftPen lineWidth="0.4"/>
+					<bottomPen lineWidth="0.4"/>
+					<rightPen lineWidth="0.4"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ABRIL}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###">
+				<reportElement x="200" y="0" width="50" height="20" uuid="4e56cf49-4aa6-4b74-a79e-3ac2a35620e4">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box padding="3">
+					<topPen lineWidth="0.4"/>
+					<leftPen lineWidth="0.4"/>
+					<bottomPen lineWidth="0.4"/>
+					<rightPen lineWidth="0.4"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MAYO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###">
+				<reportElement x="250" y="0" width="50" height="20" uuid="0d79c859-2852-4ad4-8df5-c4b237174419">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box padding="3">
+					<topPen lineWidth="0.4"/>
+					<leftPen lineWidth="0.4"/>
+					<bottomPen lineWidth="0.4"/>
+					<rightPen lineWidth="0.4"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{JUNIO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###">
+				<reportElement x="300" y="0" width="50" height="20" uuid="cf7fef7d-1b62-4c95-b110-6c0c546bf76f">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box padding="3">
+					<topPen lineWidth="0.4"/>
+					<leftPen lineWidth="0.4"/>
+					<bottomPen lineWidth="0.4"/>
+					<rightPen lineWidth="0.4"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{JULIO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###">
+				<reportElement x="350" y="0" width="50" height="20" uuid="c7fd2e36-18f4-4f56-9642-693e5846d4f6">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box padding="3">
+					<topPen lineWidth="0.4"/>
+					<leftPen lineWidth="0.4"/>
+					<bottomPen lineWidth="0.4"/>
+					<rightPen lineWidth="0.4"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AGOSTO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###">
+				<reportElement x="400" y="0" width="50" height="20" uuid="e25b4db9-ca13-4918-afb0-3ace14096861">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box padding="3">
+					<topPen lineWidth="0.4"/>
+					<leftPen lineWidth="0.4"/>
+					<bottomPen lineWidth="0.4"/>
+					<rightPen lineWidth="0.4"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SETIEMBRE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###">
+				<reportElement x="450" y="0" width="50" height="20" uuid="de9cbccc-3d81-466b-b364-e57cd711e00c">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box padding="3">
+					<topPen lineWidth="0.4"/>
+					<leftPen lineWidth="0.4"/>
+					<bottomPen lineWidth="0.4"/>
+					<rightPen lineWidth="0.4"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{OCTUBRE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###">
+				<reportElement x="500" y="0" width="50" height="20" uuid="a6b04da3-071d-462d-8650-5309399050ae">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box padding="3">
+					<topPen lineWidth="0.4"/>
+					<leftPen lineWidth="0.4"/>
+					<bottomPen lineWidth="0.4"/>
+					<rightPen lineWidth="0.4"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOVIEMBRE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###">
+				<reportElement x="550" y="0" width="50" height="20" uuid="a99dc420-f60e-4ef5-9a7c-621ac1f1a674">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box padding="3">
+					<topPen lineWidth="0.4"/>
+					<leftPen lineWidth="0.4"/>
+					<bottomPen lineWidth="0.4"/>
+					<rightPen lineWidth="0.4"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DICIEMBRE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###">
+				<reportElement x="600" y="0" width="50" height="20" uuid="5b8aeb02-3fbc-4ed9-b3cb-94dc5b67d3d9">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box padding="3">
+					<topPen lineWidth="0.4"/>
+					<leftPen lineWidth="0.4"/>
+					<bottomPen lineWidth="0.4"/>
+					<rightPen lineWidth="0.4"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTAL}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###">
+				<reportElement x="650" y="0" width="50" height="20" uuid="bb3a9420-1ae3-4a3b-8ec6-4deeb430225a">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box padding="3">
+					<topPen lineWidth="0.4"/>
+					<leftPen lineWidth="0.4"/>
+					<bottomPen lineWidth="0.4"/>
+					<rightPen lineWidth="0.4"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTAL}-$F{TOTAL_COMPROMETIDO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
