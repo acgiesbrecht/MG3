@@ -1,16 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-  <persistence-unit name="pcb_PU" transaction-type="RESOURCE_LOCAL">
+  <persistence-unit name="mg_PU" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-    <class>com.chortitzer.pcbjfx.domain.TblBasPrecios</class>
-    <class>com.chortitzer.pcbjfx.domain.TblBasContratos</class>
-    <class>com.chortitzer.pcbjfx.domain.Tblempresa</class>
-    <class>com.chortitzer.pcbjfx.domain.Tblproductos</class>
+    <class>com.parah.mg.domain.TblCategoriasArticulos</class>
+    <class>com.parah.mg.domain.TblCentrosDeCosto</class>
+    <class>com.parah.mg.domain.TblContribuyentes</class>
+    <class>com.parah.mg.domain.TblCuentasContables</class>
+    <class>com.parah.mg.domain.TblDatabaseUpdates</class>
+    <class>com.parah.mg.domain.TblFacturas</class>
+    <class>com.parah.mg.domain.TblFacturasCompra</class>
+    <class>com.parah.mg.domain.TblFormasDePago</class>
+    <class>com.parah.mg.domain.TblGrupos</class>
+    <class>com.parah.mg.domain.TblIglesia</class>
+    <class>com.parah.mg.domain.TblRecibos</class>
+    <class>com.parah.mg.domain.TblRoles</class>
+    <class>com.parah.mg.domain.TblRubrosDdjj</class>
+    <class>com.parah.mg.domain.TblTimbrados</class>
+    <class>com.parah.mg.domain.TblTransacciones</class>
+    <class>com.parah.mg.domain.TblTransferencias</class>
+    <class>com.parah.mg.domain.TblUsers</class>
+    <class>com.parah.mg.domain.miembros.TblAreasServicioEnIglesia</class>
+    <class>com.parah.mg.domain.miembros.TblEntidades</class>
+    <class>com.parah.mg.domain.miembros.TblMiembrosAlergias</class>
+    <class>com.parah.mg.domain.miembros.TblMiembrosCategoriasDePago</class>
+    <class>com.parah.mg.domain.miembros.TblMiembrosFamilias</class>
+    <class>com.parah.mg.domain.miembros.TblMiembrosRelaciones</class>
+    <class>com.parah.mg.domain.miembros.TblMiembrosRelacionesRoles</class>
+    <class>com.parah.mg.domain.miembros.TblMiembrosRelacionesTipos</class>
+    <class>com.parah.mg.domain.models.MiembrosConPagosPendientes</class>
+    <class>com.parah.mg.domain.models.PagosMensualesPendientes</class>
+    <class>com.parah.mg.domain.models.PendientesTotal</class>
+    <class>com.parah.mg.domain.models.Recibo</class>
+    <class>com.parah.mg.domain.models.Transferencia</class>
+    <class>com.parah.mg.domain.TblAsientos</class>
+    <class>com.parah.mg.domain.TblCuentasContablesPorDefecto</class>
+    <class>com.parah.mg.domain.TblAutofacturas</class>
+    <class>com.parah.mg.domain.TblTimbradosAutofacturas</class>
+    <class>com.parah.mg.domain.TblRecibosCompra</class>
+    <class>com.parah.mg.domain.TblRecibosCompraFacturasCompra</class>
+    <class>com.parah.mg.domain.TblEventos</class>
+    <class>com.parah.mg.domain.TblEventoCuotas</class>
+    <class>com.parah.mg.domain.TblEventoDetalle</class>
+    <class>com.parah.mg.domain.TblEventoTipos</class>
+    <class>com.parah.mg.domain.TblAsientosTemporales</class>
+    <class>com.parah.mg.utils.LocalDateTimeAttributeConverter</class>
+    <class>com.parah.mg.utils.LocalDateAttributeConverter</class>
+    <class>com.parah.mg.domain.TblTimbradosCompras</class>
+    <class>com.parah.mg.domain.TblNotasDeCreditoCompras</class>
+    <class>com.parah.mg.domain.TblTimbradosNotasDeCredito</class>
+    <class>com.parah.mg.domain.TblNotasDeCredito</class>
+    <class>com.parah.mg.domain.TblDonacionesVariasDetalle</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://192.168.3.122:5432/industria"/>
-      <property name="javax.persistence.jdbc.user" value="postgres"/>
-      <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-      <property name="javax.persistence.jdbc.password" value="123456"/>
+      <property name="eclipselink.jdbc.batch-writing" value="JDBC"/>
+      <property name="eclipselink.logging.level.sql" value="FINE"/>
+      <property name="eclipselink.logging.parameters" value="true"/>
+      <property name="javax.persistence.jdbc.url" value=""/>
+      <property name="javax.persistence.jdbc.user" value=""/>
+      <property name="javax.persistence.jdbc.driver" value=""/>
+      <property name="javax.persistence.jdbc.password" value=""/>
     </properties>
   </persistence-unit>
 </persistence>
