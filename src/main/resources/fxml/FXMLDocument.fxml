@@ -5,9 +5,12 @@
 <?import javafx.scene.layout.Pane?>
 
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gnadenheimer.mg3.FXMLDocumentController">
-   <children>
-      <TypeAheadControl fx:id="cboMiembros" layoutX="26.0" layoutY="22.0" />
-      <TableControl fx:id="transferemcoasTable" layoutX="26.0" layoutY="63.0" prefHeight="313.0" prefWidth="541.0" />
-   </children>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"
+      xmlns="http://javafx.com/javafx/8.0.60"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.gnadenheimer.mg3.FXMLDocumentController">
+    <children>
+        <TypeAheadControl fx:id="cboEntidades" layoutX="26.0" layoutY="22.0" />
+        <TableControl fx:id="transferenciasTable" layoutX="26.0" layoutY="63.0" prefHeight="313.0" prefWidth="541.0" />
+    </children>
 </Pane>

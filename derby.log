@@ -1,14 +1,1 @@
-Thu Dec 15 18:00:44 PYST 2016 : Servidor de red Apache Derby: Se ha iniciado 10.13.1.1 - (1765088) y está listo para aceptar las conexiones en el puerto 1527
-----------------------------------------------------------------
-Thu Dec 15 18:00:46 PYST 2016:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.13.1.1 - (1765088): instance a816c00e-0159-0449-8682-000002e31988 
-on database directory C:\Users\adriang\Documents\NetBeansProjects\MGjfx\mgdb with class loader sun.misc.Launcher$AppClassLoader@73d16e93 
-Loaded from file:/C:/Users/adriang/.m2/repository/org/apache/derby/derby/10.13.1.1/derby-10.13.1.1.jar
-java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_111-b14
-user.dir=C:\Users\adriang\Documents\NetBeansProjects\MGjfx
-os.name=Windows 10
-os.arch=amd64
-os.version=10.0
-derby.system.home=C:\javadb
-Database Class Loader started - derby.database.classpath=''
+Thu Dec 15 20:12:38 PYST 2016 : Apache Derby Network Server - 10.13.1.1 - (1765088) started and ready to accept connections on port 1527

@@ -24,16 +24,15 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        
-        
+        persistenceMap = Utils.getInstance().getPersistenceMap();
+
         if (Boolean.parseBoolean(Preferences.userRoot().node("MG").get("isServer", "true"))) {
             NetworkServerControl server = new NetworkServerControl();
             server.start(null);
-        }        
+        }
 
-        persistenceMap = Utils.getInstance().getPersistenceMap();
         factory = Persistence.createEntityManagerFactory("mg_PU", persistenceMap);
-        
+
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/FXMLDocument.fxml"));
 
         Scene scene = new Scene(root);

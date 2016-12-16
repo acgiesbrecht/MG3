@@ -32,6 +32,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -73,7 +74,7 @@ public class TblTransferencias implements Serializable {
     private final IntegerProperty montoAporte = new SimpleIntegerProperty();
 
     private final IntegerProperty montoDonacion = new SimpleIntegerProperty();
-    
+
     private final IntegerProperty montoTotal = new SimpleIntegerProperty();
 
     private final BooleanProperty cobrado = new SimpleBooleanProperty();
@@ -195,7 +196,7 @@ public class TblTransferencias implements Serializable {
     }
 
     @JoinColumn(name = "ID_ENTIDAD", referencedColumnName = "ID")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     public TblEntidades getIdEntidad() {
         return idEntidad.get();
     }
@@ -205,7 +206,7 @@ public class TblTransferencias implements Serializable {
     }
 
     @JoinColumn(name = "ID_EVENTO", referencedColumnName = "ID")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     public TblEventos getIdEvento() {
         return idEvento;
     }
@@ -215,7 +216,7 @@ public class TblTransferencias implements Serializable {
     }
 
     @JoinColumn(name = "ID_EVENTO_TIPO", referencedColumnName = "ID")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     public TblEventoTipos getIdEventoTipo() {
         return idEventoTipo;
     }
@@ -225,7 +226,7 @@ public class TblTransferencias implements Serializable {
     }
 
     @JoinColumn(name = "ID_EVENTO_DETALLE", referencedColumnName = "ID")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     public TblEventoDetalle getIdEventoDetalle() {
         return idEventoDetalle;
     }
@@ -235,7 +236,7 @@ public class TblTransferencias implements Serializable {
     }
 
     @JoinColumn(name = "ID_USER", referencedColumnName = "ID")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     public TblUsers getIdUser() {
         return idUser;
     }
@@ -270,10 +271,11 @@ public class TblTransferencias implements Serializable {
         return "com.parah.mg.domain.TblTransferencias[ id=" + id + " ]";
     }
 
+    @Transient
     public Integer getMontoTotal() {
         return getMontoAporte() + getMontoDonacion();
     }
-    
+
     public void setMontoTotal(Integer montoTotal) {
         this.montoTotal.set(montoTotal);
     }
