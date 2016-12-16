@@ -19,7 +19,19 @@
     <build>
 
         <finalName>mg3</finalName>
-
+         <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.png</include>
+                    <include>**/*.xml</include>
+                    <include>**/*.jrxml</include>
+                    <include>**/*.sql</include>
+                    <include>version.properties</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
 
             <!--<plugin>
@@ -66,7 +78,7 @@
                         <configuration>
                             <appbase>http://190.52.180.233/mg3</appbase>
                             <libPath>lib</libPath>
-                            <mainClass>com.gnadenheimer.mg.App</mainClass>
+                            <mainClass>com.gnadenheimer.mg3.App</mainClass>
                             <outputJarVersions>true</outputJarVersions>
                             <verbose>true</verbose>
                             <ui>
@@ -149,17 +161,17 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.21</version>
+            <version>1.7.22</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
-            <version>1.7.21</version>
+            <version>1.7.22</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.21</version>
+            <version>1.7.22</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
@@ -196,7 +208,7 @@
             <groupId>javax.transaction</groupId>
             <artifactId>jta</artifactId>
             <version>1.1</version>
-        </dependency>               
+        </dependency>
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
@@ -222,7 +234,7 @@
             <groupId>net.sf.jasperreports</groupId>
             <artifactId>jasperreports</artifactId>
             <version>6.4.0</version>
-        </dependency>        
+        </dependency>
         <dependency>
             <groupId>net.sf.jasperreports</groupId>
             <artifactId>jasperreports-fonts</artifactId>
@@ -239,9 +251,9 @@
             <artifactId>beansbinding</artifactId>
             <version>1.2.1</version>
         </dependency>
-    </dependencies>  
+    </dependencies>
 
-        
+
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>

@@ -9,8 +9,9 @@ import java.util.prefs.Preferences;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.MenuBar;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -21,23 +22,44 @@ public class App extends Application {
     public static EntityManagerFactory factory;
     Map<String, String> persistenceMap = new HashMap<>();
 
+    // Creating a static root to pass to the controller
+    private static final BorderPane root = new BorderPane();
+
+    /**
+     * Just a root getter for the controller to use
+     */
+    public static BorderPane getRoot() {
+        return root;
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
 
-        
-        
+        persistenceMap = Utils.getInstance().getPersistenceMap();
+
         if (Boolean.parseBoolean(Preferences.userRoot().node("MG").get("isServer", "true"))) {
             NetworkServerControl server = new NetworkServerControl();
             server.start(null);
-        }        
+        }
 
-        persistenceMap = Utils.getInstance().getPersistenceMap();
+       //MenuBar bar = FXMLLoader.load(getClass().getResource("/fxml/Menu.fxml"));
+        //AnchorPane paneOne = FXMLLoader.load(getClass().getResource("/fxml/FXMLDocument.fxml"));
+
+        // constructing our scene using the static root
+        
+        //root.setCenter(paneOne);
+
         factory = Persistence.createEntityManagerFactory("mg_PU", persistenceMap);
         
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/FXMLDocument.fxml"));
+        root.setTop(FXMLLoader.load(getClass().getResource("/fxml/MenuPrincipal.fxml")));
+        root.setCenter(FXMLLoader.load(getClass().getResource("/fxml/FXMLDocument.fxml")));        
+        Scene scene = new Scene(root, 640, 480);
+        /*scene
+                .getStylesheets()
+                .add(getClass()
+                        .getResource("/tiwulfx.css")
+                        .toExternalForm());*/
 
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add(("/tiwulfx.css"));//load tiwulfx.css
         stage.setScene(scene);
 
         InputStream resourceAsStream = this.getClass().getResourceAsStream("/version.properties");
