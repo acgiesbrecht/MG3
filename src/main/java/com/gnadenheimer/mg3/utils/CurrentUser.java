@@ -7,27 +7,12 @@ package com.gnadenheimer.mg3.utils;
 
 import com.gnadenheimer.mg3.domain.TblRoles;
 import com.gnadenheimer.mg3.domain.TblUsers;
-import java.awt.Component;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 
-public class CurrentUser extends Component {
-
-    private PropertyChangeSupport propChangeSupport = new PropertyChangeSupport(this);
-
-    @Override
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        propChangeSupport.addPropertyChangeListener(listener);
-    }
-
-    @Override
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        propChangeSupport.removePropertyChangeListener(listener);
-    }
+public class CurrentUser {
 
     private TblUsers user;
 
-    private static CurrentUser currentUser = new CurrentUser();
+    private static final CurrentUser currentUser = new CurrentUser();
 
     /* A private Constructor prevents any other
      * class from instantiating.
@@ -53,7 +38,6 @@ public class CurrentUser extends Component {
     public void setUser(TblUsers user) {
         TblUsers userOld = this.user;
         this.user = user;
-        propChangeSupport.firePropertyChange("user", userOld, user);
     }
 
     public boolean hasRole(Integer roleLevel) {

@@ -1,33 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
 
-<MenuBar        xmlns="http://javafx.com/javafx/8.0.60"
-                xmlns:fx="http://javafx.com/fxml/1"
-                fx:controller="com.gnadenheimer.mg3.MenuController">
+<MenuBar xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gnadenheimer.mg3.MenuController">
     <menus>
-        <Menu 
-            mnemonicParsing="false" 
-            text="First Menu">
+        <Menu mnemonicParsing="false" text="Sesión">
             <items>
-                <MenuItem 
-                    fx:id="displayOne" 
-                    mnemonicParsing="false"
-                    onAction="#switchToOne" 
-                    text="Display Anchor Pane One" />
+                <MenuItem fx:id="mnuLogout" mnemonicParsing="false" onAction="#logout" text="Cerrar Sesión" />
             </items>
         </Menu>
-        <Menu 
-            mnemonicParsing="false" 
-            text="Second Menu">
+        <Menu mnemonicParsing="false" text="Ingresos">
             <items>
-                <MenuItem 
-                    fx:id="displayTwo" 
-                    mnemonicParsing="false"
-                    onAction="#switchToTwo" 
-                    text="Display Anchor Pane Two" />
+                <MenuItem fx:id="mnuInRemates" mnemonicParsing="false" text="Remates" />
+            <MenuItem fx:id="mnuInRematesP" mnemonicParsing="false" text="Pago de Remates" />
+            <MenuItem fx:id="mnuInRematesIT" mnemonicParsing="false" text="Ingresar Transferencias Cobradas de Remates" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem fx:id="mnuInAportes" mnemonicParsing="false" text="Aportes - Ingresar Compromisos" />
+            <MenuItem fx:id="mnuInColectas" mnemonicParsing="false" text="Colectas - Ingresar Compromisos" />
+            <MenuItem fx:id="mnuInAportesColectasIT" mnemonicParsing="false" text="Aportes y Colectas - Ingresar Transferencias Cobradas" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem fx:id="mnuInDonacionesVarias" mnemonicParsing="false" text="Donaciones Varias" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem fx:id="mnuInFacturacionColectiva" mnemonicParsing="false" text="Facturacion Colectiva" />
+            <MenuItem fx:id="mnuInFacturacionUnica" mnemonicParsing="false" text="Facturacion Unica" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem fx:id="mnuInNotaDeCredito" mnemonicParsing="false" text="Nota de Credito" />
             </items>
         </Menu>
+      <Menu mnemonicParsing="false" text="Egresos">
+         <items>
+            <MenuItem fx:id="mnuEgFacturas" mnemonicParsing="false" text="Facturas de Compra" />
+            <MenuItem fx:id="mnuEgNotaDeCredito" mnemonicParsing="false" text="Nota de Credito de Compra" />
+            <MenuItem fx:id="mnuEgRecibos" mnemonicParsing="false" text="Recibos de Compra" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem fx:id="mnuEgNotaDeCredito1" mnemonicParsing="false" text="Autofacturacion" />
+         </items>
+      </Menu>
+      <Menu mnemonicParsing="false" text="Informes">
+         <items>
+            <MenuItem fx:id="mnuInfR" mnemonicParsing="false" text="Remates" />
+            <MenuItem fx:id="mnuInfAyC" mnemonicParsing="false" text="Aportes y Colectas" />
+            <MenuItem fx:id="mnuInfContabilidad" mnemonicParsing="false" text="Contabilidad" />
+         </items>
+      </Menu>
+      <Menu mnemonicParsing="false" text="Administración">
+         <items>
+            <MenuItem fx:id="mnuAdEntidades" mnemonicParsing="false" onAction="#mnuAdEntidades" text="Administrar Entidades" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem fx:id="mnuAdEventos" mnemonicParsing="false" text="Administrar Eventos" />
+            <MenuItem fx:id="mnuAdEventosCuotas" mnemonicParsing="false" text="Administrar Eventos - Cuotas " />
+            <MenuItem fx:id="mnuAdEventosCategorias" mnemonicParsing="false" text="Administrar Eventos - Categorias de Articulo" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem fx:id="mnuAdTransferencias" mnemonicParsing="false" text="Administrar Transferencias" />
+            <MenuItem fx:id="mnuAdRecibos" mnemonicParsing="false" text="Administrar Recibos" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem fx:id="mnuAdTimbrados" mnemonicParsing="false" text="Administrar Facturas - Timbrados" />
+            <MenuItem fx:id="mnuAdFacturas" mnemonicParsing="false" text="Administrar Facturas" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem fx:id="mnuAdAutofacturasTimbrados" mnemonicParsing="false" text="Administrar Autofacturas - Timbrados" />
+            <MenuItem fx:id="mnuAdAutofacturas" mnemonicParsing="false" text="Administrar Autofacturas" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem fx:id="mnuAdNotCreditoTimbrados" mnemonicParsing="false" text="Administrar Autofacturas - Timbrados" />
+            <MenuItem fx:id="mnuAdNotaCredito" mnemonicParsing="false" text="Administrar Autofacturas" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem fx:id="mnuAdCentrosCosto" mnemonicParsing="false" text="Administrar Centros de Costo" />
+            <MenuItem fx:id="mnuAdPlanCuentas" mnemonicParsing="false" text="Administrar Plan de Cuentas" />
+            <MenuItem fx:id="mnuAdAsientosManuales" mnemonicParsing="false" text="Administrar Asientos Manuales" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem fx:id="mnuAdIglesia" mnemonicParsing="false" text="Administrar Iglesia" />
+            <MenuItem fx:id="mnuAdUsuarios" mnemonicParsing="false" text="Administrar Usuarios" />
+            <MenuItem fx:id="mnuAdGrupos" mnemonicParsing="false" text="Administrar Grupos" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem fx:id="mnuAdConfig" mnemonicParsing="false" text="Configuracion de Sistema" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem fx:id="mnuAdBackUp" mnemonicParsing="false" text="Realizar BackUp" />
+         </items>
+      </Menu>
     </menus>
 </MenuBar>

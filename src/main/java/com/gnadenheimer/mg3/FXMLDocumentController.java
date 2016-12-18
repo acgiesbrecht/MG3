@@ -11,7 +11,6 @@ import com.panemu.tiwulfx.common.TableCriteria;
 import com.panemu.tiwulfx.common.TableData;
 import com.panemu.tiwulfx.form.TypeAheadControl;
 import com.panemu.tiwulfx.table.LocalDateColumn;
-import com.panemu.tiwulfx.table.LocalDateTimeColumn;
 import com.panemu.tiwulfx.table.NumberColumn;
 import com.panemu.tiwulfx.table.TableControl;
 import com.panemu.tiwulfx.table.TableController;
@@ -37,10 +36,10 @@ public class FXMLDocumentController implements Initializable {
     private DaoBase<TblEntidades> daoTblEntidades = new DaoBase<>(TblEntidades.class);
     private DaoBase<TblTransferencias> daoTblTransferencias = new DaoBase<>(TblTransferencias.class);
 
-    @FXML
     private TableControl transferenciasTable;
-    @FXML
     private TypeAheadControl cboEntidades;
+    @FXML
+    private TableControl<?> entidadesTable;
 
     //EntityManager em = Persistence.createEntityManagerFactory("pcb_PU").createEntityManager();
     /**
