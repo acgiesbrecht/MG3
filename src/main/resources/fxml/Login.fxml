@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane id="AnchorPane" prefHeight="572.0" prefWidth="666.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gnadenheimer.mg3.LoginController">
+   <children>
+      <GridPane alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="227.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="35.0" prefHeight="35.0" vgrow="NEVER" />
+            <RowConstraints maxHeight="57.0" minHeight="35.0" prefHeight="35.0" vgrow="NEVER" />
+            <RowConstraints maxHeight="91.0" minHeight="35.0" prefHeight="35.0" vgrow="NEVER" />
+         </rowConstraints>
+         <children>
+            <TextField fx:id="txtUser" GridPane.columnIndex="1" />
+            <PasswordField fx:id="txtPass" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ButtonBar prefHeight="50.0" prefWidth="369.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="2">
+               <buttons>
+                  <Button fx:id="cmdLogin" defaultButton="true" mnemonicParsing="false" onAction="#login" text="Iniciar sesión" />
+                  <Button fx:id="cmdCancel" cancelButton="true" mnemonicParsing="false" text="Cancelar" />
+               </buttons>
+            </ButtonBar>
+            <Label text="Usuario:" />
+            <Label text="Contraseña:" GridPane.rowIndex="1" />
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>

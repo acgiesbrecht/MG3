@@ -126,4 +126,9 @@ public class MenuController implements Initializable {
         }
     }
 
+    @FXML
+    private void mnuEgFacturas(ActionEvent event) {
+        setPane("/fxml/egresos/FacturasCompras.fxml");
+    }
+
 }

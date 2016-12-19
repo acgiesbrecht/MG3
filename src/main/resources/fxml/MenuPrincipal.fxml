@@ -32,7 +32,7 @@
         </Menu>
       <Menu mnemonicParsing="false" text="Egresos">
          <items>
-            <MenuItem fx:id="mnuEgFacturas" mnemonicParsing="false" text="Facturas de Compra" />
+            <MenuItem fx:id="mnuEgFacturas" mnemonicParsing="false" onAction="#mnuEgFacturas" text="Facturas de Compra" />
             <MenuItem fx:id="mnuEgNotaDeCredito" mnemonicParsing="false" text="Nota de Credito de Compra" />
             <MenuItem fx:id="mnuEgRecibos" mnemonicParsing="false" text="Recibos de Compra" />
             <SeparatorMenuItem mnemonicParsing="false" />
