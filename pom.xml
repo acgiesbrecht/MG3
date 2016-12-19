@@ -24,7 +24,9 @@
                 <directory>src/main/resources</directory>
                 <includes>
                     <include>**/*.png</include>
+                    <include>**/*.css</include>
                     <include>**/*.xml</include>
+                    <include>**/*.fxml</include>
                     <include>**/*.jrxml</include>
                     <include>**/*.sql</include>
                     <include>version.properties</include>
@@ -147,7 +149,11 @@
             <artifactId>miglayout-javafx</artifactId>
             <version>5.0</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.3m</version>
+        </dependency>
         <!-- Apache Commons -->
 
         <dependency>

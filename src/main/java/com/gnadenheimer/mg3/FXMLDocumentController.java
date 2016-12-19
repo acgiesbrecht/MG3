@@ -36,10 +36,10 @@ public class FXMLDocumentController implements Initializable {
     private DaoBase<TblEntidades> daoTblEntidades = new DaoBase<>(TblEntidades.class);
     private DaoBase<TblTransferencias> daoTblTransferencias = new DaoBase<>(TblTransferencias.class);
 
-    @FXML
     private TableControl transferenciasTable;
-    @FXML
     private TypeAheadControl cboEntidades;
+    @FXML
+    private TableControl<?> entidadesTable;
 
     //EntityManager em = Persistence.createEntityManagerFactory("pcb_PU").createEntityManager();
     /**
