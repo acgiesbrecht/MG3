@@ -29,7 +29,7 @@
                     <include>**/*.fxml</include>
                     <include>**/*.jrxml</include>
                     <include>**/*.sql</include>
-                    <include>version.properties</include>
+                    <include>**/*.properties</include>
                 </includes>
                 <filtering>true</filtering>
             </resource>
@@ -257,6 +257,13 @@
             <artifactId>beansbinding</artifactId>
             <version>1.2.1</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.jidesoft/jidefx-fields -->
+        <dependency>
+            <groupId>com.jidesoft</groupId>
+            <artifactId>jidefx-fields</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+
     </dependencies>
 
 
