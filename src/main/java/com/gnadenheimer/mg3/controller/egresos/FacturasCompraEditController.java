@@ -8,16 +8,19 @@ package com.gnadenheimer.mg3.controller.egresos;
 import com.gnadenheimer.mg3.DaoBase;
 import com.gnadenheimer.mg3.domain.TblFacturasCompra;
 import com.panemu.tiwulfx.form.Form;
-import com.panemu.tiwulfx.form.NumberControl;
+import com.panemu.tiwulfx.form.TextControl;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.UnaryOperator;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.StringConverter;
 import jidefx.scene.control.field.FormattedTextField;
 import jidefx.scene.control.field.verifier.IntegerRangePatternVerifier;
 
@@ -45,18 +48,41 @@ public class FacturasCompraEditController extends AnchorPane implements Initiali
     @FXML
     private Form<TblFacturasCompra> tblFacturasCompraForm;
     @FXML
-    private FormattedTextField<String> txtNro;
-    @FXML
-    private NumberControl<? extends Number> txtTimbrado;
+    private TextControl txtTimbrado;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        txtNro.getPatternVerifiers().put("n", new IntegerRangePatternVerifier(0, 999));
+        /*txtNro.getPatternVerifiers().put("n", new IntegerRangePatternVerifier(0, 999));
         txtNro.getPatternVerifiers().put("a", new IntegerRangePatternVerifier(0, 9999999));
         txtNro.setPattern("n-n-a");
+         */
+        StringConverter<String> formatter;
+        formatter = new StringConverter<String>() {
+            @Override
+            public String fromString(String string) {
+                return com.gnadenheimer.mg3.utils.Utils.completarNroFactura(string);
+            }
+
+            @Override
+            public String toString(String object) {
+                return com.gnadenheimer.mg3.utils.Utils.completarNroFactura(object);
+            }
+        };
+        UnaryOperator<TextFormatter.Change> filter;
+        filter = (TextFormatter.Change change) -> {
+            String text = change.getText();
+            for (int i = 0; i < text.length(); i++) {
+                if (!Character.isDigit(text.charAt(i))) {
+                    return null;
+                }
+            }
+            return change;
+        };
+        txtTimbrado.setTextFormatter(new TextFormatter<>(formatter, "", filter));
+
         btnSave.setOnAction(eventHandler);
         btnEdit.setOnAction(eventHandler);
         btnAdd.setOnAction(eventHandler);

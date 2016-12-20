@@ -5,13 +5,16 @@
 package com.panemu.tiwulfx.form;
 
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 
 /**
  *
  * @author Amrullah <amrullah@panemu.com>
  */
 public class TextControl extends BaseControl<String, TextField> {
+
     private TextField textField;
+
     public TextControl() {
         this("");
     }
@@ -35,6 +38,10 @@ public class TextControl extends BaseControl<String, TextField> {
     @Override
     protected void bindEditablePropertyWithControl(TextField inputControl) {
         inputControl.editableProperty().bind(editableProperty());
+    }
+
+    public void setTextFormatter(TextFormatter textFormatter) {
+        textField.setTextFormatter(textFormatter);
     }
 
 }
