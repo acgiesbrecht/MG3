@@ -39,7 +39,7 @@ public class FXMLDocumentController implements Initializable {
     private TableControl transferenciasTable;
     private TypeAheadControl cboEntidades;
     @FXML
-    private TableControl<?> entidadesTable;
+    private TableControl<TblEntidades> entidadesTable;
 
     //EntityManager em = Persistence.createEntityManagerFactory("pcb_PU").createEntityManager();
     /**

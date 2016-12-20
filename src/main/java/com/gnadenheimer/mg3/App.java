@@ -42,6 +42,7 @@ public class App extends Application {
     public static EntityManagerFactory factory;
     Map<String, String> persistenceMap = new HashMap<>();
     private static final BorderPane root = new BorderPane();
+    public static Stage mainStage;
 
     /**
      * Just a root getter for the controller to use
@@ -93,6 +94,8 @@ public class App extends Application {
         } else {
             LoginManager.getInstance().showMainView();
         }
+
+        mainStage = stage;
 
     }
 

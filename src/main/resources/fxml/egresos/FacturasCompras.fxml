@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.panemu.tiwulfx.table.TableControl?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import jidefx.scene.control.field.FormattedTextField?>
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gnadenheimer.mg3.controller.egresos.FacturasComprasController">
-   <children>
-      <FormattedTextField fx:id="txtNro" autoReformat="true" layoutX="32.0" layoutY="36.0" pattern="" />
-   </children>
+    <children>
+      <TableControl fx:id="masterTable" prefHeight="320.0" prefWidth="600.0" />
+    </children>
 </AnchorPane>
