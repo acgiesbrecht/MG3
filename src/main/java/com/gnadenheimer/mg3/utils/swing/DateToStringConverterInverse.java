@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gnadenheimer.mg3.utils;
+package com.gnadenheimer.mg3.utils.swing;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -13,17 +13,17 @@ import org.jdesktop.beansbinding.Converter;
  *
  * @author user
  */
-public class DateToStringConverter extends Converter {
+public class DateToStringConverterInverse extends Converter {
 
     @Override
-    public Object convertForward(Object value) {
-        return ((LocalDate) value).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    public Object convertReverse(Object value) {
+        return ((LocalDate) value).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
     @Override
-    public LocalDate convertReverse(Object value) {
+    public LocalDate convertForward(Object value) {
         try {
-            return LocalDate.parse(value.toString());
+            return (LocalDate) value;
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             return null;

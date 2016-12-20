@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gnadenheimer.mg3.utils;
+package com.gnadenheimer.mg3.utils.swing;
 
+import com.gnadenheimer.mg3.App;
 import java.awt.Color;
 import java.awt.Component;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import org.apache.logging.log4j.LogManager;
@@ -47,7 +47,7 @@ public class NormalTableCellRenderer extends DefaultTableCellRenderer {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, Thread.currentThread().getStackTrace()[1].getMethodName() + " - " + ex.getMessage());
+            App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
             LOGGER.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
         }
         return this;

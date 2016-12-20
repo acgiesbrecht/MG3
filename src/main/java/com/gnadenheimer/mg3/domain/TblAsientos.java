@@ -5,7 +5,7 @@
  */
 package com.gnadenheimer.mg3.domain;
 
-import com.gnadenheimer.mg3.utils.LocalDateTimeAttributeConverter;
+import com.gnadenheimer.mg3.utils.swing.LocalDateTimeAttributeConverter;
 import java.io.Serializable;
 import java.util.List;
 import java.time.LocalDateTime;

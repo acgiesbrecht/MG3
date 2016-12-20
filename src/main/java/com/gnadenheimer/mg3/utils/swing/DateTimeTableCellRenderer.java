@@ -3,32 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gnadenheimer.mg3.utils;
+package com.gnadenheimer.mg3.utils.swing;
 
-import java.time.LocalDate;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import javax.swing.JOptionPane;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.Locale;
 
 /**
  *
  * @author user
  */
-public class DateTableCellRenderer extends NormalTableCellRenderer {
-
-    private final Logger LOGGER = LogManager.getLogger(this);
+public class DateTimeTableCellRenderer extends NormalTableCellRenderer {
 
     @Override
     public void setValue(Object value) {
-        try {
-
-            //setText((value == null) ? "" : new SimpleDateFormat("yyyy-MM-dd").format(value));
-            setText((value == null) ? "" : ((LocalDate) value).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, Thread.currentThread().getStackTrace()[1].getMethodName() + " - " + ex.getMessage());
-            LOGGER.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
-        }
+        //setText((value == null) ? "" : new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(value));
+        setText((value == null) ? "" : ((LocalDateTime) value).format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
     }
     /*
      @Override

@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gnadenheimer.mg3.utils;
+package com.gnadenheimer.mg3.utils.swing;
 
+import com.gnadenheimer.mg3.App;
 import com.gnadenheimer.mg3.domain.TblCategoriasArticulos;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.swing.JOptionPane;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jdesktop.beansbinding.Converter;
@@ -39,7 +39,7 @@ public class CategoriasConverter extends Converter {
         } catch (NoResultException ex) {
             res = null;
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, Thread.currentThread().getStackTrace()[1].getMethodName() + " - " + ex.getMessage());
+            App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
             LOGGER.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
         }
         return res;

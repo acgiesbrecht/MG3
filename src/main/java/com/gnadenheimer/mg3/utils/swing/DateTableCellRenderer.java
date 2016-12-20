@@ -3,32 +3,32 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gnadenheimer.mg3.utils;
+package com.gnadenheimer.mg3.utils.swing;
 
-import javax.swing.SwingConstants;
-import org.apache.commons.lang.StringUtils;
+import com.gnadenheimer.mg3.App;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
  * @author user
  */
-public class CuentaContableCellRenderer extends NormalTableCellRenderer {
+public class DateTableCellRenderer extends NormalTableCellRenderer {
+
+    private final Logger LOGGER = LogManager.getLogger(this);
 
     @Override
     public void setValue(Object value) {
-        setText((value == null) ? "" : StringUtils.repeat(" ", getSpaces(value.toString())) + value.toString());
-        //setHorizontalAlignment(SwingConstants.RIGHT);
-    }
+        try {
 
-    private Integer getSpaces(String s) {
-        Integer c = 0;
-        Integer i = s.length() - 1;
-
-        while (s.charAt(i) == '0') {
-            i--;
-            c++;
+            //setText((value == null) ? "" : new SimpleDateFormat("yyyy-MM-dd").format(value));
+            setText((value == null) ? "" : ((LocalDate) value).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        } catch (Exception ex) {
+            App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
+            LOGGER.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
         }
-        return (8 - c) * 2;
     }
     /*
      @Override

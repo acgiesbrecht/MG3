@@ -3,30 +3,32 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gnadenheimer.mg3.utils;
+package com.gnadenheimer.mg3.utils.swing;
 
-import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.commons.lang.StringUtils;
 
 /**
  *
  * @author user
  */
-public class NumberCellRenderer extends NormalTableCellRenderer {
-
-    private static final Logger LOGGER = LogManager.getLogger(NumberCellRenderer.class);
+public class CuentaContableCellRenderer extends NormalTableCellRenderer {
 
     @Override
     public void setValue(Object value) {
-        try {
-            setText((value == null) ? "" : String.format("%,d", value));
-            setHorizontalAlignment(SwingConstants.RIGHT);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, Thread.currentThread().getStackTrace()[1].getMethodName() + " - " + ex.getMessage());
-            LOGGER.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
+        setText((value == null) ? "" : StringUtils.repeat(" ", getSpaces(value.toString())) + value.toString());
+        //setHorizontalAlignment(SwingConstants.RIGHT);
+    }
+
+    private Integer getSpaces(String s) {
+        Integer c = 0;
+        Integer i = s.length() - 1;
+
+        while (s.charAt(i) == '0') {
+            i--;
+            c++;
         }
+        return (8 - c) * 2;
     }
     /*
      @Override

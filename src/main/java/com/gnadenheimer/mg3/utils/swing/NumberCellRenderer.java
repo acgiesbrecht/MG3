@@ -3,23 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gnadenheimer.mg3.utils;
+package com.gnadenheimer.mg3.utils.swing;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
+import com.gnadenheimer.mg3.App;
+import javax.swing.SwingConstants;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
  * @author user
  */
-public class DateTimeTableCellRenderer extends NormalTableCellRenderer {
+public class NumberCellRenderer extends NormalTableCellRenderer {
+
+    private static final Logger LOGGER = LogManager.getLogger(NumberCellRenderer.class);
 
     @Override
     public void setValue(Object value) {
-        //setText((value == null) ? "" : new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(value));
-        setText((value == null) ? "" : ((LocalDateTime) value).format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
+        try {
+            setText((value == null) ? "" : String.format("%,d", value));
+            setHorizontalAlignment(SwingConstants.RIGHT);
+        } catch (Exception ex) {
+            App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
+            LOGGER.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
+        }
     }
     /*
      @Override

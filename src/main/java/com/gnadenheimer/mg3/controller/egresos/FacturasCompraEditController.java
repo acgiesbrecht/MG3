@@ -8,6 +8,7 @@ package com.gnadenheimer.mg3.controller.egresos;
 import com.gnadenheimer.mg3.DaoBase;
 import com.gnadenheimer.mg3.domain.TblFacturasCompra;
 import com.panemu.tiwulfx.form.Form;
+import com.panemu.tiwulfx.form.NumberControl;
 import com.panemu.tiwulfx.form.TextControl;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,8 +22,6 @@ import javafx.scene.control.TextFormatter;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.StringConverter;
-import jidefx.scene.control.field.FormattedTextField;
-import jidefx.scene.control.field.verifier.IntegerRangePatternVerifier;
 
 /**
  * FXML Controller class
@@ -49,6 +48,8 @@ public class FacturasCompraEditController extends AnchorPane implements Initiali
     private Form<TblFacturasCompra> tblFacturasCompraForm;
     @FXML
     private TextControl txtTimbrado;
+    @FXML
+    private TextControl txtNro;
 
     /**
      * Initializes the controller class.
@@ -63,15 +64,24 @@ public class FacturasCompraEditController extends AnchorPane implements Initiali
         formatter = new StringConverter<String>() {
             @Override
             public String fromString(String string) {
-                return com.gnadenheimer.mg3.utils.Utils.completarNroFactura(string);
+                if (string != null) {
+                    return com.gnadenheimer.mg3.utils.Utils.completarNroFactura(string);
+                } else {
+                    return null;
+                }
             }
 
             @Override
             public String toString(String object) {
-                return com.gnadenheimer.mg3.utils.Utils.completarNroFactura(object);
+                if (object != null) {
+                    return com.gnadenheimer.mg3.utils.Utils.completarNroFactura(object);
+                } else {
+                    return null;
+                }
             }
         };
-        UnaryOperator<TextFormatter.Change> filter;
+
+        /*UnaryOperator<TextFormatter.Change> filter;
         filter = (TextFormatter.Change change) -> {
             String text = change.getText();
             for (int i = 0; i < text.length(); i++) {
@@ -81,16 +91,22 @@ public class FacturasCompraEditController extends AnchorPane implements Initiali
             }
             return change;
         };
-        txtTimbrado.setTextFormatter(new TextFormatter<>(formatter, "", filter));
+        txtNro.setTextFormatter(new TextFormatter<>(formatter, "", filter));*/
+        txtNro.setTextFormatter(new TextFormatter<>(formatter, ""));
 
         btnSave.setOnAction(eventHandler);
+
         btnEdit.setOnAction(eventHandler);
+
         btnAdd.setOnAction(eventHandler);
 //        btnReload.setOnAction(eventHandler);
 
-        btnSave.disableProperty().bind(tblFacturasCompraForm.modeProperty().isEqualTo(Form.Mode.READ));
-        btnAdd.disableProperty().bind(tblFacturasCompraForm.modeProperty().isNotEqualTo(Form.Mode.READ));
-        btnEdit.disableProperty().bind(tblFacturasCompraForm.modeProperty().isNotEqualTo(Form.Mode.READ));
+        btnSave.disableProperty()
+                .bind(tblFacturasCompraForm.modeProperty().isEqualTo(Form.Mode.READ));
+        btnAdd.disableProperty()
+                .bind(tblFacturasCompraForm.modeProperty().isNotEqualTo(Form.Mode.READ));
+        btnEdit.disableProperty()
+                .bind(tblFacturasCompraForm.modeProperty().isNotEqualTo(Form.Mode.READ));
 
         tblFacturasCompraForm.bindChildren();
     }

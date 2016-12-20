@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gnadenheimer.mg3.utils;
+package com.gnadenheimer.mg3.utils.swing;
 
 /**
  *
  * @author user
  */
-public class FacturaNroTableCellRenderer extends NormalTableCellRenderer {
+public class DonacionTableCellRenderer extends NormalTableCellRenderer {
 
     @Override
     public void setValue(Object value) {
-        setText((value == null) ? "" : String.format("001-001-%07d", value));
+        setText((value == null) ? "" : String.valueOf(100 - (Integer) value));
     }
 }

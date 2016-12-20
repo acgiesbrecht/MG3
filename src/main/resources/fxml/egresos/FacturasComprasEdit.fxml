@@ -40,13 +40,13 @@
                                 <RowConstraints maxHeight="25.0" minHeight="25.0" percentHeight="0.0" prefHeight="25.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <TextControl fx:id="txtNro" propertyName="nro" autoReformat="true" maxWidth="-Infinity" pattern="" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" />
+                                <TextControl fx:id="txtNro" propertyName="nro" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" />
                                 <Label text="Nro. Factura" GridPane.halignment="RIGHT" />
                                 <Label text="Nro. Timbrado" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                                <NumberControl fx:id="txtTimbrado" maxWidth="200.0" minWidth="-Infinity" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <TextControl fx:id="txtTimbrado" propertyName="nroTimbrado" maxWidth="200.0" minWidth="-Infinity" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                 <Label text="Vencimiento Timbrado" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
                                 <Label text="Nro. Timbrado" GridPane.rowIndex="5" />
-                                <LocalDateControl GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                <LocalDateControl fx:id="vencimientoTimbrado" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                             </children>
                             <padding>
                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
