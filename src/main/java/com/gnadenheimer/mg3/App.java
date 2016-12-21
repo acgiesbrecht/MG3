@@ -18,6 +18,8 @@ import java.util.Properties;
 import java.util.prefs.Preferences;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -27,6 +29,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -73,6 +76,14 @@ public class App extends Application {
         InputStream resourceAsStream = this.getClass().getResourceAsStream("/version.properties");
         Properties prop = new Properties();
         prop.load(resourceAsStream);
+
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent t) {
+                Platform.exit();
+                System.exit(0);
+            }
+        });
 
         stage.setMaximized(true);
         stage.setTitle("MG " + prop.getProperty("project.version") + "." + prop.getProperty("project.build"));

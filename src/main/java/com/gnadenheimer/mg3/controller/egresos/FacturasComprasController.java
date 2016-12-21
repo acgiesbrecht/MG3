@@ -77,12 +77,12 @@ public class FacturasComprasController implements Initializable {
         }
 
         @Override
-        public boolean canEdit(TblFacturasCompra selectedRecod) {
-            if (selectedRecod == null) {
+        public boolean canEdit(TblFacturasCompra selectedRecord) {
+            if (selectedRecord == null) {
                 MessageDialogBuilder.error().message("Please select a record to edit.").show(null);
                 return false;
             }
-            showFacturasCompraEdit(selectedRecod, Form.Mode.EDIT);
+            showFacturasCompraEdit(selectedRecord, Form.Mode.EDIT);
             return false;
         }
 
