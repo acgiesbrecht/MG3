@@ -5,7 +5,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 
-<MenuBar xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gnadenheimer.mg3.MenuController">
+<MenuBar xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gnadenheimer.mg3.MenuController">
     <menus>
         <Menu mnemonicParsing="false" text="Sesión">
             <items>
@@ -54,7 +54,7 @@
             <MenuItem fx:id="mnuAdEventosCuotas" mnemonicParsing="false" text="Administrar Eventos - Cuotas " />
             <MenuItem fx:id="mnuAdEventosCategorias" mnemonicParsing="false" text="Administrar Eventos - Categorias de Articulo" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem fx:id="mnuAdTransferencias" mnemonicParsing="false" text="Administrar Transferencias" />
+            <MenuItem fx:id="mnuAdTransferencias" mnemonicParsing="false" onAction="#mnuAdTransferencias" text="Administrar Transferencias" />
             <MenuItem fx:id="mnuAdRecibos" mnemonicParsing="false" text="Administrar Recibos" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem fx:id="mnuAdTimbrados" mnemonicParsing="false" text="Administrar Facturas - Timbrados" />

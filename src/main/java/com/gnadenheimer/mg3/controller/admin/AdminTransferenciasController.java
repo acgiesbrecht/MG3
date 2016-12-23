@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gnadenheimer.mg3;
+package com.gnadenheimer.mg3.controller.admin;
 
+import com.gnadenheimer.mg3.DaoBase;
 import com.gnadenheimer.mg3.domain.TblTransferencias;
 import com.gnadenheimer.mg3.domain.miembros.TblEntidades;
 import com.panemu.tiwulfx.common.TableCriteria;
@@ -30,16 +31,14 @@ import org.apache.logging.log4j.Logger;
  *
  * @author adriang
  */
-public class FXMLDocumentController implements Initializable {
+public class AdminTransferenciasController implements Initializable {
 
-    private static final Logger LOGGER = LogManager.getLogger(FXMLDocumentController.class);
+    private static final Logger LOGGER = LogManager.getLogger(AdminTransferenciasController.class);
     private DaoBase<TblEntidades> daoTblEntidades = new DaoBase<>(TblEntidades.class);
     private DaoBase<TblTransferencias> daoTblTransferencias = new DaoBase<>(TblTransferencias.class);
 
-    private TableControl transferenciasTable;
-    private TypeAheadControl cboEntidades;
     @FXML
-    private TableControl<TblEntidades> entidadesTable;
+    private TableControl transferenciasTable;
 
     //EntityManager em = Persistence.createEntityManagerFactory("pcb_PU").createEntityManager();
     /**
@@ -71,7 +70,6 @@ public class FXMLDocumentController implements Initializable {
         List<TblEntidades> lEntidades = daoTblEntidades.getList();
         lEntidades.forEach((p) -> {
             cEntidad.addItem(p.getNombreCompleto(), p);
-            cboEntidades.addItem(p.getNombreCompleto(), p);
         });
         NumberColumn<TblTransferencias, Integer> cMontoDonacion = new NumberColumn<>("montoDonacion", Integer.class);
         cMontoDonacion.setText("Monto Donacion");
@@ -81,6 +79,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     private final TableController<TblTransferencias> cntlTblTransferencias = new TableController<TblTransferencias>() {
+
         @Override
         public TableData loadData(int startIndex, List<TableCriteria> filteredColumns, List<String> sortedColumns, List<TableColumn.SortType> sortingOrders, int maxResult) {
             return daoTblTransferencias.fetch(startIndex, filteredColumns, sortedColumns, sortingOrders, maxResult);

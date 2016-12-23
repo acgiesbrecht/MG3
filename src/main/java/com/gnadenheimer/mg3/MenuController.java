@@ -131,4 +131,9 @@ public class MenuController implements Initializable {
         setPane("/fxml/egresos/FacturasCompras.fxml");
     }
 
+    @FXML
+    private void mnuAdTransferencias(ActionEvent event) {
+        setPane("/fxml/admin/AdminTransferencias.fxml");
+    }
+
 }
