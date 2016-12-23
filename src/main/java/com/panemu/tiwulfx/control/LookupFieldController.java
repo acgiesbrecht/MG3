@@ -43,6 +43,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 
 /**
  * Class that serves data loading for LookupField.
+ *
  * @author Amrullah <amrullah@panemu.com>
  */
 public abstract class LookupFieldController<T> {
@@ -52,8 +53,9 @@ public abstract class LookupFieldController<T> {
     private Class<T> recordClass;
 
     /**
-     * 
-     * @param recordClass The class of record/object/POJO that will be displayed in table's row
+     *
+     * @param recordClass The class of record/object/POJO that will be displayed
+     * in table's row
      */
     public LookupFieldController(Class<T> recordClass) {
         this.recordClass = recordClass;
@@ -62,23 +64,27 @@ public abstract class LookupFieldController<T> {
     public abstract String[] getColumns();
 
     /**
-     * This method is published to serve data displayed on Lookup's suggestion list.
-     * Eventually it will call {@link #loadData(int, java.util.List, java.util.List, java.util.List, int)}
+     * This method is published to serve data displayed on Lookup's suggestion
+     * list. Eventually it will call
+     * {@link #loadData(int, java.util.List, java.util.List, java.util.List, int)}
+     *
      * @param propertyName
      * @param key
-     * @return 
+     * @return
      */
     public List<T> loadDataForPopup(String propertyName, String key) {
         return loadDataForPopup(propertyName, key, TableCriteria.Operator.ilike_anywhere);
     }
 
     /**
-     * This method is published to serve data displayed on Lookup's suggestion list.
-     * Eventually it will call {@link #loadData(int, java.util.List, java.util.List, java.util.List, int)}
+     * This method is published to serve data displayed on Lookup's suggestion
+     * list. Eventually it will call
+     * {@link #loadData(int, java.util.List, java.util.List, java.util.List, int)}
+     *
      * @param propertyName
      * @param key
      * @param operator
-     * @return 
+     * @return
      */
     public List<T> loadDataForPopup(String propertyName, String key, TableCriteria.Operator operator) {
         List<TableCriteria> lstCriteria = new ArrayList<>();
@@ -88,10 +94,10 @@ public abstract class LookupFieldController<T> {
         TableData data = loadData(0, lstCriteria, Arrays.asList(propertyName), Arrays.asList(SortType.ASCENDING), TiwulFXUtil.DEFAULT_LOOKUP_SUGGESTION_ITEMS);
         return (List<T>) data.getRows();
     }
-    
+
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     protected String getWindowTitle() {
         return TiwulFXUtil.getLiteral("lookup.title");
@@ -103,8 +109,10 @@ public abstract class LookupFieldController<T> {
 
     /**
      * Show lookup dialog.
+     *
      * @param stage parent
-     * @param initialValue this value will be returned if user clik the close button instead of double clicking a row or click Select button
+     * @param initialValue this value will be returned if user clik the close
+     * button instead of double clicking a row or click Select button
      * @param propertyName propertyName corresponds to searchCriteria
      * @param searchCriteria searchCriteria (nullable)
      * @return selected object or the initialValue
@@ -141,19 +149,19 @@ public abstract class LookupFieldController<T> {
 
             }
             dialogStage = new Stage();
-			if (stage instanceof Stage) {
-				dialogStage.initOwner(stage);
-				dialogStage.initModality(Modality.WINDOW_MODAL);
-			} else {
-				dialogStage.initOwner(null);
-				dialogStage.initModality(Modality.APPLICATION_MODAL);
-			}
+            if (stage instanceof Stage) {
+                dialogStage.initOwner(stage);
+                dialogStage.initModality(Modality.WINDOW_MODAL);
+            } else {
+                dialogStage.initOwner(null);
+                dialogStage.initModality(Modality.APPLICATION_MODAL);
+            }
             dialogStage.initStyle(StageStyle.UTILITY);
             dialogStage.setResizable(true);
             dialogStage.setScene(new Scene(lookupWindow));
             dialogStage.getIcons().add(new Image(LookupFieldController.class.getResourceAsStream("/com/panemu/tiwulfx/res/image/lookup.png")));
             dialogStage.setTitle(getWindowTitle());
-            dialogStage.getScene().getStylesheets().add("tiwulfx.css");
+            dialogStage.getScene().getStylesheets().add(getClass().getResource("/com/panemu/tiwulfx/res/tiwulfx.css").toExternalForm());
             initCallback(lookupWindow, lookupWindow.table);
         }
 
@@ -172,54 +180,60 @@ public abstract class LookupFieldController<T> {
         selectedValue = initialValue;
         beforeShowCallback(lookupWindow.table);
         lookupWindow.table.reloadFirstPage();
-		
-		if (stage != null) {
-			/**
-			 * Since we support multiple monitors, ensure that the stage is located in the center of parent stage.
-			 * But we don't know the dimension of the stage for the calculation, so we defer the relocation
-			 * after the stage is actually displayed.
-			 */
-			Runnable runnable = new Runnable() {
-				public void run() {
-					dialogStage.setX(stage.getX() + stage.getWidth() / 2 - dialogStage.getWidth() / 2);
-					dialogStage.setY(stage.getY() + stage.getHeight() / 2 - dialogStage.getHeight() / 2);
-					
-					//set the opacity back to fully opaque
-					dialogStage.setOpacity(1);
-				}
-			};
 
-			Platform.runLater(runnable);
-			
-			//set the opacity to 0 to minimize flicker effect
-			dialogStage.setOpacity(0);
-		}
-		
+        if (stage != null) {
+            /**
+             * Since we support multiple monitors, ensure that the stage is
+             * located in the center of parent stage. But we don't know the
+             * dimension of the stage for the calculation, so we defer the
+             * relocation after the stage is actually displayed.
+             */
+            Runnable runnable = new Runnable() {
+                public void run() {
+                    dialogStage.setX(stage.getX() + stage.getWidth() / 2 - dialogStage.getWidth() / 2);
+                    dialogStage.setY(stage.getY() + stage.getHeight() / 2 - dialogStage.getHeight() / 2);
+
+                    //set the opacity back to fully opaque
+                    dialogStage.setOpacity(1);
+                }
+            };
+
+            Platform.runLater(runnable);
+
+            //set the opacity to 0 to minimize flicker effect
+            dialogStage.setOpacity(0);
+        }
+
         dialogStage.showAndWait();
         return selectedValue;
     }
-    
+
     /**
-     * Override this method to get reference on Lookup container and TableControl object.
-     * This is useful to set preferred size of lookup window and set particular column's width.
-     * This callback is executed after Lookup Stage along with TableControl are ready to be shown.
-     * It is only executed one time. The next lookup dialog show will not be called.
+     * Override this method to get reference on Lookup container and
+     * TableControl object. This is useful to set preferred size of lookup
+     * window and set particular column's width. This callback is executed after
+     * Lookup Stage along with TableControl are ready to be shown. It is only
+     * executed one time. The next lookup dialog show will not be called.
+     *
      * @param container
-     * @param table 
+     * @param table
      * @see #beforeShowCallback(com.panemu.tiwulfx.table.TableControl)
      */
     protected void initCallback(VBox container, TableControl<T> table) {
     }
-    
+
     /**
-     * Call back that is called every time the lookup dialog is about to be shown.
-     * @param table 
-     * @see #initCallback(javafx.scene.layout.VBox, com.panemu.tiwulfx.table.TableControl)
+     * Call back that is called every time the lookup dialog is about to be
+     * shown.
+     *
+     * @param table
+     * @see #initCallback(javafx.scene.layout.VBox,
+     * com.panemu.tiwulfx.table.TableControl)
      */
     protected void beforeShowCallback(TableControl<T> table) {
-        
+
     }
-    
+
     private T selectedValue;
 
     private void select() {
@@ -227,7 +241,7 @@ public abstract class LookupFieldController<T> {
         close();
 
     }
-    
+
     private void close() {
         Platform.runLater(new Runnable() {
             @Override
@@ -268,10 +282,10 @@ public abstract class LookupFieldController<T> {
                 }
             });
             HBox pnlButton = new HBox();
-				pnlButton.setAlignment(Pos.CENTER);
-				pnlButton.setPadding(new Insets(10));
-				pnlButton.getChildren().add(button);
-				
+            pnlButton.setAlignment(Pos.CENTER);
+            pnlButton.setPadding(new Insets(10));
+            pnlButton.getChildren().add(button);
+
             getChildren().addAll(table, pnlButton);
             table.setController(new LookupTableController());
             table.setVisibleComponents(false, Component.BUTTON_DELETE,

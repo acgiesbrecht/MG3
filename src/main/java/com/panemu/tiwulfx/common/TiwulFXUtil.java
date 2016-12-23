@@ -376,7 +376,7 @@ public class TiwulFXUtil {
      * @param scene
      */
     public static void setTiwulFXStyleSheet(Scene scene) {
-        scene.getStylesheets().add("/com/panemu/tiwulfx/res/tiwulfx.css");
+        scene.getStylesheets().add(TiwulFXUtil.class.getResource("/com/panemu/tiwulfx/res/tiwulfx.css").toExternalForm());
     }
 
     /**

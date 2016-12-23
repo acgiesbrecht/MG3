@@ -60,604 +60,608 @@ import javafx.util.StringConverter;
  */
 public class TypeAheadFieldSkin<T> extends BehaviorSkinBase<TypeAheadField<T>, TypeAheadFieldBehavior<T>> {
 
-	private static final String PROP_SHOWING_SUGGESTION = "SHOWING_SUGGESTION";
-	private static final String PROP_RESETTING_DISPLAY_TEXT = "RESETTING_DISPLAY_TEXT";
-	private TextField textField;
-	private Button button;
-	private PopupControl popup;
-	private boolean detectTextChanged = true;
-	private Timer waitTimer;
-	private LoaderTimerTask loaderTimerTask;
-	private TypeAheadField<T> typeAheadField;
-	/**
-	 * flag to
-	 */
-	public boolean needValidation = true;
+    private static final String PROP_SHOWING_SUGGESTION = "SHOWING_SUGGESTION";
+    private static final String PROP_RESETTING_DISPLAY_TEXT = "RESETTING_DISPLAY_TEXT";
+    private TextField textField;
+    private Button button;
+    private PopupControl popup;
+    private boolean detectTextChanged = true;
+    private Timer waitTimer;
+    private LoaderTimerTask loaderTimerTask;
+    private TypeAheadField<T> typeAheadField;
+    /**
+     * flag to
+     */
+    public boolean needValidation = true;
 
-	public TypeAheadFieldSkin(TypeAheadField<T> control) {
-		super(control, new TypeAheadFieldBehavior<>(control));
-		this.typeAheadField = control;
-		// move focus in to the textfield
-		typeAheadField.focusedProperty().addListener(new ChangeListener<Boolean>() {
-			@Override
-			public void changed(ObservableValue<? extends Boolean> ov, Boolean t, Boolean hasFocus) {
-				if (hasFocus) {
-					// move focus in to the textfield if the comboBox is editable
-					Platform.runLater(new Runnable() {
-						@Override
-						public void run() {
-							textField.requestFocus();
-						}
-					});
-				}
-			}
-		});
+    public TypeAheadFieldSkin(TypeAheadField<T> control) {
+        super(control, new TypeAheadFieldBehavior<>(control));
+        this.typeAheadField = control;
+        // move focus in to the textfield
+        typeAheadField.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> ov, Boolean t, Boolean hasFocus) {
+                if (hasFocus) {
+                    // move focus in to the textfield if the comboBox is editable
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            textField.requestFocus();
+                        }
+                    });
+                }
+            }
+        });
 
-		initialize();
+        initialize();
 
-		textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
+        textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
 
-			@Override
-			public void changed(ObservableValue<? extends Boolean> ov, Boolean t, Boolean hasFocus) {
-				if (!hasFocus) {
-					validate();
-				}
-			}
-		});
+            @Override
+            public void changed(ObservableValue<? extends Boolean> ov, Boolean t, Boolean hasFocus) {
+                if (!hasFocus) {
+                    validate();
+                }
+            }
+        });
 
-		textField.addEventFilter(KeyEvent.ANY, new EventHandler<KeyEvent>() {
+        textField.addEventFilter(KeyEvent.ANY, new EventHandler<KeyEvent>() {
 
-			@Override
-			public void handle(KeyEvent ke) {
-				if (ke.getCode() == KeyCode.DOWN) {
-					typeAheadField.fireEvent(ke);
-					//prevent moving caret position to the end
-					ke.consume();
-				}
-			}
-		});
-		typeAheadField.addEventFilter(InputEvent.ANY, new EventHandler<InputEvent>() {
-			@Override
-			public void handle(InputEvent t) {
-				if (textField == null) {
-					return;
-				}
+            @Override
+            public void handle(KeyEvent ke) {
+                if (ke.getCode() == KeyCode.DOWN) {
+                    typeAheadField.fireEvent(ke);
+                    //prevent moving caret position to the end
+                    ke.consume();
+                }
+            }
+        });
+        typeAheadField.addEventFilter(InputEvent.ANY, new EventHandler<InputEvent>() {
+            @Override
+            public void handle(InputEvent t) {
+                if (textField == null) {
+                    return;
+                }
 
-				// When the user hits the enter or F4 keys, we respond before 
-				// ever giving the event to the TextField.
-				if (t instanceof KeyEvent) {
-					KeyEvent ke = (KeyEvent) t;
+                // When the user hits the enter or F4 keys, we respond before
+                // ever giving the event to the TextField.
+                if (t instanceof KeyEvent) {
+                    KeyEvent ke = (KeyEvent) t;
 //					if (ke.getCode() == KeyCode.DOWN && ke.getEventType() == KeyEvent.KEY_RELEASED) {
 //						if (!typeAheadField.isShowingSuggestion()) {
 //							typeAheadField.showSuggestion();
 //						}
 //						t.consume();
 //                        return;
-//					} else 
-					if ((ke.getCode() == KeyCode.F10 || ke.getCode() == KeyCode.ESCAPE || ke.getCode() == KeyCode.ENTER)
-							  && !ke.isControlDown()) {
+//					} else
+                    if ((ke.getCode() == KeyCode.F10 || ke.getCode() == KeyCode.ESCAPE || ke.getCode() == KeyCode.ENTER)
+                            && !ke.isControlDown()) {
 
-						// RT-23275: The TextField fires F10 and ESCAPE key events
-						// up to the parent, which are then fired back at the 
-						// TextField, and this ends up in an infinite loop until
-						// the stack overflows. So, here we consume these two
-						// events and stop them from going any further.
-						t.consume();
-						return;
-					}
-				}
-			}
-		});
+                        // RT-23275: The TextField fires F10 and ESCAPE key events
+                        // up to the parent, which are then fired back at the
+                        // TextField, and this ends up in an infinite loop until
+                        // the stack overflows. So, here we consume these two
+                        // events and stop them from going any further.
+                        t.consume();
+                        return;
+                    }
+                }
+            }
+        });
 
-		textField.promptTextProperty().bind(typeAheadField.promptTextProperty());
+        textField.promptTextProperty().bind(typeAheadField.promptTextProperty());
 
-		getSkinnable().requestLayout();
+        getSkinnable().requestLayout();
 
-		registerChangeListener(control.showingSuggestionProperty(), PROP_SHOWING_SUGGESTION);
-		registerChangeListener(control.resettingDisplayTextProperty(), PROP_RESETTING_DISPLAY_TEXT);
-	}
+        registerChangeListener(control.showingSuggestionProperty(), PROP_SHOWING_SUGGESTION);
+        registerChangeListener(control.resettingDisplayTextProperty(), PROP_RESETTING_DISPLAY_TEXT);
+    }
 
-	@Override
-	protected void handleControlPropertyChanged(String string) {
-		super.handleControlPropertyChanged(string);
-		if (PROP_SHOWING_SUGGESTION.equals(string)) {
-			if (typeAheadField.isShowingSuggestion()) {
-				showSuggestion();
-			} else {
-				hideSuggestion();
-			}
-		} else if (PROP_RESETTING_DISPLAY_TEXT.equals(string)) {
-			if (typeAheadField.isResettingDisplayText()) {
-				updateTextField();
-			}
-		}
-	}
+    @Override
+    protected void handleControlPropertyChanged(String string) {
+        super.handleControlPropertyChanged(string);
+        if (PROP_SHOWING_SUGGESTION.equals(string)) {
+            if (typeAheadField.isShowingSuggestion()) {
+                showSuggestion();
+            } else {
+                hideSuggestion();
+            }
+        } else if (PROP_RESETTING_DISPLAY_TEXT.equals(string)) {
+            if (typeAheadField.isResettingDisplayText()) {
+                updateTextField();
+            }
+        }
+    }
 
-	public void hideSuggestion() {
-		if (popup != null && popup.isShowing()) {
-			popup.hide();
-		}
-	}
+    public void hideSuggestion() {
+        if (popup != null && popup.isShowing()) {
+            popup.hide();
+        }
+    }
 
-	private PopupControl getPopup() {
-		if (popup == null) {
-			createPopup();
-		}
-		return popup;
-	}
+    private PopupControl getPopup() {
+        if (popup == null) {
+            createPopup();
+        }
+        return popup;
+    }
 
-	private double getListViewPrefHeight() {
-		double ph = 200;
-		if (listView.getSkin() instanceof VirtualContainerBase) {
-			try {
-				int maxRows = 10;
-				
-				ListViewSkin<?> skinL = (ListViewSkin<?>) listView.getSkin();
-				skinL.updateListViewItems();
-				
-				Method methodL = skinL.getClass().getSuperclass().getDeclaredMethod("updateRowCount", null);
-				methodL.setAccessible(true);
-				methodL.invoke(skinL, null);
-				
-				VirtualContainerBase<?, ?, ?> skin = (VirtualContainerBase<?, ?, ?>) listView.getSkin();
-				 
-				Method method = skin.getClass().getSuperclass().getDeclaredMethod("getVirtualFlowPreferredHeight", Integer.TYPE);
-				method.setAccessible(true);
-				ph = (double) method.invoke(skin, maxRows);
-			} catch (Exception ex) {
-				Logger.getLogger(TypeAheadFieldSkin.class.getName()).log(Level.SEVERE, null, ex);
-			}
-		} else {
-			double ch = typeAheadField.getItems().size() * 25;
-			ph = Math.min(ch, 200);
-		}
-		return ph;
-	}
+    private double getListViewPrefHeight() {
+        double ph = 200;
+        if (listView.getSkin() instanceof VirtualContainerBase) {
+            try {
+                int maxRows = 10;
 
-	/**
-	 * Get the reference to the underlying textfield. This method is used by
-	 * TypeAheadTableCell.
-	 *
-	 * @return TextField
-	 */
-	public TextField getTextField() {
-		return textField;
-	}
+                ListViewSkin<?> skinL = (ListViewSkin<?>) listView.getSkin();
+                skinL.updateListViewItems();
 
-	private void createPopup() {
-		popup = new PopupControl() {
-			{
-				setSkin(new Skin() {
-					@Override
-					public Skinnable getSkinnable() {
-						return TypeAheadFieldSkin.this.typeAheadField;
-					}
+                Method methodL = skinL.getClass().getSuperclass().getDeclaredMethod("updateRowCount", null);
+                methodL.setAccessible(true);
+                methodL.invoke(skinL, null);
 
-					@Override
-					public Node getNode() {
-						return listView;
-					}
+                VirtualContainerBase<?, ?, ?> skin = (VirtualContainerBase<?, ?, ?>) listView.getSkin();
 
-					@Override
-					public void dispose() {
-					}
-				});
-			}
-		};
-		popup.setAutoHide(true);
-		popup.setOnAutoHide(new EventHandler<Event>() {
-			@Override
-			public void handle(Event e) {
-				typeAheadField.hideSuggestion();
-			}
-		});
-		popup.setAutoFix(true);
-		popup.setHideOnEscape(true);
-		popup.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent t) {
-				typeAheadField.hideSuggestion();
-			}
-		});
+                Method method = skin.getClass().getSuperclass().getDeclaredMethod("getVirtualFlowPreferredHeight", Integer.TYPE);
+                method.setAccessible(true);
+                ph = (double) method.invoke(skin, maxRows);
+            } catch (Exception ex) {
+                Logger.getLogger(TypeAheadFieldSkin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            double ch = typeAheadField.getItems().size() * 25;
+            ph = Math.min(ch, 200);
+        }
+        return ph;
+    }
 
-		listView.setCellFactory(new Callback() {
-			@Override
-			public Object call(Object p) {
-				return new PropertyListCell();
-			}
-		});
+    /**
+     * Get the reference to the underlying textfield. This method is used by
+     * TypeAheadTableCell.
+     *
+     * @return TextField
+     */
+    public TextField getTextField() {
+        return textField;
+    }
 
-		/**
-		 * Taken from
-		 * {@link com.sun.javafx.scene.control.skin.ComboBoxListViewSkin}
-		 */
-		listView.addEventFilter(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent t) {
-				// RT-18672: Without checking if the user is clicking in the 
-				// scrollbar area of the ListView, the comboBox will hide. Therefore,
-				// we add the check below to prevent this from happening.
-				EventTarget target = t.getTarget();
-				if (target instanceof Parent) {
-					List<String> s = ((Parent) target).getStyleClass();
-					if (s.contains("thumb")
-							  || s.contains("track")
-							  || s.contains("decrement-arrow")
-							  || s.contains("increment-arrow")) {
-						return;
-					}
-				}
-				needValidation = false;
-				typeAheadField.setValue(listView.getSelectionModel().getSelectedItem());
-				typeAheadField.hideSuggestion();
-			}
-		});
+    private void createPopup() {
+        popup = new PopupControl() {
+            {
+                setSkin(new Skin() {
+                    @Override
+                    public Skinnable getSkinnable() {
+                        return TypeAheadFieldSkin.this.typeAheadField;
+                    }
 
-		listView.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(KeyEvent t) {
-				if (t.getCode() == KeyCode.ENTER) {
-					needValidation = false;
-					if (listView.getSelectionModel().getSelectedItem() != null) {
-						/**
-						 * By default, select the first item if none is selected
-						 */
-						if (listView.getSelectionModel().getSelectedItem() == typeAheadField.getValue()) {
-							/**
-							 * Update the textfield. User may have changed it.
-							 */
-							updateTextField();
-						} else {
-							typeAheadField.setValue(listView.getSelectionModel().getSelectedItem());
-							/**
-							 * The textfield will be updated by value change listener
-							 */
-						}
+                    @Override
+                    public Node getNode() {
+                        return listView;
+                    }
 
-					} else if (!listView.getItems().isEmpty()) {
-						T defaultItem = listView.getItems().get(0);
-						if (defaultItem == typeAheadField.getValue()) {
-							/**
-							 * Update the textfield. User may have changed it.
-							 */
-							updateTextField();
-						} else {
-							typeAheadField.setValue(defaultItem);
-							/**
-							 * The textfield will be updated by value change listener
-							 */
-						}
-					}
+                    @Override
+                    public void dispose() {
+                    }
+                });
+            }
+        };
+        popup.setAutoHide(true);
+        popup.setOnAutoHide(new EventHandler<Event>() {
+            @Override
+            public void handle(Event e) {
+                typeAheadField.hideSuggestion();
+            }
+        });
+        popup.setAutoFix(true);
+        popup.setHideOnEscape(true);
+        popup.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent t) {
+                typeAheadField.hideSuggestion();
+            }
+        });
 
-					typeAheadField.hideSuggestion();
-				} else if (t.getCode() == KeyCode.ESCAPE) {
-					typeAheadField.hideSuggestion();
-				} else if (t.getCode() == KeyCode.RIGHT) {
-					textField.positionCaret(textField.getCaretPosition() + 1);
-					refreshList();
-					t.consume();
-				} else if (t.getCode() == KeyCode.LEFT) {
-					textField.positionCaret(textField.getCaretPosition() - 1);
-					refreshList();
-					t.consume();
-				} else if (t.getCode() == KeyCode.TAB) {
-					typeAheadField.hideSuggestion();
-					if (textField.getSkin() instanceof BehaviorSkinBase) {
-						/**
-						 * Move to the next control. It will trigger action to select
-						 * first matched item from the listview
-						 */
-						BehaviorSkinBase bsb = (BehaviorSkinBase) textField.getSkin();
-						bsb.getBehavior().traverseNext();
-					}
-				}
-			}
-		});
+        listView.setCellFactory(new Callback() {
+            @Override
+            public Object call(Object p) {
+                return new PropertyListCell();
+            }
+        });
 
-	}
+        /**
+         * Taken from
+         * {@link com.sun.javafx.scene.control.skin.ComboBoxListViewSkin}
+         */
+        listView.addEventFilter(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent t) {
+                // RT-18672: Without checking if the user is clicking in the
+                // scrollbar area of the ListView, the comboBox will hide. Therefore,
+                // we add the check below to prevent this from happening.
+                EventTarget target = t.getTarget();
+                if (target instanceof Parent) {
+                    List<String> s = ((Parent) target).getStyleClass();
+                    if (s.contains("thumb")
+                            || s.contains("track")
+                            || s.contains("decrement-arrow")
+                            || s.contains("increment-arrow")) {
+                        return;
+                    }
+                }
+                needValidation = false;
+                typeAheadField.setValue(listView.getSelectionModel().getSelectedItem());
+                typeAheadField.hideSuggestion();
+            }
+        });
 
-	private void initialize() {
-		textField = new TextField();
-		textField.setFocusTraversable(true);
+        listView.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent t) {
+                if (t.getCode() == KeyCode.ENTER) {
+                    needValidation = false;
+                    if (listView.getSelectionModel().getSelectedItem() != null) {
+                        /**
+                         * By default, select the first item if none is selected
+                         */
+                        if (listView.getSelectionModel().getSelectedItem() == typeAheadField.getValue()) {
+                            /**
+                             * Update the textfield. User may have changed it.
+                             */
+                            updateTextField();
+                        } else {
+                            typeAheadField.setValue(listView.getSelectionModel().getSelectedItem());
+                            /**
+                             * The textfield will be updated by value change
+                             * listener
+                             */
+                        }
 
-		button = new Button();
-		button.setFocusTraversable(false);
-		StackPane arrow = new StackPane();
-		arrow.setFocusTraversable(false);
-		arrow.getStyleClass().setAll("arrow");
-		arrow.setMaxWidth(USE_PREF_SIZE);
-		arrow.setMaxHeight(USE_PREF_SIZE);
+                    } else if (!listView.getItems().isEmpty()) {
+                        T defaultItem = listView.getItems().get(0);
+                        if (defaultItem == typeAheadField.getValue()) {
+                            /**
+                             * Update the textfield. User may have changed it.
+                             */
+                            updateTextField();
+                        } else {
+                            typeAheadField.setValue(defaultItem);
+                            /**
+                             * The textfield will be updated by value change
+                             * listener
+                             */
+                        }
+                    }
 
-		button.setGraphic(arrow);
-		StackPane.setAlignment(textField, Pos.CENTER_LEFT);
-		StackPane.setAlignment(button, Pos.CENTER_RIGHT);
-		this.getChildren().addAll(textField, button);
-		button.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent t) {
-				if (!typeAheadField.isFocused()) {
-					/**
-					 * Need to make this control become focused. Otherwise changing
-					 * value in LookupColumn while the LookuField cell editor is not
-					 * focused before, won't trigger commitEdit()
-					 */
-					typeAheadField.requestFocus();
-				}
-				typeAheadField.showSuggestion();
-			}
-		});
-		updateTextField();
-		typeAheadField.valueProperty().addListener(new ChangeListener() {
-			@Override
-			public void changed(ObservableValue ov, Object t, Object t1) {
-				updateTextField();
-			}
-		});
+                    typeAheadField.hideSuggestion();
+                } else if (t.getCode() == KeyCode.ESCAPE) {
+                    typeAheadField.hideSuggestion();
+                } else if (t.getCode() == KeyCode.RIGHT) {
+                    textField.positionCaret(textField.getCaretPosition() + 1);
+                    refreshList();
+                    t.consume();
+                } else if (t.getCode() == KeyCode.LEFT) {
+                    textField.positionCaret(textField.getCaretPosition() - 1);
+                    refreshList();
+                    t.consume();
+                } else if (t.getCode() == KeyCode.TAB) {
+                    typeAheadField.hideSuggestion();
+                    if (textField.getSkin() instanceof BehaviorSkinBase) {
+                        /**
+                         * Move to the next control. It will trigger action to
+                         * select first matched item from the listview
+                         */
+                        BehaviorSkinBase bsb = (BehaviorSkinBase) textField.getSkin();
+                        bsb.getBehavior().traverseNext();
+                    }
+                }
+            }
+        });
 
-		typeAheadField.markInvalidProperty().addListener(new ChangeListener<Boolean>() {
-			@Override
-			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				if (oldValue && !newValue && needValidation) {
-					validate();
-				}
-			}
-		});
+    }
 
-		textField.textProperty().addListener(new InvalidationListener() {
-			@Override
-			public void invalidated(Observable o) {
-				if (detectTextChanged) {
-					if (waitTimer != null) {
-						loaderTimerTask.setObsolete(true);
-						waitTimer.cancel();
-						waitTimer.purge();
-					}
+    private void initialize() {
+        textField = new TextField();
+        textField.setFocusTraversable(true);
 
-					typeAheadField.markInvalidProperty().set(true);
-					needValidation = true;
+        button = new Button();
+        button.setFocusTraversable(false);
+        StackPane arrow = new StackPane();
+        arrow.setFocusTraversable(false);
+        arrow.getStyleClass().setAll("arrow");
+        arrow.setMaxWidth(USE_PREF_SIZE);
+        arrow.setMaxHeight(USE_PREF_SIZE);
 
-					waitTimer = new Timer("lookupTimer");
-					loaderTimerTask = new LoaderTimerTask(waitTimer);
-					waitTimer.schedule(loaderTimerTask, 100);
-				}
-			}
-		});
+        button.setGraphic(arrow);
+        StackPane.setAlignment(textField, Pos.CENTER_LEFT);
+        StackPane.setAlignment(button, Pos.CENTER_RIGHT);
+        this.getChildren().addAll(textField, button);
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+                if (!typeAheadField.isFocused()) {
+                    /**
+                     * Need to make this control become focused. Otherwise
+                     * changing value in LookupColumn while the LookuField cell
+                     * editor is not focused before, won't trigger commitEdit()
+                     */
+                    typeAheadField.requestFocus();
+                }
+                typeAheadField.showSuggestion();
+            }
+        });
+        updateTextField();
+        typeAheadField.valueProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue ov, Object t, Object t1) {
+                updateTextField();
+            }
+        });
 
-	}
+        typeAheadField.markInvalidProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (oldValue && !newValue && needValidation) {
+                    validate();
+                }
+            }
+        });
 
-	private void updateTextField() {
-		detectTextChanged = false;
-		needValidation = false;
-		if (typeAheadField.getValue() == null) {
-			textField.setText("");
-			typeAheadField.markInvalidProperty().set(false);
-			detectTextChanged = true;
-			return;
-		}
-		T value = getSkinnable().getValue();
-		if (value != null) {
-			String string = getSkinnable().getConverter().toString(value);
-			if (string == null) {
-				textField.setText("");
-			} else {
-				textField.setText(string);
-			}
-		} else {
-			textField.setText("");
-		}
-		typeAheadField.markInvalidProperty().set(false);
-		detectTextChanged = true;
-	}
+        textField.textProperty().addListener(new InvalidationListener() {
+            @Override
+            public void invalidated(Observable o) {
+                if (detectTextChanged) {
+                    if (waitTimer != null) {
+                        loaderTimerTask.setObsolete(true);
+                        waitTimer.cancel();
+                        waitTimer.purge();
+                    }
 
-	private Point2D getPrefPopupPosition() {
-		Point2D p = getSkinnable().localToScene(0.0, 0.0);
-		Point2D p2 = new Point2D(p.getX() + getSkinnable().getScene().getX() + getSkinnable().getScene().getWindow().getX(), p.getY() + getSkinnable().getScene().getY() + getSkinnable().getScene().getWindow().getY() + getSkinnable().getHeight());
-		return p2;
-	}
+                    typeAheadField.markInvalidProperty().set(true);
+                    needValidation = true;
 
-	private void positionAndShowPopup() {
-		if (getPopup().getSkin() == null) {
-			getSkinnable().getScene().getRoot().impl_processCSS(true);
-		}
+                    waitTimer = new Timer("lookupTimer");
+                    loaderTimerTask = new LoaderTimerTask(waitTimer);
+                    waitTimer.schedule(loaderTimerTask, 100);
+                }
+            }
+        });
 
-		Point2D p = getPrefPopupPosition();
+    }
 
-		/**
-		 * In LookupColumn, sometimes the lookupfield disappears due to commit
-		 * editing before the popup appears. In this case, lookupField.getScene()
-		 * will be null.
-		 */
-		Scene scene = typeAheadField.getScene();
-		if (scene != null) {
-			getPopup().show(scene.getWindow(), p.getX(), p.getY());
-		}
-	}
+    private void updateTextField() {
+        detectTextChanged = false;
+        needValidation = false;
+        if (typeAheadField.getValue() == null) {
+            textField.setText("");
+            typeAheadField.markInvalidProperty().set(false);
+            detectTextChanged = true;
+            return;
+        }
+        T value = getSkinnable().getValue();
+        if (value != null) {
+            String string = getSkinnable().getConverter().toString(value);
+            if (string == null) {
+                textField.setText("");
+            } else {
+                textField.setText(string);
+            }
+        } else {
+            textField.setText("");
+        }
+        typeAheadField.markInvalidProperty().set(false);
+        detectTextChanged = true;
+    }
 
-	@Override
-	protected void layoutChildren(final double x, final double y, final double w, final double h) {
+    private Point2D getPrefPopupPosition() {
+        Point2D p = getSkinnable().localToScene(0.0, 0.0);
+        Point2D p2 = new Point2D(p.getX() + getSkinnable().getScene().getX() + getSkinnable().getScene().getWindow().getX(), p.getY() + getSkinnable().getScene().getY() + getSkinnable().getScene().getWindow().getY() + getSkinnable().getHeight());
+        return p2;
+    }
 
-		double obw = button.prefWidth(-1);
+    private void positionAndShowPopup() {
+        if (getPopup().getSkin() == null) {
+            getSkinnable().getScene().getRoot().impl_processCSS(true);
+        }
 
-		double displayWidth = getSkinnable().getWidth()
-				  - (getSkinnable().getInsets().getLeft() + getSkinnable().getInsets().getRight() + obw);
+        Point2D p = getPrefPopupPosition();
 
-		textField.resizeRelocate(x, y, w, h);
-		button.resizeRelocate(x + displayWidth, y, obw, h);
-	}
+        /**
+         * In LookupColumn, sometimes the lookupfield disappears due to commit
+         * editing before the popup appears. In this case,
+         * lookupField.getScene() will be null.
+         */
+        Scene scene = typeAheadField.getScene();
+        if (scene != null) {
+            getPopup().show(scene.getWindow(), p.getX(), p.getY());
+        }
+    }
 
-	private List<T> getData() {
-		List<T> items = getSkinnable().getItems();
-		StringConverter<T> converter = getSkinnable().getConverter();
-		List<T> eligibleItems = new ArrayList<>();
-		String text = textField.getText().substring(0, textField.getCaretPosition());
-		if (!getSkinnable().isSorted() && (text == null || text.length() == 0)) {
-			return items;
-		}
+    @Override
+    protected void layoutChildren(final double x, final double y, final double w, final double h) {
 
-		if (getSkinnable().isSorted()) {
-			List<String> lstEligibleString = new ArrayList<>();
-			for (T item : items) {
-				String label = converter.toString(item);
-				if (label != null && label.toLowerCase().startsWith(text.toLowerCase())) {
-					lstEligibleString.add(label);
-				}
-			}
-			Collections.sort(lstEligibleString);
-			for (String string : lstEligibleString) {
-				eligibleItems.add(converter.fromString(string));
-			}
-		} else {
-			for (T item : items) {
-				String label = converter.toString(item);
-				if (label != null && label.toLowerCase().startsWith(text.toLowerCase())) {
-					eligibleItems.add(item);
-				}
-			}
-		}
-		return eligibleItems;
-	}
+        double obw = button.prefWidth(-1);
 
-	private void validate() {
-		if (needValidation) {
-			if (!textField.getText().isEmpty()) {
-				loaderTimerTask.setObsolete(true);
-				List<T> data = getData();
-				if (data.size() > 0) {
-					if (typeAheadField.getValue() == data.get(0)) {
-						updateTextField();
-					} else {
-						typeAheadField.setValue(data.get(0));
-					}
-				} else if (typeAheadField.getValue() == null) {
-					//need to update text field since value change listener
-					//doesn't detect any change.
-					updateTextField();
-				} else {
-					//the text field will be updated by value change listener
-					typeAheadField.setValue(null);
-				}
-			} else {
-				typeAheadField.setValue(null);
-			}
-		}
-	}
+        double displayWidth = getSkinnable().getWidth()
+                - (getSkinnable().getInsets().getLeft() + getSkinnable().getInsets().getRight() + obw);
 
-	private void showSuggestion() {
-		List<T> data = getData();
-		listView.getItems().clear();
-		listView.getItems().addAll(data);
-		boolean dummyBag = needValidation;
-		needValidation = false;
-		if (getSkinnable().getValue() == null) {
-			listView.getSelectionModel().selectFirst();
-		} else {
-			listView.getSelectionModel().select(getSkinnable().getValue());
-		}
-		needValidation = dummyBag;
-		positionAndShowPopup();
-	}
+        textField.resizeRelocate(x, y, w, h);
+        button.resizeRelocate(x + displayWidth, y, obw, h);
+    }
 
-	private void refreshList() {
-		List<T> data = getData();
-		listView.getItems().clear();
-		listView.getItems().addAll(data);
-	}
+    private List<T> getData() {
+        List<T> items = getSkinnable().getItems();
+        StringConverter<T> converter = getSkinnable().getConverter();
+        List<T> eligibleItems = new ArrayList<>();
+        String text = textField.getText().substring(0, textField.getCaretPosition());
+        if (!getSkinnable().isSorted() && (text == null || text.length() == 0)) {
+            return items;
+        }
 
-	private class LoaderTimerTask extends TimerTask {
+        if (getSkinnable().isSorted()) {
+            List<String> lstEligibleString = new ArrayList<>();
+            for (T item : items) {
+                String label = converter.toString(item);
+                //if (label != null && label.toLowerCase().startsWith(text.toLowerCase())) {
+                if (label != null && label.toLowerCase().contains(text.toLowerCase())) {
+                    lstEligibleString.add(label);
+                }
+            }
+            Collections.sort(lstEligibleString);
+            for (String string : lstEligibleString) {
+                eligibleItems.add(converter.fromString(string));
+            }
+        } else {
+            for (T item : items) {
+                String label = converter.toString(item);
+                //if (label != null && label.toLowerCase().startsWith(text.toLowerCase())) {
+                if (label != null && label.toLowerCase().contains(text.toLowerCase())) {
+                    eligibleItems.add(item);
+                }
+            }
+        }
+        return eligibleItems;
+    }
 
-		private boolean obsolete = false;
-		private Timer timer;
+    private void validate() {
+        if (needValidation) {
+            if (!textField.getText().isEmpty()) {
+                loaderTimerTask.setObsolete(true);
+                List<T> data = getData();
+                if (data.size() > 0) {
+                    if (typeAheadField.getValue() == data.get(0)) {
+                        updateTextField();
+                    } else {
+                        typeAheadField.setValue(data.get(0));
+                    }
+                } else if (typeAheadField.getValue() == null) {
+                    //need to update text field since value change listener
+                    //doesn't detect any change.
+                    updateTextField();
+                } else {
+                    //the text field will be updated by value change listener
+                    typeAheadField.setValue(null);
+                }
+            } else {
+                typeAheadField.setValue(null);
+            }
+        }
+    }
 
-		public LoaderTimerTask(Timer timer) {
-			this.timer = timer;
-		}
+    private void showSuggestion() {
+        List<T> data = getData();
+        listView.getItems().clear();
+        listView.getItems().addAll(data);
+        boolean dummyBag = needValidation;
+        needValidation = false;
+        if (getSkinnable().getValue() == null) {
+            listView.getSelectionModel().selectFirst();
+        } else {
+            listView.getSelectionModel().select(getSkinnable().getValue());
+        }
+        needValidation = dummyBag;
+        positionAndShowPopup();
+    }
 
-		public void setObsolete(boolean obsolete) {
-			this.obsolete = obsolete;
-		}
+    private void refreshList() {
+        List<T> data = getData();
+        listView.getItems().clear();
+        listView.getItems().addAll(data);
+    }
 
-		@Override
-		public void run() {
-			if (!obsolete) {
-				final List<T> data = getData();
-				Platform.runLater(new Runnable() {
-					@Override
-					public void run() {
-						if (!obsolete) {
-							listView.getItems().clear();
-							if (!data.isEmpty()) {
-								listView.getItems().addAll(data);
-								typeAheadField.showSuggestion();
-							}
-						}
-					}
-				});
-			}
-			timer.cancel();
-			timer.purge();
-		}
-	}
-	private ListView<T> listView = new ListView<T>() {
-		@Override
-		protected double computeMinHeight(double width) {
-			return 30;
-		}
+    private class LoaderTimerTask extends TimerTask {
 
-		@Override
-		protected double computePrefWidth(double height) {
-			double pw = 0;
-			if (getSkin() instanceof ListViewSkin) {
-				ListViewSkin<?> skin = (ListViewSkin<?>) getSkin();
+        private boolean obsolete = false;
+        private Timer timer;
 
-				int rowsToMeasure = -1;
+        public LoaderTimerTask(Timer timer) {
+            this.timer = timer;
+        }
+
+        public void setObsolete(boolean obsolete) {
+            this.obsolete = obsolete;
+        }
+
+        @Override
+        public void run() {
+            if (!obsolete) {
+                final List<T> data = getData();
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!obsolete) {
+                            listView.getItems().clear();
+                            if (!data.isEmpty()) {
+                                listView.getItems().addAll(data);
+                                typeAheadField.showSuggestion();
+                            }
+                        }
+                    }
+                });
+            }
+            timer.cancel();
+            timer.purge();
+        }
+    }
+    private ListView<T> listView = new ListView<T>() {
+        @Override
+        protected double computeMinHeight(double width) {
+            return 30;
+        }
+
+        @Override
+        protected double computePrefWidth(double height) {
+            double pw = 0;
+            if (getSkin() instanceof ListViewSkin) {
+                ListViewSkin<?> skin = (ListViewSkin<?>) getSkin();
+
+                int rowsToMeasure = -1;
 
 //				pw = Math.max(comboBox.getWidth(), skin.getMaxCellWidth(rowsToMeasure) + 30);
-				Method method;
-				try {
-					method = skin.getClass().getSuperclass().getDeclaredMethod("getMaxCellWidth", Integer.TYPE);
+                Method method;
+                try {
+                    method = skin.getClass().getSuperclass().getDeclaredMethod("getMaxCellWidth", Integer.TYPE);
 
-					method.setAccessible(true);
-					double rowWidth = (double) method.invoke(skin, rowsToMeasure);
-					pw = Math.max(typeAheadField.getWidth(), rowWidth + 30);
-				} catch (Exception ex) {
-					Logger.getLogger(TypeAheadFieldSkin.class.getName()).log(Level.SEVERE, null, ex);
-				}
+                    method.setAccessible(true);
+                    double rowWidth = (double) method.invoke(skin, rowsToMeasure);
+                    pw = Math.max(typeAheadField.getWidth(), rowWidth + 30);
+                } catch (Exception ex) {
+                    Logger.getLogger(TypeAheadFieldSkin.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
-			} else {
-				pw = Math.max(100, typeAheadField.getWidth());
-			}
+            } else {
+                pw = Math.max(100, typeAheadField.getWidth());
+            }
 
-			// need to check the ListView pref height in the case that the
-			// placeholder node is showing
-			if (getItems().isEmpty() && getPlaceholder() != null) {
-				pw = Math.max(super.computePrefWidth(height), pw);
-			}
+            // need to check the ListView pref height in the case that the
+            // placeholder node is showing
+            if (getItems().isEmpty() && getPlaceholder() != null) {
+                pw = Math.max(super.computePrefWidth(height), pw);
+            }
 
-			return Math.max(50, pw);
-		}
+            return Math.max(50, pw);
+        }
 
-		@Override
-		protected double computePrefHeight(double width) {
+        @Override
+        protected double computePrefHeight(double width) {
 
-			return getListViewPrefHeight();
-		}
-	};
+            return getListViewPrefHeight();
+        }
+    };
 
-	private class PropertyListCell extends ListCell<T> {
+    private class PropertyListCell extends ListCell<T> {
 
-		@Override
-		protected void updateItem(T t, boolean bln) {
-			super.updateItem(t, bln);
+        @Override
+        protected void updateItem(T t, boolean bln) {
+            super.updateItem(t, bln);
 
-			if (t != null) {
-				StringConverter<T> converter = getSkinnable().getConverter();
-				String value = converter.toString(t);
-				if (value != null) {
-					setText(value.toString());
-				} else {
-					setText("");
-				}
-			}
-		}
-	}
+            if (t != null) {
+                StringConverter<T> converter = getSkinnable().getConverter();
+                String value = converter.toString(t);
+                if (value != null) {
+                    setText(value.toString());
+                } else {
+                    setText("");
+                }
+            }
+        }
+    }
 }

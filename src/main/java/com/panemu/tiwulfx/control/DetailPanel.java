@@ -30,7 +30,7 @@ public class DetailPanel extends VBox implements ObjectExposer {
     public DetailPanel() {
         setPadding(new Insets(10));
         setSpacing(8);
-        getStylesheets().add("tiwulfx.css");
+        getStylesheets().add(getClass().getResource("/com/panemu/tiwulfx/res/tiwulfx.css").toExternalForm());
     }
 
     public List<String> getPropertyNames() {
@@ -59,7 +59,7 @@ public class DetailPanel extends VBox implements ObjectExposer {
             lblValue.getStyleClass().add("valueLabel");
             lblValue.setWrapText(true);
             this.getChildren().add(lblValue);
-            
+
             componentMap.put(prop, lblValue);
         }
     }
@@ -78,7 +78,7 @@ public class DetailPanel extends VBox implements ObjectExposer {
                     if (obj.toString().length() == 1) {
                         lblValue.setWrapText(false);
                     }
-                    
+
                     lblValue.setText(obj.toString());
                 } else {
                     lblValue.setText("-- undefined --");

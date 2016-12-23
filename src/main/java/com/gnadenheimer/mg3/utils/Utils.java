@@ -125,6 +125,19 @@ public class Utils extends Component {
             persistenceMap.put("javax.persistence.jdbc.user", "mg");
             persistenceMap.put("javax.persistence.jdbc.password", "123456");
             persistenceMap.put("javax.persistence.jdbc.driver", "org.apache.derby.jdbc.ClientDriver");
+            persistenceMap.put("hibernate.dialect", "org.hibernate.dialect.DerbyDialect");
+            persistenceMap.put("hibernate.show_sql", "false");
+            persistenceMap.put("hibernate.connection.release_mode", "auto");
+            persistenceMap.put("current_session_context_class", "thread");
+            persistenceMap.put("hibernate.connection.autoReconnect", "true");
+            persistenceMap.put("hibernate.c3p0.min_size", "5");
+            persistenceMap.put("hibernate.c3p0.max_size", "20");
+            persistenceMap.put("hibernate.c3p0.timeout", "500");
+            persistenceMap.put("hibernate.c3p0.max_statements", "50");
+            persistenceMap.put("hibernate.c3p0.idle_test_period", "2000");
+            persistenceMap.put("hibernate.c3p0.testConnectionOnCheckout", "true");
+            persistenceMap.put("connection.provider_class", "org.hibernate.connection.C3P0ConnectionProvider");
+
             persistenceMap.put("backUpDir", Preferences.userRoot().node("MG").get("Datadir", (new JFileChooser()).getFileSystemView().getDefaultDirectory().toString() + "\\javadb") + "\\autoBackUp");
             return persistenceMap;
         } catch (Exception exx) {
