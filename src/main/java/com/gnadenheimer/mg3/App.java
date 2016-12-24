@@ -71,6 +71,7 @@ public class App extends Application {
         databaseUpdate();
 
         Scene scene = new Scene(root);
+        TiwulFXUtil.setTiwulFXStyleSheet(scene);
         stage.setScene(scene);
 
         InputStream resourceAsStream = this.getClass().getResourceAsStream("/version.properties");

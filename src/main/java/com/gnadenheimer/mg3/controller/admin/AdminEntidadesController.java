@@ -56,6 +56,7 @@ public class AdminEntidadesController implements Initializable {
 
         CtaCteColumn<TblEntidades, Integer> cCtaCte = new CtaCteColumn<>("ctacte", Integer.class);
         cCtaCte.setText("Cta. Cte.");
+        cCtaCte.setSortType(TableColumn.SortType.ASCENDING);
 
         RucColumn<TblEntidades> cRuc = new RucColumn<>("rucSinDv");
         cRuc.setText("RUC");
@@ -68,12 +69,14 @@ public class AdminEntidadesController implements Initializable {
 
         LocalDateColumn<TblEntidades> cFechaNacimiento = new LocalDateColumn<>("fechaNacimiento");
         cFechaNacimiento.setText("Fecha Nacimiento");
-        cFechaNacimiento.setDateFormat(DateTimeFormatter.ISO_DATE);
+        cFechaNacimiento.setDateFormat(DateTimeFormatter.ofPattern("dd/MM/uuuu"));
         cFechaNacimiento.setMinWidth(150);
 
         CheckBoxColumn<TblEntidades> cEsMiembroActivo = new CheckBoxColumn<>("isMiembroActivo");
 
         entidadesTable.addColumn(cID, cNombre, cApellidos, cCtaCte, cRuc, cDomicilio, cBox, cFechaNacimiento, cEsMiembroActivo);
+        entidadesTable.getTableView().setColumnResizePolicy((param) -> true);
+        entidadesTable.getTableView().getSortOrder().add(cCtaCte);
         entidadesTable.reload();
     }
 

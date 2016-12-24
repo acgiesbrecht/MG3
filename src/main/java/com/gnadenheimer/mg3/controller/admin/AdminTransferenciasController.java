@@ -10,12 +10,13 @@ import com.gnadenheimer.mg3.domain.TblTransferencias;
 import com.gnadenheimer.mg3.domain.miembros.TblEntidades;
 import com.panemu.tiwulfx.common.TableCriteria;
 import com.panemu.tiwulfx.common.TableData;
-import com.panemu.tiwulfx.form.TypeAheadControl;
+import com.panemu.tiwulfx.table.CheckBoxColumn;
+import com.panemu.tiwulfx.table.CtaCteColumn;
 import com.panemu.tiwulfx.table.LocalDateColumn;
 import com.panemu.tiwulfx.table.NumberColumn;
 import com.panemu.tiwulfx.table.TableControl;
 import com.panemu.tiwulfx.table.TableController;
-import com.panemu.tiwulfx.table.TypeAheadColumn;
+import com.panemu.tiwulfx.table.TextColumn;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -53,29 +54,59 @@ public class AdminTransferenciasController implements Initializable {
         transferenciasTable.setController(cntlTblTransferencias);
         transferenciasTable.setRecordClass(TblTransferencias.class);
 
+        NumberColumn<TblTransferencias, Integer> cId = new NumberColumn<>("id", Integer.class);
+        cId.setText("Nro.");
+
         LocalDateColumn<TblTransferencias> cFechaCompromiso = new LocalDateColumn<>("fechahoraCompromiso");
         cFechaCompromiso.setText("Fecha Compromiso");
-        cFechaCompromiso.setDateFormat(DateTimeFormatter.ISO_DATE);
-        cFechaCompromiso.setMinWidth(150);
+        cFechaCompromiso.setDateFormat(DateTimeFormatter.ofPattern("dd/MM/uuuu"));
+        cFechaCompromiso.setMinWidth(130);
 
         LocalDateColumn<TblTransferencias> cFecha = new LocalDateColumn<>("fechahora");
         cFecha.setText("Fecha pago");
-        cFecha.setDateFormat(DateTimeFormatter.ISO_DATE);
-        cFecha.setMinWidth(150);
+        cFecha.setDateFormat(DateTimeFormatter.ofPattern("dd/MM/uuuu"));
+        //cFecha.setMinWidth(150);
         cFecha.setSortType(TableColumn.SortType.ASCENDING);
 
-        TypeAheadColumn<TblTransferencias, TblEntidades> cEntidad = new TypeAheadColumn<>("idEntidad");
+        /*TypeAheadColumn<TblTransferencias, TblEntidades> cEntidad = new TypeAheadColumn<>("idEntidad");
         cEntidad.setText("Nombre o Razon Social");
         cEntidad.setMinWidth(200);
         List<TblEntidades> lEntidades = daoTblEntidades.getList();
         lEntidades.forEach((p) -> {
             cEntidad.addItem(p.getNombreCompleto(), p);
-        });
-        NumberColumn<TblTransferencias, Integer> cMontoDonacion = new NumberColumn<>("montoDonacion", Integer.class);
-        cMontoDonacion.setText("Monto Donacion");
-        transferenciasTable.addColumn(cFecha, cEntidad, cMontoDonacion);
-        transferenciasTable.reload();
+        });*/
+        TextColumn<TblTransferencias> cNombre = new TextColumn<>("idEntidad.nombreCompleto");
+        cNombre.setMinWidth(250);
+        cNombre.setText("Nombre o Razon Social");
 
+        CtaCteColumn<TblTransferencias, Integer> cCtaCte = new CtaCteColumn<>("idEntidad.ctacte", Integer.class);
+        cCtaCte.setText("Cta. Cte.");
+
+        TextColumn<TblTransferencias> cConcepto = new TextColumn<>("concepto");
+        cConcepto.setText("Concepto");
+
+        NumberColumn<TblTransferencias, Integer> cMontoAporte = new NumberColumn<>("montoAporte", Integer.class);
+        cMontoAporte.setMinWidth(150);
+        cMontoAporte.setText("Importe Aporte");
+
+        NumberColumn<TblTransferencias, Integer> cMontoDonacion = new NumberColumn<>("montoDonacion", Integer.class);
+        cMontoDonacion.setMinWidth(150);
+        cMontoDonacion.setText("Importe Donacion");
+
+        NumberColumn<TblTransferencias, Integer> cMontoTotal = new NumberColumn<>("montoTotal", Integer.class);
+        cMontoTotal.setMinWidth(150);
+        cMontoTotal.setText("Importe Total");
+
+        CheckBoxColumn<TblTransferencias> cCobrado = new CheckBoxColumn<>("cobrado");
+        cCobrado.setText("Cobrado");
+
+        transferenciasTable.addColumn(cId, cFechaCompromiso, cFecha, cNombre, cCtaCte, cConcepto, cMontoAporte, cMontoDonacion, cMontoTotal, cCobrado);
+        transferenciasTable.setVisibleComponents(false, TableControl.Component.BUTTON_INSERT);
+        transferenciasTable.setVisibleComponents(false, TableControl.Component.BUTTON_EDIT);
+        transferenciasTable.getTableView().setColumnResizePolicy((param) -> true);
+        transferenciasTable.getTableView().getSortOrder().add(cFecha);
+
+        transferenciasTable.reload();
     }
 
     private final TableController<TblTransferencias> cntlTblTransferencias = new TableController<TblTransferencias>() {

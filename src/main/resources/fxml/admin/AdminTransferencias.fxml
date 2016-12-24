@@ -5,6 +5,6 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gnadenheimer.mg3.controller.admin.AdminTransferenciasController">
     <children>
-        <TableControl fx:id="transferenciasTable" fillWidth="false" layoutX="30.0" layoutY="36.0" maxRecord="0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+        <TableControl fx:id="transferenciasTable" layoutX="30.0" layoutY="36.0" maxRecord="5000" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
     </children>
 </AnchorPane>
