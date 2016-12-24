@@ -6,22 +6,28 @@
 package com.gnadenheimer.mg3.controller.egresos;
 
 import com.gnadenheimer.mg3.DaoBase;
+import com.gnadenheimer.mg3.domain.TblAsientos;
 import com.gnadenheimer.mg3.domain.TblFacturasCompra;
+import com.gnadenheimer.mg3.domain.miembros.TblEntidades;
+import com.panemu.tiwulfx.common.TableCriteria;
+import com.panemu.tiwulfx.common.TableData;
+import com.panemu.tiwulfx.form.FacturaNroControl;
 import com.panemu.tiwulfx.form.Form;
-import com.panemu.tiwulfx.form.NumberControl;
+import com.panemu.tiwulfx.form.LocalDateControl;
 import com.panemu.tiwulfx.form.TextControl;
+import com.panemu.tiwulfx.table.TableControl;
+import com.panemu.tiwulfx.table.TableController;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
-import java.util.function.UnaryOperator;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextFormatter;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.TableColumn;
 import javafx.scene.layout.AnchorPane;
-import javafx.util.StringConverter;
 
 /**
  * FXML Controller class
@@ -35,80 +41,42 @@ public class FacturasCompraEditController extends AnchorPane implements Initiali
     @FXML
     private Button btnAdd;
     @FXML
-    private ImageView cmdAdd;
-    @FXML
     private Button btnEdit;
     @FXML
-    private ImageView cmdEdit;
-    @FXML
     private Button btnSave;
-    @FXML
-    private ImageView cmdSave;
     @FXML
     private Form<TblFacturasCompra> tblFacturasCompraForm;
     @FXML
     private TextControl txtTimbrado;
     @FXML
-    private TextControl txtNro;
+    private FacturaNroControl txtNro;
+    @FXML
+    private LocalDateControl vencimientoTimbrado;
+    @FXML
+    private TextControl txtRazonSocial;
+    @FXML
+    private TextControl txtRuc;
+    @FXML
+    private TableControl<TblAsientos> tableAsientos;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        /*txtNro.getPatternVerifiers().put("n", new IntegerRangePatternVerifier(0, 999));
-        txtNro.getPatternVerifiers().put("a", new IntegerRangePatternVerifier(0, 9999999));
-        txtNro.setPattern("n-n-a");
-         */
-        StringConverter<String> formatter;
-        formatter = new StringConverter<String>() {
-            @Override
-            public String fromString(String string) {
-                if (string != null) {
-                    return com.gnadenheimer.mg3.utils.Utils.completarNroFactura(string);
-                } else {
-                    return null;
-                }
-            }
-
-            @Override
-            public String toString(String object) {
-                if (object != null) {
-                    return com.gnadenheimer.mg3.utils.Utils.completarNroFactura(object);
-                } else {
-                    return null;
-                }
-            }
-        };
-
-        /*UnaryOperator<TextFormatter.Change> filter;
-        filter = (TextFormatter.Change change) -> {
-            String text = change.getText();
-            for (int i = 0; i < text.length(); i++) {
-                if (!Character.isDigit(text.charAt(i))) {
-                    return null;
-                }
-            }
-            return change;
-        };
-        txtNro.setTextFormatter(new TextFormatter<>(formatter, "", filter));*/
-        txtNro.setTextFormatter(new TextFormatter<>(formatter, ""));
+        tableAsientos.setRecordClass(TblAsientos.class);
+        tableAsientos.setController(cntlTblAsientos);
 
         btnSave.setOnAction(eventHandler);
-
         btnEdit.setOnAction(eventHandler);
-
         btnAdd.setOnAction(eventHandler);
-//        btnReload.setOnAction(eventHandler);
 
-        btnSave.disableProperty()
-                .bind(tblFacturasCompraForm.modeProperty().isEqualTo(Form.Mode.READ));
-        btnAdd.disableProperty()
-                .bind(tblFacturasCompraForm.modeProperty().isNotEqualTo(Form.Mode.READ));
-        btnEdit.disableProperty()
-                .bind(tblFacturasCompraForm.modeProperty().isNotEqualTo(Form.Mode.READ));
+        btnSave.disableProperty().bind(tblFacturasCompraForm.modeProperty().isEqualTo(Form.Mode.READ));
+        btnAdd.disableProperty().bind(tblFacturasCompraForm.modeProperty().isNotEqualTo(Form.Mode.READ));
+        btnEdit.disableProperty().bind(tblFacturasCompraForm.modeProperty().isNotEqualTo(Form.Mode.READ));
 
         tblFacturasCompraForm.bindChildren();
+
     }
     private EventHandler<ActionEvent> eventHandler = new EventHandler<ActionEvent>() {
         @Override
@@ -133,6 +101,28 @@ public class FacturasCompraEditController extends AnchorPane implements Initiali
 //                personForm.setMode(Form.Mode.READ);
 //                personForm.validate();//ensure to remove exclamation mark next to the invalid fields
             }
+        }
+    };
+
+    private final TableController<TblAsientos> cntlTblAsientos = new TableController<TblAsientos>() {
+        @Override
+        public TableData loadData(int startIndex, List<TableCriteria> filteredColumns, List<String> sortedColumns, List<TableColumn.SortType> sortingOrders, int maxResult) {
+            return new TableData(tblFacturasCompraForm.getRecord().getTblAsientosList(), false, tblFacturasCompraForm.getRecord().getTblAsientosList().size());
+        }
+
+        @Override
+        public List<TblAsientos> insert(List<TblAsientos> newRecords) {
+            tblFacturasCompraForm.getRecord().getTblAsientosList().addAll(newRecords);
+            return newRecords;
+        }
+
+        /*@Override
+        public List<TblAsientos> update(List<TblAsientos> records) {
+            return daoTblEntidades.update(records);
+        }*/
+        @Override
+        public void delete(List<TblAsientos> records) {
+            tblFacturasCompraForm.getRecord().getTblAsientosList().removeAll(records);
         }
     };
 

@@ -38,22 +38,38 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "TBL_FACTURAS_COMPRA")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "TblFacturasCompra.findAll", query = "SELECT t FROM TblFacturasCompra t"),
-    @NamedQuery(name = "TblFacturasCompra.findById", query = "SELECT t FROM TblFacturasCompra t WHERE t.id = :id"),
-    @NamedQuery(name = "TblFacturasCompra.findByNro", query = "SELECT t FROM TblFacturasCompra t WHERE t.nro = :nro"),
-    @NamedQuery(name = "TblFacturasCompra.findByNroTimbrado", query = "SELECT t FROM TblFacturasCompra t WHERE t.nroTimbrado = :nroTimbrado"),
-    @NamedQuery(name = "TblFacturasCompra.findByVencimientoTimbrado", query = "SELECT t FROM TblFacturasCompra t WHERE t.vencimientoTimbrado = :vencimientoTimbrado"),
-    @NamedQuery(name = "TblFacturasCompra.findByCondicionContado", query = "SELECT t FROM TblFacturasCompra t WHERE t.condicionContado = :condicionContado"),
-    @NamedQuery(name = "TblFacturasCompra.findByFechaVencimientoCredito", query = "SELECT t FROM TblFacturasCompra t WHERE t.fechaVencimientoCredito = :fechaVencimientoCredito"),
-    @NamedQuery(name = "TblFacturasCompra.findByCuotasCredito", query = "SELECT t FROM TblFacturasCompra t WHERE t.cuotasCredito = :cuotasCredito"),
-    @NamedQuery(name = "TblFacturasCompra.findByFechahora", query = "SELECT t FROM TblFacturasCompra t WHERE t.fechahora = :fechahora"),
-    @NamedQuery(name = "TblFacturasCompra.findByRazonSocial", query = "SELECT t FROM TblFacturasCompra t WHERE t.razonSocial = :razonSocial"),
-    @NamedQuery(name = "TblFacturasCompra.findByRuc", query = "SELECT t FROM TblFacturasCompra t WHERE t.ruc = :ruc"),
-    @NamedQuery(name = "TblFacturasCompra.findByMontoExentas", query = "SELECT t FROM TblFacturasCompra t WHERE t.montoExentas = :montoExentas"),
-    @NamedQuery(name = "TblFacturasCompra.findByMontoIva5", query = "SELECT t FROM TblFacturasCompra t WHERE t.montoIva5 = :montoIva5"),
-    @NamedQuery(name = "TblFacturasCompra.findByMontoIva10", query = "SELECT t FROM TblFacturasCompra t WHERE t.montoIva10 = :montoIva10"),
-    @NamedQuery(name = "TblFacturasCompra.findByIva5", query = "SELECT t FROM TblFacturasCompra t WHERE t.iva5 = :iva5"),
-    @NamedQuery(name = "TblFacturasCompra.findByIva10", query = "SELECT t FROM TblFacturasCompra t WHERE t.iva10 = :iva10"),
+    @NamedQuery(name = "TblFacturasCompra.findAll", query = "SELECT t FROM TblFacturasCompra t")
+    ,
+    @NamedQuery(name = "TblFacturasCompra.findById", query = "SELECT t FROM TblFacturasCompra t WHERE t.id = :id")
+    ,
+    @NamedQuery(name = "TblFacturasCompra.findByNro", query = "SELECT t FROM TblFacturasCompra t WHERE t.nro = :nro")
+    ,
+    @NamedQuery(name = "TblFacturasCompra.findByNroTimbrado", query = "SELECT t FROM TblFacturasCompra t WHERE t.nroTimbrado = :nroTimbrado")
+    ,
+    @NamedQuery(name = "TblFacturasCompra.findByVencimientoTimbrado", query = "SELECT t FROM TblFacturasCompra t WHERE t.vencimientoTimbrado = :vencimientoTimbrado")
+    ,
+    @NamedQuery(name = "TblFacturasCompra.findByCondicionContado", query = "SELECT t FROM TblFacturasCompra t WHERE t.condicionContado = :condicionContado")
+    ,
+    @NamedQuery(name = "TblFacturasCompra.findByFechaVencimientoCredito", query = "SELECT t FROM TblFacturasCompra t WHERE t.fechaVencimientoCredito = :fechaVencimientoCredito")
+    ,
+    @NamedQuery(name = "TblFacturasCompra.findByCuotasCredito", query = "SELECT t FROM TblFacturasCompra t WHERE t.cuotasCredito = :cuotasCredito")
+    ,
+    @NamedQuery(name = "TblFacturasCompra.findByFechahora", query = "SELECT t FROM TblFacturasCompra t WHERE t.fechahora = :fechahora")
+    ,
+    @NamedQuery(name = "TblFacturasCompra.findByRazonSocial", query = "SELECT t FROM TblFacturasCompra t WHERE t.razonSocial = :razonSocial")
+    ,
+    @NamedQuery(name = "TblFacturasCompra.findByRuc", query = "SELECT t FROM TblFacturasCompra t WHERE t.ruc = :ruc")
+    ,
+    @NamedQuery(name = "TblFacturasCompra.findByMontoExentas", query = "SELECT t FROM TblFacturasCompra t WHERE t.montoExentas = :montoExentas")
+    ,
+    @NamedQuery(name = "TblFacturasCompra.findByMontoIva5", query = "SELECT t FROM TblFacturasCompra t WHERE t.montoIva5 = :montoIva5")
+    ,
+    @NamedQuery(name = "TblFacturasCompra.findByMontoIva10", query = "SELECT t FROM TblFacturasCompra t WHERE t.montoIva10 = :montoIva10")
+    ,
+    @NamedQuery(name = "TblFacturasCompra.findByIva5", query = "SELECT t FROM TblFacturasCompra t WHERE t.iva5 = :iva5")
+    ,
+    @NamedQuery(name = "TblFacturasCompra.findByIva10", query = "SELECT t FROM TblFacturasCompra t WHERE t.iva10 = :iva10")
+    ,
     @NamedQuery(name = "TblFacturasCompra.findByObservacion", query = "SELECT t FROM TblFacturasCompra t WHERE t.observacion = :observacion")})
 public class TblFacturasCompra implements Serializable {
 
@@ -79,21 +95,20 @@ public class TblFacturasCompra implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "VENCIMIENTO_TIMBRADO")
-    
     private LocalDate vencimientoTimbrado;
     @Basic(optional = false)
     @NotNull
     @Column(name = "CONDICION_CONTADO")
     private Boolean condicionContado;
     @Column(name = "FECHA_VENCIMIENTO_CREDITO")
-    
+
     private LocalDate fechaVencimientoCredito;
     @Column(name = "CUOTAS_CREDITO")
     private Integer cuotasCredito;
     @Basic(optional = false)
     @NotNull
     @Column(name = "FECHAHORA")
-    
+
     private LocalDate fechahora;
     @Basic(optional = false)
     @NotNull
