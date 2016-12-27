@@ -4,7 +4,7 @@
  */
 package com.panemu.tiwulfx.form;
 
-import java.util.List;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
 
@@ -12,9 +12,9 @@ import javafx.scene.control.TableView;
  *
  * @author Amrullah <amrullah@panemu.com>
  */
-public class TableViewControl<R> extends BaseListControl<R, TableView<R>> {
+public class TableViewControl<R> extends BaseControl<R, TableView<R>> {
 
-    private TableView<R> textField;
+    private TableView<R> tableView;
 
     public TableViewControl() {
         this("");
@@ -22,13 +22,13 @@ public class TableViewControl<R> extends BaseListControl<R, TableView<R>> {
 
     public TableViewControl(String propertyName) {
         super(propertyName, new TableView<R>());
-        textField = getInputComponent();
-        value.bind(textField.itemsProperty());
+        tableView = getInputComponent();
+        value.bind((ObservableValue) tableView.itemsProperty());
     }
 
     @Override
-    public void setValue(ObservableList<R> value) {
-        textField.itemsProperty().set(value);
+    public void setValue(R value) {
+        tableView.itemsProperty().set((ObservableList<R>) value);
     }
 
     @Override

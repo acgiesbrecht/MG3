@@ -278,7 +278,13 @@ public class TblAsientos implements Serializable {
      * @param asientoManual the asientoManual to set
      */
     public void setAsientoManual(Boolean asientoManual) {
-        this.asientoManual.set(asientoManual);
+        if (asientoManual != null) {
+            this.asientoManual.set(asientoManual);
+        }
+    }
+
+    public BooleanProperty asientoManualProperty() {
+        return asientoManual;
     }
 
 }
