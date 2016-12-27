@@ -8,17 +8,14 @@ package com.gnadenheimer.mg3.controller.egresos;
 import com.gnadenheimer.mg3.DaoBase;
 import com.gnadenheimer.mg3.domain.TblAsientos;
 import com.gnadenheimer.mg3.domain.TblFacturasCompra;
-import com.gnadenheimer.mg3.domain.miembros.TblEntidades;
 import com.panemu.tiwulfx.common.TableCriteria;
 import com.panemu.tiwulfx.common.TableData;
 import com.panemu.tiwulfx.form.FacturaNroControl;
 import com.panemu.tiwulfx.form.Form;
 import com.panemu.tiwulfx.form.LocalDateControl;
+import com.panemu.tiwulfx.form.TableViewControl;
 import com.panemu.tiwulfx.form.TextControl;
-import com.panemu.tiwulfx.table.TableControl;
-import com.panemu.tiwulfx.table.TableController;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -27,6 +24,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -57,15 +55,27 @@ public class FacturasCompraEditController extends AnchorPane implements Initiali
     @FXML
     private TextControl txtRuc;
     @FXML
-    private TableControl<TblAsientos> tableAsientos;
+    private TableViewControl<TblAsientos> tableAsientos;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        tableAsientos.setRecordClass(TblAsientos.class);
-        tableAsientos.setController(cntlTblAsientos);
+
+        //TableColumn<TblAsientos, Integer> cId = new TableColumn<>();
+        //
+        TableColumn<TblAsientos, Integer> cId = new TableColumn<>("Nro.");
+        cId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
+        //cId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        /*cId.setCellValueFactory(new Callback<CellDataFeatures<TblAsientos, Integer>, ObservableValue<Integer>>() {
+            public ObservableValue<Integer> call(CellDataFeatures<TblAsientos, Integer> p) {
+                // p.getValue() returns the Person instance for a particular TableView row
+                return p.getValue();
+            }
+        });*/
+
+        tableAsientos.getInputComponent().getColumns().add(cId);
 
         btnSave.setOnAction(eventHandler);
         btnEdit.setOnAction(eventHandler);
@@ -93,6 +103,7 @@ public class FacturasCompraEditController extends AnchorPane implements Initiali
                 tblFacturasCompraForm.setMode(Form.Mode.READ);
             } else if (t.getSource() == btnEdit) {
                 tblFacturasCompraForm.setMode(Form.Mode.EDIT);
+                System.out.print(tableAsientos.getInputComponent().getItems().get(0).toString());
             } else if (t.getSource() == btnAdd) {
                 tblFacturasCompraForm.setRecord(new TblFacturasCompra());
                 tblFacturasCompraForm.setMode(Form.Mode.INSERT);
@@ -101,28 +112,6 @@ public class FacturasCompraEditController extends AnchorPane implements Initiali
 //                personForm.setMode(Form.Mode.READ);
 //                personForm.validate();//ensure to remove exclamation mark next to the invalid fields
             }
-        }
-    };
-
-    private final TableController<TblAsientos> cntlTblAsientos = new TableController<TblAsientos>() {
-        @Override
-        public TableData loadData(int startIndex, List<TableCriteria> filteredColumns, List<String> sortedColumns, List<TableColumn.SortType> sortingOrders, int maxResult) {
-            return new TableData(tblFacturasCompraForm.getRecord().getTblAsientosList(), false, tblFacturasCompraForm.getRecord().getTblAsientosList().size());
-        }
-
-        @Override
-        public List<TblAsientos> insert(List<TblAsientos> newRecords) {
-            tblFacturasCompraForm.getRecord().getTblAsientosList().addAll(newRecords);
-            return newRecords;
-        }
-
-        /*@Override
-        public List<TblAsientos> update(List<TblAsientos> records) {
-            return daoTblEntidades.update(records);
-        }*/
-        @Override
-        public void delete(List<TblAsientos> records) {
-            tblFacturasCompraForm.getRecord().getTblAsientosList().removeAll(records);
         }
     };
 
