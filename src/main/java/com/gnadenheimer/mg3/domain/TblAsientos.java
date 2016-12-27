@@ -6,15 +6,13 @@
 package com.gnadenheimer.mg3.domain;
 
 import java.io.Serializable;
-import java.util.List;
 import java.time.LocalDateTime;
+import java.util.List;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -68,7 +66,7 @@ public class TblAsientos implements Serializable {
 
     private BooleanProperty asientoManual = new SimpleBooleanProperty();
 
-    private ListProperty<TblAsientosTemporales> tblAsientosTemporalesList = new SimpleListProperty<>();
+    private ObjectProperty<List<TblAsientosTemporales>> tblAsientosTemporalesList = new SimpleObjectProperty<>();
 
     private ObjectProperty<TblCentrosDeCosto> idCentroDeCostoDebe = new SimpleObjectProperty<>();
 
@@ -163,11 +161,11 @@ public class TblAsientos implements Serializable {
         return tblAsientosTemporalesList.get();
     }
 
-    public void setTblAsientosTemporalesList(ObservableList<TblAsientosTemporales> tblAsientosTemporalesList) {
+    public void setTblAsientosTemporalesList(List<TblAsientosTemporales> tblAsientosTemporalesList) {
         this.tblAsientosTemporalesList.set(tblAsientosTemporalesList);
     }
 
-    public ListProperty<TblAsientosTemporales> tblAsientosTemporalesListProperty() {
+    public ObjectProperty<List<TblAsientosTemporales>> tblAsientosTemporalesListProperty() {
         return tblAsientosTemporalesList;
     }
 

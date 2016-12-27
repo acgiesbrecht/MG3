@@ -8,6 +8,7 @@ package com.gnadenheimer.mg3.domain;
 import java.io.Serializable;
 import java.util.List;
 import java.time.LocalDateTime;
+import javafx.collections.ObservableList;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,47 +33,39 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "TBL_ASIENTOS_TEMPORALES")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "TblAsientosTemporales.findAll", query = "SELECT t FROM TblAsientosTemporales t"),
-    @NamedQuery(name = "TblAsientosTemporales.findById", query = "SELECT t FROM TblAsientosTemporales t WHERE t.id = :id"),
-    @NamedQuery(name = "TblAsientosTemporales.findByFechahora", query = "SELECT t FROM TblAsientosTemporales t WHERE t.fechahora = :fechahora"),
-    @NamedQuery(name = "TblAsientosTemporales.findByMonto", query = "SELECT t FROM TblAsientosTemporales t WHERE t.monto = :monto"),
-    @NamedQuery(name = "TblAsientosTemporales.findByFacturado", query = "SELECT t FROM TblAsientosTemporales t WHERE t.facturado = :facturado"),
+    @NamedQuery(name = "TblAsientosTemporales.findAll", query = "SELECT t FROM TblAsientosTemporales t")
+    ,
+    @NamedQuery(name = "TblAsientosTemporales.findById", query = "SELECT t FROM TblAsientosTemporales t WHERE t.id = :id")
+    ,
+    @NamedQuery(name = "TblAsientosTemporales.findByFechahora", query = "SELECT t FROM TblAsientosTemporales t WHERE t.fechahora = :fechahora")
+    ,
+    @NamedQuery(name = "TblAsientosTemporales.findByMonto", query = "SELECT t FROM TblAsientosTemporales t WHERE t.monto = :monto")
+    ,
+    @NamedQuery(name = "TblAsientosTemporales.findByFacturado", query = "SELECT t FROM TblAsientosTemporales t WHERE t.facturado = :facturado")
+    ,
     @NamedQuery(name = "TblAsientosTemporales.findByEsAporte", query = "SELECT t FROM TblAsientosTemporales t WHERE t.esAporte = :esAporte")})
 public class TblAsientosTemporales implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "ID")
+
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "FECHAHORA")
+
     private LocalDateTime fechahora;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "MONTO")
+
     private Integer monto;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "FACTURADO")
+
     private Boolean facturado;
-    @Column(name = "ES_APORTE")
+
     private Boolean esAporte;
-    @ManyToMany(mappedBy = "tblAsientosTemporalesList")
+
     private List<TblAsientos> tblAsientosList;
-    @JoinColumn(name = "ID_CENTRO_DE_COSTO_DEBE", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
+
     private TblCentrosDeCosto idCentroDeCostoDebe;
-    @JoinColumn(name = "ID_CENTRO_DE_COSTO_HABER", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
+
     private TblCentrosDeCosto idCentroDeCostoHaber;
-    @JoinColumn(name = "ID_CUENTA_CONTABLE_HABER", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
+
     private TblCuentasContables idCuentaContableHaber;
-    @JoinColumn(name = "ID_CUENTA_CONTABLE_DEBE", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
+
     private TblCuentasContables idCuentaContableDebe;
 
     public TblAsientosTemporales() {
@@ -89,6 +82,10 @@ public class TblAsientosTemporales implements Serializable {
         this.facturado = facturado;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ID")
     public Integer getId() {
         return id;
     }
@@ -97,6 +94,9 @@ public class TblAsientosTemporales implements Serializable {
         this.id = id;
     }
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "FECHAHORA")
     public LocalDateTime getFechahora() {
         return fechahora;
     }
@@ -105,6 +105,9 @@ public class TblAsientosTemporales implements Serializable {
         this.fechahora = fechahora;
     }
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "MONTO")
     public Integer getMonto() {
         return monto;
     }
@@ -113,6 +116,9 @@ public class TblAsientosTemporales implements Serializable {
         this.monto = monto;
     }
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "FACTURADO")
     public Boolean getFacturado() {
         return facturado;
     }
@@ -121,6 +127,7 @@ public class TblAsientosTemporales implements Serializable {
         this.facturado = facturado;
     }
 
+    @Column(name = "ES_APORTE")
     public Boolean getEsAporte() {
         return esAporte;
     }
@@ -130,6 +137,7 @@ public class TblAsientosTemporales implements Serializable {
     }
 
     @XmlTransient
+    @ManyToMany(mappedBy = "tblAsientosTemporalesList")
     public List<TblAsientos> getTblAsientosList() {
         return tblAsientosList;
     }
@@ -138,6 +146,8 @@ public class TblAsientosTemporales implements Serializable {
         this.tblAsientosList = tblAsientosList;
     }
 
+    @JoinColumn(name = "ID_CENTRO_DE_COSTO_DEBE", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
     public TblCentrosDeCosto getIdCentroDeCostoDebe() {
         return idCentroDeCostoDebe;
     }
@@ -146,6 +156,8 @@ public class TblAsientosTemporales implements Serializable {
         this.idCentroDeCostoDebe = idCentroDeCostoDebe;
     }
 
+    @JoinColumn(name = "ID_CENTRO_DE_COSTO_HABER", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
     public TblCentrosDeCosto getIdCentroDeCostoHaber() {
         return idCentroDeCostoHaber;
     }
@@ -154,6 +166,8 @@ public class TblAsientosTemporales implements Serializable {
         this.idCentroDeCostoHaber = idCentroDeCostoHaber;
     }
 
+    @JoinColumn(name = "ID_CUENTA_CONTABLE_HABER", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
     public TblCuentasContables getIdCuentaContableHaber() {
         return idCuentaContableHaber;
     }
@@ -162,6 +176,8 @@ public class TblAsientosTemporales implements Serializable {
         this.idCuentaContableHaber = idCuentaContableHaber;
     }
 
+    @JoinColumn(name = "ID_CUENTA_CONTABLE_DEBE", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
     public TblCuentasContables getIdCuentaContableDebe() {
         return idCuentaContableDebe;
     }

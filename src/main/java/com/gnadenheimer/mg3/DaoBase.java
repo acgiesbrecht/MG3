@@ -56,6 +56,18 @@ public class DaoBase<T> {
         }
     }
 
+    public List<T> getList(String query) {
+        try {
+
+            List<T> result = (List<T>) em.createQuery(query).setParameter("trueValue", true).getResultList();
+
+            return result;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
     public TableData fetch(int startIndex,
             List<TableCriteria> filteredColumns,
             List<String> sortedColumns,

@@ -125,7 +125,7 @@ public class Utils extends Component {
             persistenceMap.put("javax.persistence.jdbc.user", "mg");
             persistenceMap.put("javax.persistence.jdbc.password", "123456");
             persistenceMap.put("javax.persistence.jdbc.driver", "org.apache.derby.jdbc.ClientDriver");
-            persistenceMap.put("hibernate.dialect", "org.hibernate.dialect.DerbyDialect");
+            persistenceMap.put("hibernate.dialect", "org.hibernate.dialect.DerbyTenSevenDialect");
             persistenceMap.put("hibernate.show_sql", "false");
             persistenceMap.put("hibernate.connection.release_mode", "auto");
             persistenceMap.put("current_session_context_class", "thread");

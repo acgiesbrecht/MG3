@@ -4,24 +4,24 @@
  */
 package com.panemu.tiwulfx.form;
 
+import com.panemu.tiwulfx.table.CustomTableView;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TableView;
 
 /**
  *
  * @author Amrullah <amrullah@panemu.com>
  */
-public class TableViewControl<R> extends BaseControl<R, TableView<R>> {
+public class TableViewControl<R> extends BaseControl<R, CustomTableView<R>> {
 
-    private TableView<R> tableView;
+    private CustomTableView<R> tableView;
 
     public TableViewControl() {
         this("");
     }
 
     public TableViewControl(String propertyName) {
-        super(propertyName, new TableView<R>());
+        super(propertyName, new CustomTableView<R>());
         tableView = getInputComponent();
         value.bind((ObservableValue) tableView.itemsProperty());
     }
@@ -32,12 +32,12 @@ public class TableViewControl<R> extends BaseControl<R, TableView<R>> {
     }
 
     @Override
-    protected void bindValuePropertyWithControl(TableView inputControl) {
+    protected void bindValuePropertyWithControl(CustomTableView inputControl) {
         value.bind(inputControl.itemsProperty());
     }
 
     @Override
-    protected void bindEditablePropertyWithControl(TableView inputControl) {
+    protected void bindEditablePropertyWithControl(CustomTableView inputControl) {
         inputControl.editableProperty().bind(editableProperty());
     }
 

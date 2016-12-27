@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.panemu.tiwulfx.form.FacturaNroControl?>
-<?import com.panemu.tiwulfx.form.Form?>
 <?import com.panemu.tiwulfx.form.LocalDateControl?>
-<?import com.panemu.tiwulfx.form.TableViewControl?>
 <?import com.panemu.tiwulfx.form.TextControl?>
+<?import com.panemu.tiwulfx.table.TableControl?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -20,87 +17,60 @@
 <AnchorPane id="AnchorPane" prefHeight="415.0" prefWidth="799.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gnadenheimer.mg3.controller.egresos.FacturasCompraEditController">
     <children>
         <BorderPane layoutX="91.0" layoutY="186.0" prefHeight="200.0" prefWidth="721.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <center>
-                <Form fx:id="tblFacturasCompraForm" prefHeight="360.0" prefWidth="707.0" BorderPane.alignment="CENTER">
-                    <children>
-                        <GridPane hgap="5.0" vgap="5.0">
-                            <columnConstraints>
-                                <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="NEVER" maxWidth="150.0" minWidth="50.0" prefWidth="124.0" />
-                                <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="155.0" minWidth="10.0" prefWidth="140.0" />
-                                <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="NEVER" maxWidth="156.0" minWidth="10.0" prefWidth="103.0" />
-                                <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="NEVER" maxWidth="168.0" minWidth="10.0" prefWidth="99.0" />
-                                <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="NEVER" minWidth="10.0" prefWidth="200.0" />
-                                <ColumnConstraints fillWidth="false" hgrow="NEVER" minWidth="10.0" prefWidth="200.0" />
-                            </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints maxHeight="25.0" minHeight="25.0" percentHeight="0.0" prefHeight="25.0" vgrow="SOMETIMES" />
-                                <RowConstraints maxHeight="25.0" minHeight="25.0" percentHeight="0.0" prefHeight="25.0" vgrow="SOMETIMES" />
-                                <RowConstraints maxHeight="25.0" minHeight="25.0" percentHeight="0.0" prefHeight="25.0" vgrow="SOMETIMES" />
-                                <RowConstraints maxHeight="25.0" minHeight="25.0" percentHeight="0.0" prefHeight="25.0" vgrow="SOMETIMES" />
-                                <RowConstraints maxHeight="25.0" minHeight="25.0" percentHeight="0.0" prefHeight="25.0" vgrow="SOMETIMES" />
-                                <RowConstraints maxHeight="25.0" minHeight="25.0" percentHeight="0.0" prefHeight="25.0" vgrow="SOMETIMES" />
-                                <RowConstraints maxHeight="25.0" minHeight="25.0" percentHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints maxHeight="25.0" minHeight="25.0" percentHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints maxHeight="25.0" minHeight="25.0" percentHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints maxHeight="25.0" minHeight="25.0" percentHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints maxHeight="25.0" minHeight="25.0" percentHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="25.0" minHeight="25.0" percentHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            </rowConstraints>
-                            <children>
-                                <FacturaNroControl fx:id="txtNro" maxWidth="-Infinity" prefWidth="150.0" propertyName="nro" required="true" GridPane.columnIndex="1" />
-                                <Label text="Nro. Factura" GridPane.halignment="RIGHT" />
-                                <Label text="Nro. Timbrado" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                                <TextControl fx:id="txtTimbrado" minWidth="-Infinity" prefHeight="25.0" prefWidth="123.0" propertyName="nroTimbrado" required="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                <Label text="Vencimiento Timbrado" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                                <Label text="Razon Social" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                                <LocalDateControl fx:id="vencimientoTimbrado" propertyName="vencimientoTimbrado" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-                                <Label text="Fecha" GridPane.rowIndex="2" />
-                                <Label text="RUC" GridPane.rowIndex="3" />
-                                <TextControl fx:id="txtRazonSocial" prefHeight="25.0" prefWidth="440.0" propertyName="razonSocial" required="true" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.halignment="LEFT" GridPane.rowIndex="3" />
-                                <TextControl fx:id="txtRuc" prefHeight="25.0" prefWidth="440.0" propertyName="ruc" required="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                <LocalDateControl propertyName="fechahora" required="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                            </children>
-                            <padding>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </padding>
-                        </GridPane>
-                          <TableViewControl fx:id="tableAsientos" maxHeight="291.0" prefHeight="287.0" prefWidth="687.0" propertyName="tblAsientosList" />
-                    </children>
-                </Form>
-            </center>
-            <top>
-                <ToolBar styleClass="table-toolbar" BorderPane.alignment="CENTER">
-                    <items>
-                        <Button fx:id="btnAdd" disable="false" mnemonicParsing="false" styleClass="flat-button">
-                            <graphic>
-                                <ImageView fitHeight="0.0" fitWidth="0.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../../com/panemu/tiwulfx/res/images/add.png" />
-                                    </image>
-                                </ImageView>
-                            </graphic>
-                        </Button>
-                        <Button fx:id="btnEdit" disable="false" mnemonicParsing="false" styleClass="flat-button">
-                            <graphic>
-                                <ImageView fitHeight="0.0" fitWidth="0.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../../com/panemu/tiwulfx/res/images/edit.png" />
-                                    </image>
-                                </ImageView>
-                            </graphic>
-                        </Button>
-                        <Button fx:id="btnSave" disable="true" mnemonicParsing="false" styleClass="flat-button">
-                            <graphic>
-                                <ImageView fitHeight="0.0" fitWidth="0.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../../com/panemu/tiwulfx/res/images/save.png" />
-                                    </image>
-                                </ImageView>
-                            </graphic>
-                        </Button>
-                    </items>
-                </ToolBar>
-            </top>
+            <bottom>
+                <TableControl fx:id="tableAsientos" maxHeight="291.0" prefHeight="287.0" prefWidth="687.0" BorderPane.alignment="CENTER" />
+            </bottom>
+         <center>
+                  <GridPane hgap="5.0" vgap="5.0" BorderPane.alignment="CENTER">
+                      <columnConstraints>
+                          <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="NEVER" maxWidth="150.0" minWidth="50.0" prefWidth="124.0" />
+                          <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="155.0" minWidth="10.0" prefWidth="140.0" />
+                          <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="NEVER" maxWidth="156.0" minWidth="10.0" prefWidth="103.0" />
+                          <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="NEVER" maxWidth="168.0" minWidth="10.0" prefWidth="99.0" />
+                          <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="NEVER" minWidth="10.0" prefWidth="200.0" />
+                          <ColumnConstraints fillWidth="false" hgrow="NEVER" minWidth="10.0" prefWidth="200.0" />
+                      </columnConstraints>
+                      <rowConstraints>
+                          <RowConstraints maxHeight="25.0" minHeight="25.0" percentHeight="0.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                          <RowConstraints maxHeight="25.0" minHeight="25.0" percentHeight="0.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                          <RowConstraints maxHeight="25.0" minHeight="25.0" percentHeight="0.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                          <RowConstraints maxHeight="25.0" minHeight="25.0" percentHeight="0.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                          <RowConstraints maxHeight="25.0" minHeight="25.0" percentHeight="0.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                          <RowConstraints maxHeight="25.0" minHeight="25.0" percentHeight="0.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                          <RowConstraints maxHeight="25.0" minHeight="25.0" percentHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          <RowConstraints maxHeight="25.0" minHeight="25.0" percentHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          <RowConstraints maxHeight="25.0" minHeight="25.0" percentHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          <RowConstraints maxHeight="25.0" minHeight="25.0" percentHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          <RowConstraints maxHeight="25.0" minHeight="25.0" percentHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          <RowConstraints maxHeight="25.0" minHeight="25.0" percentHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      </rowConstraints>
+                      <children>
+                          <FacturaNroControl fx:id="txtNro" maxWidth="-Infinity" prefWidth="150.0" propertyName="nro" required="true" GridPane.columnIndex="1" />
+                          <Label text="Nro. Factura" GridPane.halignment="RIGHT" />
+                          <Label text="Nro. Timbrado" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                          <TextControl fx:id="txtTimbrado" minWidth="-Infinity" prefHeight="25.0" prefWidth="123.0" propertyName="nroTimbrado" required="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                          <Label text="Vencimiento Timbrado" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                          <Label text="Razon Social" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                          <LocalDateControl fx:id="vencimientoTimbrado" propertyName="vencimientoTimbrado" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                          <Label text="Fecha" GridPane.rowIndex="2" />
+                          <Label text="RUC" GridPane.rowIndex="3" />
+                          <TextControl fx:id="txtRazonSocial" prefHeight="25.0" prefWidth="440.0" propertyName="razonSocial" required="true" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.halignment="LEFT" GridPane.rowIndex="3" />
+                          <TextControl fx:id="txtRuc" prefHeight="25.0" prefWidth="440.0" propertyName="ruc" required="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                          <LocalDateControl propertyName="fechahora" required="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                      </children>
+                      <padding>
+                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                      </padding>
+                  </GridPane>
+         </center>
+         <top>
+            <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+              <buttons>
+                <Button fx:id="btnSave" defaultButton="true" mnemonicParsing="false" onAction="#save" text="Guardar" />
+                  <Button fx:id="btnCancel" cancelButton="true" mnemonicParsing="false" onAction="#cancel" text="Cancelar" />
+              </buttons>
+            </ButtonBar>
+         </top>
         </BorderPane>
     </children>
 </AnchorPane>

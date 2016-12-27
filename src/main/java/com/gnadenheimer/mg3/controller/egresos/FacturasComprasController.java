@@ -73,6 +73,7 @@ public class FacturasComprasController implements Initializable {
         @Override
         public TblFacturasCompra preInsert(TblFacturasCompra newRecord) {
             showFacturasCompraEdit(newRecord, Form.Mode.INSERT);
+
             return null;
         }
 
@@ -88,7 +89,7 @@ public class FacturasComprasController implements Initializable {
 
         @Override
         public void doubleClick(TblFacturasCompra record) {
-            showFacturasCompraEdit(record, Form.Mode.READ);
+            showFacturasCompraEdit(record, Form.Mode.EDIT);
         }
 
         @Override
@@ -117,7 +118,8 @@ public class FacturasComprasController implements Initializable {
                 }
                 facturasCompraEditController.setTblFacturasCompra(factura);
                 facturasCompraEditController.setMode(mode);
-                dialogStage.show();
+                facturasCompraEditController.setDialogStage(dialogStage);
+                dialogStage.showAndWait();
             } catch (Exception ex) {
                 App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
             }
