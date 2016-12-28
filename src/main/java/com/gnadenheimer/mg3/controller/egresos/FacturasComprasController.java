@@ -12,6 +12,7 @@ import com.panemu.tiwulfx.common.TableCriteria;
 import com.panemu.tiwulfx.common.TableData;
 import com.panemu.tiwulfx.dialog.MessageDialogBuilder;
 import com.panemu.tiwulfx.form.Form;
+import com.panemu.tiwulfx.table.NumberColumn;
 import com.panemu.tiwulfx.table.TableControl;
 import com.panemu.tiwulfx.table.TableController;
 import com.panemu.tiwulfx.table.TextColumn;
@@ -55,8 +56,9 @@ public class FacturasComprasController implements Initializable {
         masterTable.setRecordClass(TblFacturasCompra.class);
 
         TextColumn<TblFacturasCompra> cNro = new TextColumn<>("nro");
+        NumberColumn<TblFacturasCompra, Integer> cMontoIva10 = new NumberColumn<>("montoIva10", Integer.class);
 
-        masterTable.addColumn(cNro);
+        masterTable.addColumn(cNro, cMontoIva10);
         masterTable.reload();
 
     }
@@ -120,6 +122,7 @@ public class FacturasComprasController implements Initializable {
                 facturasCompraEditController.setMode(mode);
                 facturasCompraEditController.setDialogStage(dialogStage);
                 dialogStage.showAndWait();
+                masterTable.reload();
             } catch (Exception ex) {
                 App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
             }

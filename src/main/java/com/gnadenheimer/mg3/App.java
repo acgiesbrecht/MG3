@@ -40,7 +40,7 @@ import org.mindrot.jbcrypt.BCrypt;
 
 public class App extends Application {
 
-    CurrentUser currentUser = CurrentUser.getInstance();
+    public static CurrentUser currentUser = CurrentUser.getInstance();
     private static final Logger LOGGER = LogManager.getLogger(App.class);
     public static EntityManagerFactory factory;
     Map<String, String> persistenceMap = new HashMap<>();
