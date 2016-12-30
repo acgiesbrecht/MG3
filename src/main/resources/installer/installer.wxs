@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Product Id="ECB18854-85EF-40F0-918D-BB6E2159B35B" Name="MG" Language="1033" Version="3.0.0.1" Manufacturer="Gnadenheimer Software" UpgradeCode="A7E99AA9-3DF5-4AFD-B550-3CF9DC5E53BA">
+        <Package Description="MG3" Comments="Simple test" InstallerVersion="200" Compressed="yes" />
+        <Media Id="1" Cabinet="simple.cab" EmbedCab="yes" />
+        <Directory Id="TARGETDIR" Name="SourceDir">
+            <Directory Id="ProgramFilesFolder" Name="ProgramFilesFolder">
+                <Directory Id="MG3" Name="MG3">
+                    <Component Id="MG3.EXE" DiskId="1" Guid="93D5FDDF-801D-403E-9A7E-BE453962ABC9">
+                        <File Id="MG3.EXE" Name="mg3.exe" Source="mg3.exe">
+                            <Shortcut Id="desktopShortcut" Directory="DesktopFolder" Name="MG 3 - Sistema Iglesias" WorkingDirectory="INSTALLDIR" Advertise="yes" Icon="DesktopIcon.exe" IconIndex="0" />
+                            <Shortcut Id="ExeShortcut" Directory="ProgramMenuDir" Name="MG 3 - Sistema Iglesias" Advertise="yes" Icon="StartMenuIcon.exe" IconIndex="0" />
+                        </File>
+                    </Component>
+                    <Component Id="Permission.InstallFolder" Guid="{7C5234ED-EE92-468A-A765-27E5747705DB}">
+                        <CreateFolder>
+                            <Permission GenericAll="yes" User="Everyone" />
+                        </CreateFolder>
+                    </Component>
+                    <Directory Id="APP" Name="app">
+                        <Component Id="Permission.AppFolder" Guid="{7C5234ED-EE92-468A-A765-27E5747705EE}">
+                            <CreateFolder>
+                                <Permission GenericAll="yes" User="Everyone" />
+                            </CreateFolder>
+                        </Component>
+                        <Component Id="G4204.PNG" DiskId="1" Guid="5BC5DC19-1291-4C7E-9D67-D8B4251416EA">
+                            <File Id="G4204.PNG" Name="g4204.png" Source="C:\Users\adriang\Documents\NetBeansProjects\MG\target\getdown\g4204.png" />
+                        </Component>
+                        <Component Id="GETDOWN.TXT" DiskId="1" Guid="24ABDA5F-F510-42D1-B073-24EF03F73441">
+                            <File Id="GETDOWN.TXT" Name="getdown.txt" Source="..\..\..\..\target\getdown\getdown.txt" />
+                        </Component>
+                        <Directory Id="LIB" Name="lib">
+                            <Component Id="ANTLR_2.7.7.JAR" DiskId="1" Guid="1D1D9FA3-20D3-4C9A-82A1-509EB0BC6701">
+                                <File Id="ANTLR_2.7.7.JAR" Name="antlr-2.7.7.jar" Source="..\..\..\..\target\getdown\lib\antlr-2.7.7.jar" />
+                            </Component>
+                            <Component Id="AOPALLIANCE_1.0.JAR" DiskId="1" Guid="41DE8FEC-E067-4026-8FE1-22FA416052FC">
+                                <File Id="AOPALLIANCE_1.0.JAR" Name="aopalliance-1.0.jar" Source="..\..\..\..\target\getdown\lib\aopalliance-1.0.jar" />
+                            </Component>
+                            <Component Id="BCMAIL_JDK14_1.38.JAR" DiskId="1" Guid="C960B1D1-B755-4269-A1FB-9CA86FCE1AA9">
+                                <File Id="BCMAIL_JDK14_1.38.JAR" Name="bcmail-jdk14-1.38.jar" Source="..\..\..\..\target\getdown\lib\bcmail-jdk14-1.38.jar" />
+                            </Component>
+                            <Component Id="BCMAIL_JDK14_138.JAR" DiskId="1" Guid="CA23D822-E95F-4F6A-9C7B-3C544B5C294A">
+                                <File Id="BCMAIL_JDK14_138.JAR" Name="bcmail-jdk14-138.jar" Source="..\..\..\..\target\getdown\lib\bcmail-jdk14-138.jar" />
+                            </Component>
+                            <Component Id="BCPROV_JDK14_1.38.JAR" DiskId="1" Guid="D6663895-6506-4386-89EA-A2E73DAF6896">
+                                <File Id="BCPROV_JDK14_1.38.JAR" Name="bcprov-jdk14-1.38.jar" Source="..\..\..\..\target\getdown\lib\bcprov-jdk14-1.38.jar" />
+                            </Component>
+                            <Component Id="BCPROV_JDK14_138.JAR" DiskId="1" Guid="FB73A4BC-A002-4727-8302-C7EF41493081">
+                                <File Id="BCPROV_JDK14_138.JAR" Name="bcprov-jdk14-138.jar" Source="..\..\..\..\target\getdown\lib\bcprov-jdk14-138.jar" />
+                            </Component>
+                            <Component Id="BCTSP_JDK14_1.38.JAR" DiskId="1" Guid="12335CF9-F1F6-44C7-AD3F-5B6293F75E58">
+                                <File Id="BCTSP_JDK14_1.38.JAR" Name="bctsp-jdk14-1.38.jar" Source="..\..\..\..\target\getdown\lib\bctsp-jdk14-1.38.jar" />
+                            </Component>
+                            <Component Id="BEANSBINDING_1.2.1.JAR" DiskId="1" Guid="E1C22F26-06BE-4486-AB38-43FB6F7AE9D3">
+                                <File Id="BEANSBINDING_1.2.1.JAR" Name="beansbinding-1.2.1.jar" Source="..\..\..\..\target\getdown\lib\beansbinding-1.2.1.jar" />
+                            </Component>
+                            <Component Id="BYTE_BUDDY_1.5.4.JAR" DiskId="1" Guid="95CD5510-1D5A-4FE9-982E-E0CE2FEC5926">
+                                <File Id="BYTE_BUDDY_1.5.4.JAR" Name="byte-buddy-1.5.4.jar" Source="..\..\..\..\target\getdown\lib\byte-buddy-1.5.4.jar" />
+                            </Component>
+                            <Component Id="CASTOR_CORE_1.3.3.JAR" DiskId="1" Guid="F85D0EBC-9678-4F6D-A8FA-65A8DBDD3D69">
+                                <File Id="CASTOR_CORE_1.3.3.JAR" Name="castor-core-1.3.3.jar" Source="..\..\..\..\target\getdown\lib\castor-core-1.3.3.jar" />
+                            </Component>
+                            <Component Id="CASTOR_XML_1.3.3.JAR" DiskId="1" Guid="07399D1B-0FBA-4E5E-A7E8-BB4408356823">
+                                <File Id="CASTOR_XML_1.3.3.JAR" Name="castor-xml-1.3.3.jar" Source="..\..\..\..\target\getdown\lib\castor-xml-1.3.3.jar" />
+                            </Component>
+                            <Component Id="CDI_API_1.1.JAR" DiskId="1" Guid="0FA91D02-BF8E-4D64-B525-F2CAA2FDC215">
+                                <File Id="CDI_API_1.1.JAR" Name="cdi-api-1.1.jar" Source="..\..\..\..\target\getdown\lib\cdi-api-1.1.jar" />
+                            </Component>
+                            <Component Id="CLASSMATE_1.3.0.JAR" DiskId="1" Guid="95FD09E4-CF8D-4558-8E90-45B2E579ACBB">
+                                <File Id="CLASSMATE_1.3.0.JAR" Name="classmate-1.3.0.jar" Source="..\..\..\..\target\getdown\lib\classmate-1.3.0.jar" />
+                            </Component>
+                            <Component Id="COMMONS_BEANUTILS_1.9.3.JAR" DiskId="1" Guid="F5A2CB71-1EE8-4FC0-A3B8-3FF940F73ECA">
+                                <File Id="COMMONS_BEANUTILS_1.9.3.JAR" Name="commons-beanutils-1.9.3.jar" Source="..\..\..\..\target\getdown\lib\commons-beanutils-1.9.3.jar" />
+                            </Component>
+                            <Component Id="COMMONS_CODEC_1.10.JAR" DiskId="1" Guid="BC40C872-A22F-4E5B-AD61-2BD3138C2042">
+                                <File Id="COMMONS_CODEC_1.10.JAR" Name="commons-codec-1.10.jar" Source="..\..\..\..\target\getdown\lib\commons-codec-1.10.jar" />
+                            </Component>
+                            <Component Id="COMMONS_COLLECTIONS_3.2.2.JAR" DiskId="1" Guid="33FB71B0-7C5C-41D9-9778-44625FEE7DFA">
+                                <File Id="COMMONS_COLLECTIONS_3.2.2.JAR" Name="commons-collections-3.2.2.jar" Source="..\..\..\..\target\getdown\lib\commons-collections-3.2.2.jar" />
+                            </Component>
+                            <Component Id="COMMONS_COLLECTIONS4_4.1.JAR" DiskId="1" Guid="64425A8E-6F6B-49D6-A53C-4F0876C8069C">
+                                <File Id="COMMONS_COLLECTIONS4_4.1.JAR" Name="commons-collections4-4.1.jar" Source="..\..\..\..\target\getdown\lib\commons-collections4-4.1.jar" />
+                            </Component>
+                            <Component Id="COMMONS_DIGESTER_2.1.JAR" DiskId="1" Guid="581A5D8C-30C0-414A-AA21-9DCBA2321B6D">
+                                <File Id="COMMONS_DIGESTER_2.1.JAR" Name="commons-digester-2.1.jar" Source="..\..\..\..\target\getdown\lib\commons-digester-2.1.jar" />
+                            </Component>
+                            <Component Id="COMMONS_IO_2.4.JAR" DiskId="1" Guid="C5EE32F1-E747-4925-99F9-9524C233D246">
+                                <File Id="COMMONS_IO_2.4.JAR" Name="commons-io-2.4.jar" Source="..\..\..\..\target\getdown\lib\commons-io-2.4.jar" />
+                            </Component>
+                            <Component Id="COMMONS_LANG_2.6.JAR" DiskId="1" Guid="DD7543D5-65BE-4A1B-85C3-5993E0184A32">
+                                <File Id="COMMONS_LANG_2.6.JAR" Name="commons-lang-2.6.jar" Source="..\..\..\..\target\getdown\lib\commons-lang-2.6.jar" />
+                            </Component>
+                            <Component Id="COMMONS_LOGGING_1.2.JAR" DiskId="1" Guid="4878CBD2-82E4-4DCC-8F05-466ED58BAD09">
+                                <File Id="COMMONS_LOGGING_1.2.JAR" Name="commons-logging-1.2.jar" Source="..\..\..\..\target\getdown\lib\commons-logging-1.2.jar" />
+                            </Component>
+                            <Component Id="CONTROLSFX_8.40.12.JAR" DiskId="1" Guid="AD545856-0E53-4A60-A050-6E65F05DF7D5">
+                                <File Id="CONTROLSFX_8.40.12.JAR" Name="controlsfx-8.40.12.jar" Source="..\..\..\..\target\getdown\lib\controlsfx-8.40.12.jar" />
+                            </Component>
+                            <Component Id="CORE_3.2.1.JAR" DiskId="1" Guid="E84E8E19-89D9-4C8E-88F2-BB3000AD32F1">
+                                <File Id="CORE_3.2.1.JAR" Name="core-3.2.1.jar" Source="..\..\..\..\target\getdown\lib\core-3.2.1.jar" />
+                            </Component>
+                            <Component Id="DERBY_10.13.1.1.JAR" DiskId="1" Guid="51DFE560-F1EF-401E-8A5A-75F973F3ABC4">
+                                <File Id="DERBY_10.13.1.1.JAR" Name="derby-10.13.1.1.jar" Source="..\..\..\..\target\getdown\lib\derby-10.13.1.1.jar" />
+                            </Component>
+                            <Component Id="DERBYCLIENT_10.13.1.1.JAR" DiskId="1" Guid="D64993D4-524C-4C02-B5C4-30D26409C812">
+                                <File Id="DERBYCLIENT_10.13.1.1.JAR" Name="derbyclient-10.13.1.1.jar" Source="..\..\..\..\target\getdown\lib\derbyclient-10.13.1.1.jar" />
+                            </Component>
+                            <Component Id="DERBYNET_10.13.1.1.JAR" DiskId="1" Guid="91FED05B-A2B6-4F10-91A9-7CA29A4091CA">
+                                <File Id="DERBYNET_10.13.1.1.JAR" Name="derbynet-10.13.1.1.jar" Source="..\..\..\..\target\getdown\lib\derbynet-10.13.1.1.jar" />
+                            </Component>
+                            <Component Id="DOM4J_1.6.1.JAR" DiskId="1" Guid="40816475-997B-4644-9A28-93DE021E205C">
+                                <File Id="DOM4J_1.6.1.JAR" Name="dom4j-1.6.1.jar" Source="..\..\..\..\target\getdown\lib\dom4j-1.6.1.jar" />
+                            </Component>
+                            <Component Id="ECJ_4.3.1.JAR" DiskId="1" Guid="7C89996A-2B9B-418E-8496-2DFD596A82BC">
+                                <File Id="ECJ_4.3.1.JAR" Name="ecj-4.3.1.jar" Source="..\..\..\..\target\getdown\lib\ecj-4.3.1.jar" />
+                            </Component>
+                            <Component Id="EL_API_2.2.JAR" DiskId="1" Guid="A2CBCEA9-A00D-4ABB-AE0B-5477555E9DD8">
+                                <File Id="EL_API_2.2.JAR" Name="el-api-2.2.jar" Source="..\..\..\..\target\getdown\lib\el-api-2.2.jar" />
+                            </Component>
+                            <Component Id="GERONIMO_JTA_1.1_SPEC_1.1.1.JAR" DiskId="1" Guid="AA7A9F70-F70C-40E1-8F0F-9D6061D01E81">
+                                <File Id="GERONIMO_JTA_1.1_SPEC_1.1.1.JAR" Name="geronimo-jta_1.1_spec-1.1.1.jar" Source="..\..\..\..\target\getdown\lib\geronimo-jta_1.1_spec-1.1.1.jar" />
+                            </Component>
+                            <Component Id="HIBERNATE_COMMONS_ANNOTATIONS_5.0.1.FINAL.JAR" DiskId="1" Guid="9B896C85-7864-46EA-8D1B-1B5CB679B4C9">
+                                <File Id="HIBERNATE_COMMONS_ANNOTATIONS_5.0.1.FINAL.JAR" Name="hibernate-commons-annotations-5.0.1.Final.jar" Source="..\..\..\..\target\getdown\lib\hibernate-commons-annotations-5.0.1.Final.jar" />
+                            </Component>
+                            <Component Id="HIBERNATE_CORE_5.2.5.FINAL.JAR" DiskId="1" Guid="1E6B3724-3429-479C-96F5-BD8CAFEAB4A0">
+                                <File Id="HIBERNATE_CORE_5.2.5.FINAL.JAR" Name="hibernate-core-5.2.5.Final.jar" Source="..\..\..\..\target\getdown\lib\hibernate-core-5.2.5.Final.jar" />
+                            </Component>
+                            <Component Id="HIBERNATE_ENTITYMANAGER_5.2.5.FINAL.JAR" DiskId="1" Guid="2260CF11-0860-439A-8B3F-72EB82BFA871">
+                                <File Id="HIBERNATE_ENTITYMANAGER_5.2.5.FINAL.JAR" Name="hibernate-entitymanager-5.2.5.Final.jar" Source="..\..\..\..\target\getdown\lib\hibernate-entitymanager-5.2.5.Final.jar" />
+                            </Component>
+                            <Component Id="HIBERNATE_JAVA8_5.2.5.FINAL.JAR" DiskId="1" Guid="DE6B84B5-F5AC-474F-8DE9-3FF12399404F">
+                                <File Id="HIBERNATE_JAVA8_5.2.5.FINAL.JAR" Name="hibernate-java8-5.2.5.Final.jar" Source="..\..\..\..\target\getdown\lib\hibernate-java8-5.2.5.Final.jar" />
+                            </Component>
+                            <Component Id="HIBERNATE_JPA_2.1_API_1.0.0.FINAL.JAR" DiskId="1" Guid="B49C1DC2-0986-4F27-9540-133F97B6F4BA">
+                                <File Id="HIBERNATE_JPA_2.1_API_1.0.0.FINAL.JAR" Name="hibernate-jpa-2.1-api-1.0.0.Final.jar" Source="..\..\..\..\target\getdown\lib\hibernate-jpa-2.1-api-1.0.0.Final.jar" />
+                            </Component>
+                            <Component Id="ICU4J_57.1.JAR" DiskId="1" Guid="A0EABFB6-7112-42F3-A550-0E7181EC1A04">
+                                <File Id="ICU4J_57.1.JAR" Name="icu4j-57.1.jar" Source="..\..\..\..\target\getdown\lib\icu4j-57.1.jar" />
+                            </Component>
+                            <Component Id="ITEXT_2.1.7.JS5.JAR" DiskId="1" Guid="F0F983A8-5241-4E19-B36D-925664342419">
+                                <File Id="ITEXT_2.1.7.JS5.JAR" Name="itext-2.1.7.js5.jar" Source="..\..\..\..\target\getdown\lib\itext-2.1.7.js5.jar" />
+                            </Component>
+                            <Component Id="JACKSON_ANNOTATIONS_2.1.4.JAR" DiskId="1" Guid="B13BCFA8-046E-45E0-BC06-866EA826594F">
+                                <File Id="JACKSON_ANNOTATIONS_2.1.4.JAR" Name="jackson-annotations-2.1.4.jar" Source="..\..\..\..\target\getdown\lib\jackson-annotations-2.1.4.jar" />
+                            </Component>
+                            <Component Id="JACKSON_CORE_2.1.4.JAR" DiskId="1" Guid="7E829D65-9951-44D0-9C9E-1E8239AD02BF">
+                                <File Id="JACKSON_CORE_2.1.4.JAR" Name="jackson-core-2.1.4.jar" Source="..\..\..\..\target\getdown\lib\jackson-core-2.1.4.jar" />
+                            </Component>
+                            <Component Id="JACKSON_DATABIND_2.1.4.JAR" DiskId="1" Guid="2548C882-8F06-47AE-94C6-04F00D0EDAFA">
+                                <File Id="JACKSON_DATABIND_2.1.4.JAR" Name="jackson-databind-2.1.4.jar" Source="..\..\..\..\target\getdown\lib\jackson-databind-2.1.4.jar" />
+                            </Component>
+                            <Component Id="JAKARTA_REGEXP_1.4.JAR" DiskId="1" Guid="268E86DC-C1EF-429A-9F0D-0FC2ED4FED8D">
+                                <File Id="JAKARTA_REGEXP_1.4.JAR" Name="jakarta-regexp-1.4.jar" Source="..\..\..\..\target\getdown\lib\jakarta-regexp-1.4.jar" />
+                            </Component>
+                            <Component Id="JANDEX_2.0.3.FINAL.JAR" DiskId="1" Guid="86351CD6-00FB-4014-B8D5-772937547490">
+                                <File Id="JANDEX_2.0.3.FINAL.JAR" Name="jandex-2.0.3.Final.jar" Source="..\..\..\..\target\getdown\lib\jandex-2.0.3.Final.jar" />
+                            </Component>
+                            <Component Id="JASPERREPORTS_6.4.0.JAR" DiskId="1" Guid="4C53B91A-2B75-4256-9E6D-A0BA6DE79A2E">
+                                <File Id="JASPERREPORTS_6.4.0.JAR" Name="jasperreports-6.4.0.jar" Source="..\..\..\..\target\getdown\lib\jasperreports-6.4.0.jar" />
+                            </Component>
+                            <Component Id="JASPERREPORTS_FONTS_6.0.0.JAR" DiskId="1" Guid="16F64F52-B990-4F87-9EB5-00EC606D455A">
+                                <File Id="JASPERREPORTS_FONTS_6.0.0.JAR" Name="jasperreports-fonts-6.0.0.jar" Source="..\..\..\..\target\getdown\lib\jasperreports-fonts-6.0.0.jar" />
+                            </Component>
+                            <Component Id="JAVASSIST_3.20.0_GA.JAR" DiskId="1" Guid="2B1B58F7-FE15-4AD0-8E85-EF180276D06C">
+                                <File Id="JAVASSIST_3.20.0_GA.JAR" Name="javassist-3.20.0-GA.jar" Source="..\..\..\..\target\getdown\lib\javassist-3.20.0-GA.jar" />
+                            </Component>
+                            <Component Id="JAVAX.INJECT_1.JAR" DiskId="1" Guid="D0780507-3D34-4234-BB5F-4DB802C40CB4">
+                                <File Id="JAVAX.INJECT_1.JAR" Name="javax.inject-1.jar" Source="..\..\..\..\target\getdown\lib\javax.inject-1.jar" />
+                            </Component>
+                            <Component Id="JBCRYPT_0.3M.JAR" DiskId="1" Guid="1ABCC9D0-F6CD-40B5-AE3A-50CFAEC971B2">
+                                <File Id="JBCRYPT_0.3M.JAR" Name="jbcrypt-0.3m.jar" Source="..\..\..\..\target\getdown\lib\jbcrypt-0.3m.jar" />
+                            </Component>
+                            <Component Id="JBOSS_INTERCEPTORS_API_1.1_SPEC_1.0.0.BETA1.JAR" DiskId="1" Guid="EBAD1C23-61F1-467B-BA13-9E03F7F7508E">
+                                <File Id="JBOSS_INTERCEPTORS_API_1.1_SPEC_1.0.0.BETA1.JAR" Name="jboss-interceptors-api_1.1_spec-1.0.0.Beta1.jar" Source="..\..\..\..\target\getdown\lib\jboss-interceptors-api_1.1_spec-1.0.0.Beta1.jar" />
+                            </Component>
+                            <Component Id="JBOSS_LOGGING_3.3.0.FINAL.JAR" DiskId="1" Guid="8F3891A8-D969-4F2D-8E42-1020FDB1ADF4">
+                                <File Id="JBOSS_LOGGING_3.3.0.FINAL.JAR" Name="jboss-logging-3.3.0.Final.jar" Source="..\..\..\..\target\getdown\lib\jboss-logging-3.3.0.Final.jar" />
+                            </Component>
+                            <Component Id="JCL_OVER_SLF4J_1.7.22.JAR" DiskId="1" Guid="209E7AA1-F71A-4446-BAC9-938C217A461E">
+                                <File Id="JCL_OVER_SLF4J_1.7.22.JAR" Name="jcl-over-slf4j-1.7.22.jar" Source="..\..\..\..\target\getdown\lib\jcl-over-slf4j-1.7.22.jar" />
+                            </Component>
+                            <Component Id="JCOMMON_1.0.23.JAR" DiskId="1" Guid="5C48F3C0-FBB9-464B-B3EA-C0F681B0D39B">
+                                <File Id="JCOMMON_1.0.23.JAR" Name="jcommon-1.0.23.jar" Source="..\..\..\..\target\getdown\lib\jcommon-1.0.23.jar" />
+                            </Component>
+                            <Component Id="JFREECHART_1.0.19.JAR" DiskId="1" Guid="A07D636C-84E5-49DF-AC44-DA1A487A7D03">
+                                <File Id="JFREECHART_1.0.19.JAR" Name="jfreechart-1.0.19.jar" Source="..\..\..\..\target\getdown\lib\jfreechart-1.0.19.jar" />
+                            </Component>
+                            <Component Id="JIDEFX_COMMON_0.9.1.JAR" DiskId="1" Guid="376AACD0-FBCE-4A05-B697-36C26EB9F8D4">
+                                <File Id="JIDEFX_COMMON_0.9.1.JAR" Name="jidefx-common-0.9.1.jar" Source="..\..\..\..\target\getdown\lib\jidefx-common-0.9.1.jar" />
+                            </Component>
+                            <Component Id="JIDEFX_CONVERTERS_0.9.1.JAR" DiskId="1" Guid="7B58D2D1-F534-4DBC-874B-025B6B0A112F">
+                                <File Id="JIDEFX_CONVERTERS_0.9.1.JAR" Name="jidefx-converters-0.9.1.jar" Source="..\..\..\..\target\getdown\lib\jidefx-converters-0.9.1.jar" />
+                            </Component>
+                            <Component Id="JIDEFX_DECORATION_0.9.1.JAR" DiskId="1" Guid="ABB01D81-7236-4763-8A6B-809BA7E1832A">
+                                <File Id="JIDEFX_DECORATION_0.9.1.JAR" Name="jidefx-decoration-0.9.1.jar" Source="..\..\..\..\target\getdown\lib\jidefx-decoration-0.9.1.jar" />
+                            </Component>
+                            <Component Id="JIDEFX_FIELDS_0.9.1.JAR" DiskId="1" Guid="FA54B155-FAEE-4826-B6F6-4214CC7259C1">
+                                <File Id="JIDEFX_FIELDS_0.9.1.JAR" Name="jidefx-fields-0.9.1.jar" Source="..\..\..\..\target\getdown\lib\jidefx-fields-0.9.1.jar" />
+                            </Component>
+                            <Component Id="JSR250_API_1.0.JAR" DiskId="1" Guid="94D92B6E-1232-4E4F-A695-A937498F6932">
+                                <File Id="JSR250_API_1.0.JAR" Name="jsr250-api-1.0.jar" Source="..\..\..\..\target\getdown\lib\jsr250-api-1.0.jar" />
+                            </Component>
+                            <Component Id="JTA_1.1.JAR" DiskId="1" Guid="91067AD5-F69F-49DF-8773-FEC9B427D0AB">
+                                <File Id="JTA_1.1.JAR" Name="jta-1.1.jar" Source="..\..\..\..\target\getdown\lib\jta-1.1.jar" />
+                            </Component>
+                            <Component Id="LOG4J_1.2.17.JAR" DiskId="1" Guid="31C110BD-C163-4F3C-AFDC-691941590B72">
+                                <File Id="LOG4J_1.2.17.JAR" Name="log4j-1.2.17.jar" Source="..\..\..\..\target\getdown\lib\log4j-1.2.17.jar" />
+                            </Component>
+                            <Component Id="LOG4J_API_2.7.JAR" DiskId="1" Guid="5D45CA2B-99AD-4658-9E4B-695303610DDF">
+                                <File Id="LOG4J_API_2.7.JAR" Name="log4j-api-2.7.jar" Source="..\..\..\..\target\getdown\lib\log4j-api-2.7.jar" />
+                            </Component>
+                            <Component Id="LOG4J_CORE_2.7.JAR" DiskId="1" Guid="C23B24BF-037E-427E-A1D0-E07E8CF6D996">
+                                <File Id="LOG4J_CORE_2.7.JAR" Name="log4j-core-2.7.jar" Source="..\..\..\..\target\getdown\lib\log4j-core-2.7.jar" />
+                            </Component>
+                            <Component Id="LUCENE_ANALYZERS_COMMON_4.5.1.JAR" DiskId="1" Guid="7206D7E5-E0D1-4C5A-B038-93B54B5047D1">
+                                <File Id="LUCENE_ANALYZERS_COMMON_4.5.1.JAR" Name="lucene-analyzers-common-4.5.1.jar" Source="..\..\..\..\target\getdown\lib\lucene-analyzers-common-4.5.1.jar" />
+                            </Component>
+                            <Component Id="LUCENE_CORE_4.5.1.JAR" DiskId="1" Guid="4DA93881-8B65-4517-B501-FAE966A5E6CE">
+                                <File Id="LUCENE_CORE_4.5.1.JAR" Name="lucene-core-4.5.1.jar" Source="..\..\..\..\target\getdown\lib\lucene-core-4.5.1.jar" />
+                            </Component>
+                            <Component Id="LUCENE_QUERIES_4.5.1.JAR" DiskId="1" Guid="B41B6E51-F1FD-4E96-A44F-CFE29FD9C697">
+                                <File Id="LUCENE_QUERIES_4.5.1.JAR" Name="lucene-queries-4.5.1.jar" Source="..\..\..\..\target\getdown\lib\lucene-queries-4.5.1.jar" />
+                            </Component>
+                            <Component Id="LUCENE_QUERYPARSER_4.5.1.JAR" DiskId="1" Guid="C1F4CDED-FC1D-49A2-9622-8C6EBD8B507D">
+                                <File Id="LUCENE_QUERYPARSER_4.5.1.JAR" Name="lucene-queryparser-4.5.1.jar" Source="..\..\..\..\target\getdown\lib\lucene-queryparser-4.5.1.jar" />
+                            </Component>
+                            <Component Id="LUCENE_SANDBOX_4.5.1.JAR" DiskId="1" Guid="C1D940B8-3049-4789-90B9-93A412BD37CC">
+                                <File Id="LUCENE_SANDBOX_4.5.1.JAR" Name="lucene-sandbox-4.5.1.jar" Source="..\..\..\..\target\getdown\lib\lucene-sandbox-4.5.1.jar" />
+                            </Component>
+                            <Component Id="MG3_3.0.JAR" DiskId="1" Guid="8AA0028B-BF2A-4269-998D-A8B3A15254D3">
+                                <File Id="MG3_3.0.JAR" Name="MG3-3.0.jar" Source="..\..\..\..\target\getdown\lib\MG3-3.0.jar" />
+                            </Component>
+                            <Component Id="MIGLAYOUT_CORE_5.0.JAR" DiskId="1" Guid="72B79BA0-DA9B-4E10-AB09-BB9EAA6EC739">
+                                <File Id="MIGLAYOUT_CORE_5.0.JAR" Name="miglayout-core-5.0.jar" Source="..\..\..\..\target\getdown\lib\miglayout-core-5.0.jar" />
+                            </Component>
+                            <Component Id="MIGLAYOUT_JAVAFX_5.0.JAR" DiskId="1" Guid="9B14CA57-F215-4A78-BF82-71960AA19744">
+                                <File Id="MIGLAYOUT_JAVAFX_5.0.JAR" Name="miglayout-javafx-5.0.jar" Source="..\..\..\..\target\getdown\lib\miglayout-javafx-5.0.jar" />
+                            </Component>
+                            <Component Id="OLAP4J_0.9.7.309_JS_3.JAR" DiskId="1" Guid="FD4B6455-1B9B-423E-8510-76EA4BD08243">
+                                <File Id="OLAP4J_0.9.7.309_JS_3.JAR" Name="olap4j-0.9.7.309-JS-3.jar" Source="..\..\..\..\target\getdown\lib\olap4j-0.9.7.309-JS-3.jar" />
+                            </Component>
+                            <Component Id="POI_3.15.JAR" DiskId="1" Guid="7E2B605D-4749-4D74-9D61-00E3A3AC4EC7">
+                                <File Id="POI_3.15.JAR" Name="poi-3.15.jar" Source="..\..\..\..\target\getdown\lib\poi-3.15.jar" />
+                            </Component>
+                            <Component Id="SLF4J_API_1.7.22.JAR" DiskId="1" Guid="90ED537D-4867-42F0-AE5C-3E45EBFC6948">
+                                <File Id="SLF4J_API_1.7.22.JAR" Name="slf4j-api-1.7.22.jar" Source="..\..\..\..\target\getdown\lib\slf4j-api-1.7.22.jar" />
+                            </Component>
+                            <Component Id="SLF4J_LOG4J12_1.7.22.JAR" DiskId="1" Guid="D0540313-4C9C-4CEF-8C50-BB48D0C01128">
+                                <File Id="SLF4J_LOG4J12_1.7.22.JAR" Name="slf4j-log4j12-1.7.22.jar" Source="..\..\..\..\target\getdown\lib\slf4j-log4j12-1.7.22.jar" />
+                            </Component>
+                            <Component Id="SPRING_AOP_3.0.6.RELEASE.JAR" DiskId="1" Guid="C38C1025-E6FF-45E5-80D9-BB09925BE837">
+                                <File Id="SPRING_AOP_3.0.6.RELEASE.JAR" Name="spring-aop-3.0.6.RELEASE.jar" Source="..\..\..\..\target\getdown\lib\spring-aop-3.0.6.RELEASE.jar" />
+                            </Component>
+                            <Component Id="SPRING_ASM_3.0.6.RELEASE.JAR" DiskId="1" Guid="9644A89A-060D-4C4C-A596-7544D3027AC4">
+                                <File Id="SPRING_ASM_3.0.6.RELEASE.JAR" Name="spring-asm-3.0.6.RELEASE.jar" Source="..\..\..\..\target\getdown\lib\spring-asm-3.0.6.RELEASE.jar" />
+                            </Component>
+                            <Component Id="SPRING_BEANS_3.0.6.RELEASE.JAR" DiskId="1" Guid="7C053F1F-56F8-490D-BD98-86A8D1307DE4">
+                                <File Id="SPRING_BEANS_3.0.6.RELEASE.JAR" Name="spring-beans-3.0.6.RELEASE.jar" Source="..\..\..\..\target\getdown\lib\spring-beans-3.0.6.RELEASE.jar" />
+                            </Component>
+                            <Component Id="SPRING_CONTEXT_3.0.6.RELEASE.JAR" DiskId="1" Guid="796A0C2A-33B4-439D-A023-8A7E1DA3CBDA">
+                                <File Id="SPRING_CONTEXT_3.0.6.RELEASE.JAR" Name="spring-context-3.0.6.RELEASE.jar" Source="..\..\..\..\target\getdown\lib\spring-context-3.0.6.RELEASE.jar" />
+                            </Component>
+                            <Component Id="SPRING_CORE_3.0.6.RELEASE.JAR" DiskId="1" Guid="DEB2FCE4-7428-4C76-8319-AD9F58D05401">
+                                <File Id="SPRING_CORE_3.0.6.RELEASE.JAR" Name="spring-core-3.0.6.RELEASE.jar" Source="..\..\..\..\target\getdown\lib\spring-core-3.0.6.RELEASE.jar" />
+                            </Component>
+                            <Component Id="SPRING_EXPRESSION_3.0.6.RELEASE.JAR" DiskId="1" Guid="FD7EDDE4-BCDF-4E61-B269-016293FDE845">
+                                <File Id="SPRING_EXPRESSION_3.0.6.RELEASE.JAR" Name="spring-expression-3.0.6.RELEASE.jar" Source="..\..\..\..\target\getdown\lib\spring-expression-3.0.6.RELEASE.jar" />
+                            </Component>
+                            <Component Id="STAX_1.2.0.JAR" DiskId="1" Guid="4E111ED6-1635-4863-A354-A36EB9A4AF26">
+                                <File Id="STAX_1.2.0.JAR" Name="stax-1.2.0.jar" Source="..\..\..\..\target\getdown\lib\stax-1.2.0.jar" />
+                            </Component>
+                            <Component Id="STAX_API_1.0_2.JAR" DiskId="1" Guid="086D8ED6-9B77-4950-BBC3-5F00D5077CD3">
+                                <File Id="STAX_API_1.0_2.JAR" Name="stax-api-1.0-2.jar" Source="..\..\..\..\target\getdown\lib\stax-api-1.0-2.jar" />
+                            </Component>
+                            <Component Id="STAX_API_1.0.1.JAR" DiskId="1" Guid="905445E9-5B2F-477F-BEC8-F6644F2981F1">
+                                <File Id="STAX_API_1.0.1.JAR" Name="stax-api-1.0.1.jar" Source="..\..\..\..\target\getdown\lib\stax-api-1.0.1.jar" />
+                            </Component>
+                            <Component Id="VALIDATION_API_1.1.0.FINAL.JAR" DiskId="1" Guid="B0647502-4EC9-4FBB-BC98-8A8A361C43BA">
+                                <File Id="VALIDATION_API_1.1.0.FINAL.JAR" Name="validation-api-1.1.0.Final.jar" Source="..\..\..\..\target\getdown\lib\validation-api-1.1.0.Final.jar" />
+                            </Component>
+                        </Directory>
+                    </Directory>
+                </Directory>
+            </Directory>
+            <Directory Id="DesktopFolder" />
+            <Directory Id="ProgramMenuFolder">
+                <Directory Id="ProgramMenuDir" Name="MG 3 - Sistema Iglesias">
+                    <Component Id="StartMenuShortcuts" Guid="8F90AFDE-2E0C-430D-AA5C-50526C1E6BF5">
+                        <RemoveFolder Id="ProgramMenuDir" On="uninstall" />
+                        <RegistryValue Root="HKCU" Key="Software\[Manufacturer]\[ProductName]" Type="string" Value="" />
+                        <Shortcut Id="UninstallProduct" Name="Uninstall" Description="Desinstala la aplicacion" Target="[System64Folder]msiexec.exe" Arguments="/x [ProductCode]" />
+                    </Component>
+                </Directory>
+            </Directory>
+        </Directory>
+        <Feature Id="DefaultFeature" Title="Main Feature" Level="1">
+            <ComponentRef Id="MG2.EXE" />
+            <ComponentRef Id="G4204.PNG" />
+            <ComponentRef Id="GETDOWN.TXT" />
+            <ComponentRef Id="AOPALLIANCE_1.0.JAR" />
+            <ComponentRef Id="BCMAIL_JDK14_1.38.JAR" />
+            <ComponentRef Id="BCMAIL_JDK14_138.JAR" />
+            <ComponentRef Id="BCPROV_JDK14_1.38.JAR" />
+            <ComponentRef Id="BCPROV_JDK14_138.JAR" />
+            <ComponentRef Id="BCTSP_JDK14_1.38.JAR" />
+            <ComponentRef Id="BEANSBINDING_1.2.1.JAR" />
+            <ComponentRef Id="CASTOR_CORE_1.3.3.JAR" />
+            <ComponentRef Id="CASTOR_XML_1.3.3.JAR" />
+            <ComponentRef Id="COMMONJ.SDO_2.1.1.JAR" />
+            <ComponentRef Id="COMMONS_BEANUTILS_1.9.0.JAR" />
+            <ComponentRef Id="COMMONS_CODEC_1.9.JAR" />
+            <ComponentRef Id="COMMONS_ListS_3.2.1.JAR" />
+            <ComponentRef Id="COMMONS_DIGESTER_2.1.JAR" />
+            <ComponentRef Id="COMMONS_IO_2.4.JAR" />
+            <ComponentRef Id="COMMONS_LANG_2.6.JAR" />
+            <ComponentRef Id="COMMONS_LOGGING_1.1.1.JAR" />
+            <ComponentRef Id="CORE_2.3.0.JAR" />
+            <ComponentRef Id="DERBY_10.12.1.1.JAR" />
+            <ComponentRef Id="DERBYCLIENT_10.12.1.1.JAR" />
+            <ComponentRef Id="DERBYNET_10.12.1.1.JAR" />
+            <ComponentRef Id="ECJ_4.3.1.JAR" />
+            <ComponentRef Id="ECLIPSELINK_2.6.2.JAR" />
+            <ComponentRef Id="FILTERS_2.0.235.JAR" />
+            <ComponentRef Id="GLAZEDLISTS_JAVA15_1.9.1.JAR" />
+            <ComponentRef Id="ITEXT_2.1.7.JS4.JAR" />
+            <ComponentRef Id="JACKSON_ANNOTATIONS_2.1.4.JAR" />
+            <ComponentRef Id="JACKSON_CORE_2.1.4.JAR" />
+            <ComponentRef Id="JACKSON_DATABIND_2.1.4.JAR" />
+            <ComponentRef Id="JAKARTA_REGEXP_1.4.JAR" />
+            <ComponentRef Id="JASPERREPORTS_6.2.0.JAR" />
+            <ComponentRef Id="JAVAX.INJECT_1.JAR" />
+            <ComponentRef Id="JAVAX.JSON_1.0.4.JAR" />
+            <ComponentRef Id="JAVAX.PERSISTENCE_2.1.1.JAR" />
+            <ComponentRef Id="JBCRYPT_0.3M.JAR" />
+            <ComponentRef Id="JCOMMON_1.0.23.JAR" />
+            <ComponentRef Id="JFREECHART_1.0.19.JAR" />
+            <ComponentRef Id="LOG4J_API_2.5.JAR" />
+            <ComponentRef Id="LOG4J_CORE_2.5.JAR" />
+            <ComponentRef Id="LUCENE_ANALYZERS_COMMON_4.5.1.JAR" />
+            <ComponentRef Id="LUCENE_CORE_4.5.1.JAR" />
+            <ComponentRef Id="LUCENE_QUERIES_4.5.1.JAR" />
+            <ComponentRef Id="LUCENE_QUERYPARSER_4.5.1.JAR" />
+            <ComponentRef Id="LUCENE_SANDBOX_4.5.1.JAR" />
+            <ComponentRef Id="MG_2.0.JAR" />
+            <ComponentRef Id="OLAP4J_0.9.7.309_JS_3.JAR" />
+            <ComponentRef Id="POI_3.13.JAR" />
+            <ComponentRef Id="SPRING_AOP_3.0.6.RELEASE.JAR" />
+            <ComponentRef Id="SPRING_ASM_3.0.6.RELEASE.JAR" />
+            <ComponentRef Id="SPRING_BEANS_3.0.6.RELEASE.JAR" />
+            <ComponentRef Id="SPRING_CONTEXT_3.0.6.RELEASE.JAR" />
+            <ComponentRef Id="SPRING_CORE_3.0.6.RELEASE.JAR" />
+            <ComponentRef Id="SPRING_EXPRESSION_3.0.6.RELEASE.JAR" />
+            <ComponentRef Id="STAX_1.2.0.JAR" />
+            <ComponentRef Id="STAX_API_1.0_2.JAR" />
+            <ComponentRef Id="STAX_API_1.0.1.JAR" />
+            <ComponentRef Id="SWING_WORKER_1.1.JAR" />
+            <ComponentRef Id="SWINGX_1.6.1.JAR" />
+            <ComponentRef Id="TABLEFILTER_SWING_5.2.1.JAR" />
+            <ComponentRef Id="VALIDATION_API_1.1.0.FINAL.JAR" />
+            <ComponentRef Id="XML_APIS_1.3.02.JAR" />
+            <ComponentRef Id="StartMenuShortcuts" />
+            <ComponentRef Id="Permission.InstallFolder" />
+            <ComponentRef Id="Permission.AppFolder" />
+        </Feature>
+        <UI />
+        <Icon Id="DesktopIcon.exe" SourceFile="mg3.exe" />
+        <Icon Id="StartMenuIcon.exe" SourceFile="mg3.exe" />
+    </Product>
+</Wix>
