@@ -17,13 +17,11 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
 import org.mindrot.jbcrypt.BCrypt;
 
 /**
@@ -55,7 +53,7 @@ public class LoginController implements Initializable {
                 TblUsers tempUser = new TblUsers();
                 tempUser.setId(9999);
                 TblRoles role = new TblRoles();
-                role.setId(3);
+                role.setId(4);
                 List<TblRoles> listRoles = new ArrayList();
                 listRoles.add(role);
                 tempUser.setTblRolesList(listRoles);

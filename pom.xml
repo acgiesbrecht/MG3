@@ -132,6 +132,12 @@
             <artifactId>controlsfx</artifactId>
             <version>8.40.12</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.jfxtras/jfxtras-controls -->
+        <dependency>
+            <groupId>org.jfxtras</groupId>
+            <artifactId>jfxtras-controls</artifactId>
+            <version>8.0-r5</version>
+        </dependency>
 
         <dependency>
             <groupId>commons-io</groupId>
@@ -257,13 +263,6 @@
             <artifactId>beansbinding</artifactId>
             <version>1.2.1</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.jidesoft/jidefx-fields -->
-        <dependency>
-            <groupId>com.jidesoft</groupId>
-            <artifactId>jidefx-fields</artifactId>
-            <version>0.9.1</version>
-        </dependency>
-
     </dependencies>
 
 

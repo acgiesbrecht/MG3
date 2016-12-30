@@ -7,8 +7,6 @@ package com.panemu.tiwulfx.form;
 import com.gnadenheimer.mg3.utils.Utils;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import jidefx.scene.control.field.FormattedTextField;
-import jidefx.scene.control.field.verifier.IntegerRangePatternVerifier;
 import ru.vas7n.va.widgets.MaskField;
 
 /**
