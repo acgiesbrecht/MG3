@@ -109,7 +109,44 @@ public class MenuController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        mnuAdEntidades.setDisable(!currentUser.hasRole(2));
+        mnuAdEntidades.setDisable(!currentUser.hasRole(3));
+        mnuAdEventos.setDisable(!currentUser.hasRole(3));
+        mnuInRemates.setDisable(!currentUser.hasRole(3));
+        mnuInRematesP.setDisable(!currentUser.hasRole(3));
+        mnuInRematesIT.setDisable(!currentUser.hasRole(3));
+        mnuAdEntidades.setDisable(!currentUser.hasRole(3));
+        mnuInAportes.setDisable(!currentUser.hasRole(3));
+        mnuInColectas.setDisable(!currentUser.hasRole(3));
+        mnuInAportesColectasIT.setDisable(!currentUser.hasRole(3));
+        mnuInDonacionesVarias.setDisable(!currentUser.hasRole(3));
+        mnuInFacturacionColectiva.setDisable(!currentUser.hasRole(3));
+        mnuInFacturacionUnica.setDisable(!currentUser.hasRole(3));
+        mnuInNotaDeCredito.setDisable(!currentUser.hasRole(3));
+        mnuEgFacturas.setDisable(!currentUser.hasRole(3));
+        mnuEgNotaDeCredito.setDisable(!currentUser.hasRole(3));
+        mnuEgRecibos.setDisable(!currentUser.hasRole(3));
+        mnuEgNotaDeCredito1.setDisable(!currentUser.hasRole(3));
+        mnuAdEventos.setDisable(!currentUser.hasRole(3));
+        mnuAdEventosCuotas.setDisable(!currentUser.hasRole(3));
+        mnuAdEventosCategorias.setDisable(!currentUser.hasRole(3));
+        mnuAdTransferencias.setDisable(!currentUser.hasRole(3));
+        mnuAdRecibos.setDisable(!currentUser.hasRole(3));
+        mnuAdTimbrados.setDisable(!currentUser.hasRole(3));
+        mnuAdFacturas.setDisable(!currentUser.hasRole(3));
+        mnuAdAutofacturasTimbrados.setDisable(!currentUser.hasRole(3));
+        mnuAdAutofacturas.setDisable(!currentUser.hasRole(3));
+        mnuAdNotCreditoTimbrados.setDisable(!currentUser.hasRole(3));
+        mnuAdNotaCredito.setDisable(!currentUser.hasRole(3));
+        mnuAdCentrosCosto.setDisable(!currentUser.hasRole(3));
+        mnuAdPlanCuentas.setDisable(!currentUser.hasRole(3));
+        mnuAdAsientosManuales.setDisable(!currentUser.hasRole(3));
+        mnuAdIglesia.setDisable(!currentUser.hasRole(3));
+        mnuAdUsuarios.setDisable(!currentUser.hasRole(3));
+        mnuAdGrupos.setDisable(!currentUser.hasRole(3));
+        mnuAdConfig.setDisable(!currentUser.hasRole(3));
+        mnuInfR.setDisable(!currentUser.hasRole(3));
+        mnuInfAyC.setDisable(!currentUser.hasRole(3));
+        mnuInfContabilidad.setDisable(!currentUser.hasRole(3));
     }
 
     @FXML
@@ -134,6 +171,11 @@ public class MenuController implements Initializable {
     @FXML
     private void mnuAdTransferencias(ActionEvent event) {
         setPane("/fxml/admin/AdminTransferencias.fxml");
+    }
+
+    @FXML
+    private void mnuInfContabilidad(ActionEvent event) {
+        setPane("/fxml/informes/InformesContabilidad.fxml");
     }
 
 }

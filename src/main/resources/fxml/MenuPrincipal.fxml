@@ -43,7 +43,7 @@
          <items>
             <MenuItem fx:id="mnuInfR" mnemonicParsing="false" text="Remates" />
             <MenuItem fx:id="mnuInfAyC" mnemonicParsing="false" text="Aportes y Colectas" />
-            <MenuItem fx:id="mnuInfContabilidad" mnemonicParsing="false" text="Contabilidad" />
+            <MenuItem fx:id="mnuInfContabilidad" mnemonicParsing="false" onAction="#mnuInfContabilidad" text="Contabilidad" />
          </items>
       </Menu>
       <Menu mnemonicParsing="false" text="Administración">

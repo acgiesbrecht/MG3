@@ -1,6 +1,7 @@
 package com.gnadenheimer.mg3;
 
 import com.gnadenheimer.mg3.domain.TblDatabaseUpdates;
+import com.gnadenheimer.mg3.domain.TblRoles;
 import com.gnadenheimer.mg3.domain.TblTransferencias;
 import com.gnadenheimer.mg3.domain.TblUsers;
 import com.gnadenheimer.mg3.utils.CurrentUser;
@@ -10,6 +11,7 @@ import com.panemu.tiwulfx.common.TiwulFXUtil;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -96,6 +98,11 @@ public class App extends Application {
         List<TblUsers> list = entityManager.createQuery("SELECT t FROM TblUsers t").getResultList();
         for (TblUsers user : list) {
             if (user.getNombre().equals("adrian") && BCrypt.checkpw(String.valueOf("adrian"), user.getPassword())) {
+                TblRoles role = new TblRoles();
+                role.setId(4);
+                List<TblRoles> listRoles = new ArrayList();
+                listRoles.add(role);
+                user.setTblRolesList(listRoles);
                 currentUser.setUser(user);
             }
         }
