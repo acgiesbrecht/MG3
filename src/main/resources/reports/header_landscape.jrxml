@@ -79,7 +79,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA["RUC: " + com.parah.utils.CalcDV.getRucEntero($F{RUC_SIN_DV})]]></textFieldExpression>
+				<textFieldExpression><![CDATA["RUC: " + com.gnadenheimer.utils.CalcDV.getRucEntero($F{RUC_SIN_DV})]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

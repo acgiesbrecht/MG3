@@ -162,7 +162,7 @@ public class TblCuentasContablesPorDefecto implements Serializable {
 
     @Override
     public String toString() {
-        return "com.parah.mg.domain.TblCuentasContablesPorDefecto[ id=" + id + " ]";
+        return "com.gnadenheimer.mg.domain.TblCuentasContablesPorDefecto[ id=" + id + " ]";
     }
 
 }

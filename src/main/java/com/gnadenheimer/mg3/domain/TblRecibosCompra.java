@@ -206,7 +206,7 @@ public class TblRecibosCompra implements Serializable {
 
     @Override
     public String toString() {
-        return "com.parah.mg.domain.TblRecibosCompra[ id=" + id + " ]";
+        return "com.gnadenheimer.mg.domain.TblRecibosCompra[ id=" + id + " ]";
     }
 
     @XmlTransient

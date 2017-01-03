@@ -137,7 +137,7 @@ ORDER BY p.fechahora]]>
 					<rightPen lineWidth="0.4" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[com.parah.utils.FormatCtaCte.format($F{CTACTE})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[com.gnadenheimer.utils.FormatCtaCte.format($F{CTACTE})]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
 				<reportElement x="50" y="0" width="70" height="20" uuid="2fdea32c-4bdd-48d4-95f2-60e5e5b7e274"/>

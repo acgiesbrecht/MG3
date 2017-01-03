@@ -200,7 +200,7 @@ public class TblEventoDetalle implements Serializable {
 
     @Override
     public String toString() {
-        return "com.parah.mg.domain.eventos.TblEventoDetalle[ id=" + id + " ]";
+        return "com.gnadenheimer.mg.domain.eventos.TblEventoDetalle[ id=" + id + " ]";
     }
 
 }

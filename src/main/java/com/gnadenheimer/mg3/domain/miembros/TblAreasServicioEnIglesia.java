@@ -100,7 +100,7 @@ public class TblAreasServicioEnIglesia implements Serializable {
 
     @Override
     public String toString() {
-        return "com.parah.mg.domain.TblAreasServicioEnIglesia[ id=" + id + " ]";
+        return "com.gnadenheimer.mg.domain.TblAreasServicioEnIglesia[ id=" + id + " ]";
     }
 
     @XmlTransient

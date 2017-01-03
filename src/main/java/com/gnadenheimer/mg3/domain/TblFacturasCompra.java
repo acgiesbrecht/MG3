@@ -342,7 +342,7 @@ public class TblFacturasCompra implements Serializable {
 
     @Override
     public String toString() {
-        return "com.parah.mg.domain.TblFacturasCompra[ id=" + id + " ]";
+        return "com.gnadenheimer.mg.domain.TblFacturasCompra[ id=" + id + " ]";
     }
 
     @XmlTransient

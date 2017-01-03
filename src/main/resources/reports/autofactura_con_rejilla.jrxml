@@ -128,7 +128,7 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[com.parah.utils.NumeroALetras.convertNumberToLetter($P{monto})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[com.gnadenheimer.utils.NumeroALetras.convertNumberToLetter($P{monto})]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="6" y="520" width="45" height="15" uuid="cd85e5db-b342-45fe-a014-10bad7650e68">
@@ -393,7 +393,7 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[com.parah.utils.NumeroALetras.convertNumberToLetter($P{monto})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[com.gnadenheimer.utils.NumeroALetras.convertNumberToLetter($P{monto})]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="7" y="100" width="45" height="15" uuid="bc478516-6937-44a8-975b-1f39f741496a">

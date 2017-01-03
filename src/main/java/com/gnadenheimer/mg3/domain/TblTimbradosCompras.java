@@ -121,7 +121,7 @@ public class TblTimbradosCompras implements Serializable {
 
     @Override
     public String toString() {
-        return "com.parah.mg.domain.TblTimbradosCompras[ nro=" + nro + " ]";
+        return "com.gnadenheimer.mg.domain.TblTimbradosCompras[ nro=" + nro + " ]";
     }
 
 }

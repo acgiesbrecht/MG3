@@ -310,7 +310,7 @@ public class TblAutofacturas implements Serializable {
 
     @Override
     public String toString() {
-        return "com.parah.mg.domain.TblAutofacturas[ id=" + id + " ]";
+        return "com.gnadenheimer.mg.domain.TblAutofacturas[ id=" + id + " ]";
     }
 
 }

@@ -138,7 +138,7 @@ public class TblIglesia implements Serializable {
 
     @Override
     public String toString() {
-        return "com.parah.mg.domain.TblIglesia[ id=" + id + " ]";
+        return "com.gnadenheimer.mg.domain.TblIglesia[ id=" + id + " ]";
     }
 
 }

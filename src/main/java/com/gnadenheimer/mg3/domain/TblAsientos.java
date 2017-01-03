@@ -261,7 +261,7 @@ public class TblAsientos implements Serializable {
 
     @Override
     public String toString() {
-        return "com.parah.mg.domain.TblAsientos[ id=" + id + " ]";
+        return "com.gnadenheimer.mg.domain.TblAsientos[ id=" + id + " ]";
     }
 
     /**

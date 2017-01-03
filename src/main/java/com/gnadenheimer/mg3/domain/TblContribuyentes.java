@@ -108,7 +108,7 @@ public class TblContribuyentes implements Serializable {
 
     @Override
     public String toString() {
-        return "com.parah.mg.domain.TblContribuyentes[ rucSinDv=" + rucSinDv + " ]";
+        return "com.gnadenheimer.mg.domain.TblContribuyentes[ rucSinDv=" + rucSinDv + " ]";
     }
 
 }

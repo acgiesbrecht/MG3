@@ -245,7 +245,7 @@ public class TblFacturas implements Serializable {
 
     @Override
     public String toString() {
-        return "com.parah.mg.domain.TblFacturas[ nro=" + nro + " ]";
+        return "com.gnadenheimer.mg.domain.TblFacturas[ nro=" + nro + " ]";
     }
 
 }

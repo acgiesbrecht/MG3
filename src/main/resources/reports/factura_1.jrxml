@@ -76,7 +76,7 @@
                 <textElement verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="true"/>
                 </textElement>
-                <textFieldExpression><![CDATA[com.parah.utils.NumeroALetras.convertNumberToLetter($F{importe_aporte}+$F{importe_donacion})]]></textFieldExpression>
+                <textFieldExpression><![CDATA[com.gnadenheimer.utils.NumeroALetras.convertNumberToLetter($F{importe_aporte}+$F{importe_donacion})]]></textFieldExpression>
             </textField>
             <textField pattern="#,##0">
                 <reportElement x="320" y="171" width="102" height="17" uuid="6c3699fc-2b5e-4ea7-b3da-7f6d5b6fd866"/>
@@ -109,7 +109,7 @@
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="12" isBold="true"/>
                 </textElement>
-                <textFieldExpression><![CDATA["RUC: "+$F{ruc}+"-"+com.parah.utils.CalcDV.Pa_Calcular_Dv_11_A($F{ruc}.toString(), 11)]]></textFieldExpression>
+                <textFieldExpression><![CDATA["RUC: "+$F{ruc}+"-"+com.gnadenheimer.utils.CalcDV.Pa_Calcular_Dv_11_A($F{ruc}.toString(), 11)]]></textFieldExpression>
             </textField>
             <textField pattern="#000000" isBlankWhenNull="false">
                 <reportElement x="340" y="20" width="186" height="24" uuid="8e001246-49f6-4bc3-b931-bbd496e29651"/>

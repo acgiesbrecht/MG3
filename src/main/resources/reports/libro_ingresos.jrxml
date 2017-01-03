@@ -214,7 +214,7 @@ order by fechahora]]>
 					<rightPen lineWidth="0.4"/>
 				</box>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[com.parah.mg.utils.Utils.formatFacturaNroLibroIngresos($F{NRO})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[com.gnadenheimer.mg.utils.Utils.formatFacturaNroLibroIngresos($F{NRO})]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
 				<reportElement x="456" y="0" width="86" height="20" uuid="64ccba09-eb6d-4e4a-ab75-47fa6f8ccc49"/>

@@ -122,7 +122,7 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[com.parah.utils.NumeroALetras.convertNumberToLetter($P{importe_aporte}+$P{importe_donacion})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[com.gnadenheimer.utils.NumeroALetras.convertNumberToLetter($P{importe_aporte}+$P{importe_donacion})]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="45" y="490" width="220" height="20" uuid="9b4148f0-4518-4f5e-89a1-3bacbc918afe"/>
@@ -230,7 +230,7 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[com.parah.utils.NumeroALetras.convertNumberToLetter($P{importe_aporte}+$P{importe_donacion})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[com.gnadenheimer.utils.NumeroALetras.convertNumberToLetter($P{importe_aporte}+$P{importe_donacion})]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="159" y="760" width="16" height="20" uuid="7ecd1285-56aa-4f35-8aef-60e9bccbe09d"/>

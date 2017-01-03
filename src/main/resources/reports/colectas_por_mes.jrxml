@@ -141,7 +141,7 @@ ORDER BY e.FECHA, m.CTACTE]]>
 								<textElement textAlignment="Left" verticalAlignment="Middle">
 									<font size="8"/>
 								</textElement>
-								<textFieldExpression><![CDATA[com.parah.utils.FormatCtaCte.format($V{CTACTE1})]]></textFieldExpression>
+								<textFieldExpression><![CDATA[com.gnadenheimer.utils.FormatCtaCte.format($V{CTACTE1})]]></textFieldExpression>
 							</textField>
 						</cellContents>
 					</crosstabRowHeader>

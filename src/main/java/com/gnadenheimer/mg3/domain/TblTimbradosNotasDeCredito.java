@@ -219,7 +219,7 @@ public class TblTimbradosNotasDeCredito implements Serializable {
 
     @Override
     public String toString() {
-        return "com.parah.mg.domain.TblTimbradosNotasDeCredito[ id=" + id + " ]";
+        return "com.gnadenheimer.mg.domain.TblTimbradosNotasDeCredito[ id=" + id + " ]";
     }
 
     @XmlTransient

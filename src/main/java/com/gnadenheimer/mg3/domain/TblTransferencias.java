@@ -268,7 +268,7 @@ public class TblTransferencias implements Serializable {
      */
     @Override
     public String toString() {
-        return "com.parah.mg.domain.TblTransferencias[ id=" + id + " ]";
+        return "com.gnadenheimer.mg.domain.TblTransferencias[ id=" + id + " ]";
     }
 
     @Transient

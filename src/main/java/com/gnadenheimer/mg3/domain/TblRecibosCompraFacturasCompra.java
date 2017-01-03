@@ -116,7 +116,7 @@ public class TblRecibosCompraFacturasCompra implements Serializable {
 
     @Override
     public String toString() {
-        return "com.parah.mg.domain.TblRecibosCompraFacturasCompra[ tblRecibosCompraFacturasCompraPK=" + tblRecibosCompraFacturasCompraPK + " ]";
+        return "com.gnadenheimer.mg.domain.TblRecibosCompraFacturasCompra[ tblRecibosCompraFacturasCompraPK=" + tblRecibosCompraFacturasCompraPK + " ]";
     }
 
 }

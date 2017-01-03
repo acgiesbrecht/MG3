@@ -237,7 +237,7 @@
 				<textElement>
 					<font fontName="Times New Roman" size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[com.parah.utils.FormatCtaCte.format($F{cta_debito})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[com.gnadenheimer.utils.FormatCtaCte.format($F{cta_debito})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="116" y="112" width="156" height="10" uuid="2db2791e-b29e-43aa-ad78-1a4e9ae34474"/>
@@ -265,7 +265,7 @@
 				<textElement>
 					<font fontName="Times New Roman" size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[com.parah.utils.NumeroALetras.convertNumberToLetter($F{monto})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[com.gnadenheimer.utils.NumeroALetras.convertNumberToLetter($F{monto})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="61" y="217" width="210" height="10" uuid="208f290e-f970-4d6c-8976-c8221bd1fc1d"/>
@@ -314,7 +314,7 @@
 				<textElement>
 					<font fontName="Times New Roman" size="8" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[com.parah.utils.FormatCtaCte.format($F{cta_credito})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[com.gnadenheimer.utils.FormatCtaCte.format($F{cta_credito})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="6" y="229" width="100" height="10" uuid="a7a2a9bc-00e9-4cdf-ba3f-3e260989c2fd"/>

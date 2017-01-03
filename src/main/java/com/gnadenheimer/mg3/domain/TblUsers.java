@@ -190,7 +190,7 @@ public class TblUsers implements Serializable {
 
     @Override
     public String toString() {
-        return "com.parah.mg.domain.TblUsers[ id=" + id + " ]";
+        return "com.gnadenheimer.mg.domain.TblUsers[ id=" + id + " ]";
     }
 
     @XmlTransient

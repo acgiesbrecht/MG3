@@ -159,7 +159,7 @@ ON c.id_entidad = p.entidad
                     <rightPen lineWidth="0.4" lineStyle="Solid" lineColor="#000000"/>
                 </box>
                 <textElement verticalAlignment="Middle"/>
-                <textFieldExpression><![CDATA[com.parah.utils.FormatCtaCte.format($F{CTACTE})]]></textFieldExpression>
+                <textFieldExpression><![CDATA[com.gnadenheimer.utils.FormatCtaCte.format($F{CTACTE})]]></textFieldExpression>
             </textField>
             <textField pattern="#,##0">
                 <reportElement x="420" y="0" width="110" height="20" uuid="920b3bb4-9c54-4815-b16a-8c493ad8c299"/>

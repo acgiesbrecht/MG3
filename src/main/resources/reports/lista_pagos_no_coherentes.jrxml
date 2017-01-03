@@ -238,7 +238,7 @@ where p.asientos <> p.transf AND t.ID = p.ID AND e.ID = t.ID_ENTIDAD]]>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[com.parah.utils.FormatCtaCte.format($F{CTACTE})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[com.gnadenheimer.utils.FormatCtaCte.format($F{CTACTE})]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
 				<reportElement x="510" y="0" width="80" height="20" uuid="920b3bb4-9c54-4815-b16a-8c493ad8c299"/>
