@@ -76,7 +76,7 @@
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem fx:id="mnuAdConfig" mnemonicParsing="false" onAction="#mnuAdConfig" text="Configuracion de Sistema" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem fx:id="mnuAdBackUp" mnemonicParsing="false" text="Realizar BackUp" />
+            <MenuItem fx:id="mnuAdBackUp" mnemonicParsing="false" onAction="#mnuAdBackUp" text="Realizar BackUp" />
          </items>
       </Menu>
     </menus>

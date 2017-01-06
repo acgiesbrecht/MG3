@@ -7,6 +7,8 @@ package com.gnadenheimer.mg3;
 
 import com.gnadenheimer.mg3.utils.CurrentUser;
 import com.gnadenheimer.mg3.utils.LoginManager;
+import com.gnadenheimer.mg3.utils.Utils;
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -16,6 +18,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.DirectoryChooser;
 
 /**
  * FXML Controller class
@@ -163,10 +166,6 @@ public class MenuController implements Initializable {
         }
     }
 
-    public void setWelcome() {
-        setPane("/Welcome.fxml");
-    }
-
     @FXML
     private void mnuEgFacturas(ActionEvent event) {
         setPane("/fxml/egresos/FacturasCompras.fxml");
@@ -185,6 +184,20 @@ public class MenuController implements Initializable {
     @FXML
     private void mnuAdConfig(ActionEvent event) {
         setPane("/fxml/admin/AdminConfig.fxml");
+    }
+
+    @FXML
+    private void mnuAdBackUp(ActionEvent event) {
+        try {
+            DirectoryChooser directoryChooser = new DirectoryChooser();
+            directoryChooser.setTitle("Eligir ubicación de la base de datos.");
+            File selectedDirectory = directoryChooser.showDialog(App.mainStage);
+            if (selectedDirectory != null) {
+                Utils.getInstance().exectueBackUp(selectedDirectory.getAbsolutePath());
+            }
+        } catch (Exception ex) {
+            App.showException(this.getClass().getName(), ex.getMessage(), ex);
+        }
     }
 
 }
