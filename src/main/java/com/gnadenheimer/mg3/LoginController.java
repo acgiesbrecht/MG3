@@ -32,9 +32,6 @@ import org.mindrot.jbcrypt.BCrypt;
 public class LoginController implements Initializable {
 
     CurrentUser currentUser = CurrentUser.getInstance();
-    Map<String, String> persistenceMap = Utils.getInstance().getPersistenceMap();
-    EntityManager entityManager = App.factory.createEntityManager();
-    List<TblUsers> listUsers = (List<TblUsers>) entityManager.createQuery("SELECT t FROM TblUsers t").getResultList();
 
     @FXML
     private TextField txtUser;
@@ -59,6 +56,8 @@ public class LoginController implements Initializable {
                 tempUser.setTblRolesList(listRoles);
                 currentUser.setUser(tempUser);
             } else {
+                EntityManager entityManager = App.factory.createEntityManager();
+                List<TblUsers> listUsers = (List<TblUsers>) entityManager.createQuery("SELECT t FROM TblUsers t").getResultList();
                 listUsers.stream().filter((user) -> (user.getNombre().equals(txtUser.getText()) && BCrypt.checkpw(String.valueOf(txtPass.getText()), user.getPassword()))).forEachOrdered((user) -> {
                     currentUser.setUser(user);
                 });

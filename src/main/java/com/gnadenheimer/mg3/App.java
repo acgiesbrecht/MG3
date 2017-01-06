@@ -58,19 +58,35 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        try {
+            persistenceMap = Utils.getInstance().getPersistenceMap();
 
-        persistenceMap = Utils.getInstance().getPersistenceMap();
+            if (Boolean.parseBoolean(Preferences.userRoot().node("MG").get("isServer", "true"))) {
+                NetworkServerControl server = new NetworkServerControl();
+                server.start(null);
+            }
 
-        if (Boolean.parseBoolean(Preferences.userRoot().node("MG").get("isServer", "true"))) {
-            NetworkServerControl server = new NetworkServerControl();
-            server.start(null);
+            factory = Persistence.createEntityManagerFactory("mg_PU", persistenceMap);
+            databaseUpdate();
+            //AUTO LOGIN-------------------------------
+            currentUser.setUser(null);
+            EntityManager entityManager = factory.createEntityManager();
+            List<TblUsers> list = entityManager.createQuery("SELECT t FROM TblUsers t").getResultList();
+            for (TblUsers user : list) {
+                if (user.getNombre().equals("adrian") && BCrypt.checkpw(String.valueOf("adrian"), user.getPassword())) {
+                    TblRoles role = new TblRoles();
+                    role.setId(4);
+                    List<TblRoles> listRoles = new ArrayList();
+                    listRoles.add(role);
+                    user.setTblRolesList(listRoles);
+                    currentUser.setUser(user);
+                }
+            }
+        } catch (Exception ex) {
+            App.showException(this.toString(), ex.getMessage(), ex);
         }
 
-        factory = Persistence.createEntityManagerFactory("mg_PU", persistenceMap);
-
         TiwulFXUtil.setLocale(new Locale("es", "PY"));
-
-        databaseUpdate();
 
         Scene scene = new Scene(root);
         TiwulFXUtil.setTiwulFXStyleSheet(scene);
@@ -92,21 +108,6 @@ public class App extends Application {
         stage.setTitle("MG " + prop.getProperty("project.version") + "." + prop.getProperty("project.build"));
         stage.show();
 
-        //AUTO LOGIN-------------------------------
-        currentUser.setUser(null);
-        EntityManager entityManager = factory.createEntityManager();
-        List<TblUsers> list = entityManager.createQuery("SELECT t FROM TblUsers t").getResultList();
-        for (TblUsers user : list) {
-            if (user.getNombre().equals("adrian") && BCrypt.checkpw(String.valueOf("adrian"), user.getPassword())) {
-                TblRoles role = new TblRoles();
-                role.setId(4);
-                List<TblRoles> listRoles = new ArrayList();
-                listRoles.add(role);
-                user.setTblRolesList(listRoles);
-                currentUser.setUser(user);
-            }
-        }
-
         //----------------------------------------
         if (currentUser.getUser() == null) {
             LoginManager.getInstance().showLoginScreen();
@@ -122,7 +123,6 @@ public class App extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
         launch(args);
     }
 
