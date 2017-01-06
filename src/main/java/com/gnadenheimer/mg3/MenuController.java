@@ -159,8 +159,12 @@ public class MenuController implements Initializable {
             AnchorPane pane = FXMLLoader.load(getClass().getResource(paneUrl));
             App.getRoot().setCenter(pane);
         } catch (Exception ex) {
-            App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
+            App.showException(this.getClass().getName(), ex.getMessage(), ex);
         }
+    }
+
+    public void setWelcome() {
+        setPane("/Welcome.fxml");
     }
 
     @FXML
@@ -176,6 +180,11 @@ public class MenuController implements Initializable {
     @FXML
     private void mnuInfContabilidad(ActionEvent event) {
         setPane("/fxml/informes/InformesContabilidad.fxml");
+    }
+
+    @FXML
+    private void mnuAdConfig(ActionEvent event) {
+        setPane("/fxml/admin/AdminConfig.fxml");
     }
 
 }

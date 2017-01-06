@@ -74,7 +74,7 @@
             <MenuItem fx:id="mnuAdUsuarios" mnemonicParsing="false" text="Administrar Usuarios" />
             <MenuItem fx:id="mnuAdGrupos" mnemonicParsing="false" text="Administrar Grupos" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem fx:id="mnuAdConfig" mnemonicParsing="false" text="Configuracion de Sistema" />
+            <MenuItem fx:id="mnuAdConfig" mnemonicParsing="false" onAction="#mnuAdConfig" text="Configuracion de Sistema" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem fx:id="mnuAdBackUp" mnemonicParsing="false" text="Realizar BackUp" />
          </items>

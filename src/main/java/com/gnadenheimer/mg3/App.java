@@ -11,6 +11,7 @@ import com.panemu.tiwulfx.common.TiwulFXUtil;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +27,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -48,9 +50,12 @@ public class App extends Application {
     Map<String, String> persistenceMap = new HashMap<>();
     private static final BorderPane root = new BorderPane();
     public static Stage mainStage;
+    public static String periodoFiscal = Preferences.userRoot().node("MG").get("PeriodoFiscal", String.valueOf(LocalDate.now().getYear()));
 
     /**
      * Just a root getter for the controller to use
+     *
+     * @return
      */
     public static BorderPane getRoot() {
         return root;
@@ -103,6 +108,8 @@ public class App extends Application {
                 System.exit(0);
             }
         });
+
+        stage.getIcons().add(new Image(this.getClass().getResourceAsStream("/images/mg3.png")));
 
         stage.setMaximized(true);
         stage.setTitle("MG " + prop.getProperty("project.version") + "." + prop.getProperty("project.build"));
