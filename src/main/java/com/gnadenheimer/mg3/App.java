@@ -50,7 +50,7 @@ public class App extends Application {
     Map<String, String> persistenceMap = new HashMap<>();
     private static final BorderPane root = new BorderPane();
     public static Stage mainStage;
-    public static String periodoFiscal = Preferences.userRoot().node("MG").get("PeriodoFiscal", String.valueOf(LocalDate.now().getYear()));
+    public static Integer periodoFiscal = Preferences.userRoot().node("MG").getInt("PeriodoFiscal", LocalDate.now().getYear());
 
     /**
      * Just a root getter for the controller to use

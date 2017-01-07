@@ -21,6 +21,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -512,5 +513,13 @@ public class Utils extends Component {
         } else {
             return nro;
         }
+    }
+
+    public static LocalDate inicioPeriodoFiscal() {
+        return LocalDate.of(App.periodoFiscal, Month.JANUARY, 1);
+    }
+
+    public static LocalDate finPeriodoFiscal() {
+        return LocalDate.of(App.periodoFiscal, Month.DECEMBER, 31);
     }
 }

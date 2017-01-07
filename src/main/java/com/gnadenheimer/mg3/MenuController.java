@@ -200,4 +200,9 @@ public class MenuController implements Initializable {
         }
     }
 
+    @FXML
+    private void mnuAdEventos(ActionEvent event) {
+        setPane("/fxml/admin/AdminEventos.fxml");
+    }
+
 }

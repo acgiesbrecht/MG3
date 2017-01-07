@@ -80,7 +80,7 @@ public class AdminConfigController implements Initializable {
     @FXML
     private Label lblUpdateSET;
     @FXML
-    private ComboBox<String> cboPeriodoFiscal;
+    private ComboBox<Integer> cboPeriodoFiscal;
 
     /**
      * Initializes the controller class.
@@ -89,14 +89,14 @@ public class AdminConfigController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         cboTransferencias.getItems().addAll("Normal", "Triplicado");
         cboFacturasFormato.getItems().addAll("Preimpreso con rejilla", "Preimpreso sin rejilla", "Preimpreso con rejilla modelo especial Bethel Theodor");
-        cboPeriodoFiscal.getItems().addAll("2016", "2017");
+        cboPeriodoFiscal.getItems().addAll(2016, 2017);
         txtIP.setText(Preferences.userRoot().node("MG").get("DatabaseIP", "127.000.000.001"));
         txtDataDir.setText(Preferences.userRoot().node("MG").get("Datadir", "C:\\javadb"));
         rbServidor.setSelected(Boolean.parseBoolean(Preferences.userRoot().node("MG").get("isServer", "true")));
         cboTransferencias.getSelectionModel().select(Preferences.userRoot().node("MG").get("modoImpresion", "Normal"));
         cboFacturasFormato.getSelectionModel().select(Preferences.userRoot().node("MG").get("formatoFactura", "Preimpreso sin rejilla"));
         rbAyCPorMes.setSelected(Boolean.parseBoolean(Preferences.userRoot().node("MG").get("cobrarAC", "true")));
-        cboPeriodoFiscal.getSelectionModel().select(Preferences.userRoot().node("MG").get("PeriodoFiscal", String.valueOf(LocalDate.now().getYear())));
+        cboPeriodoFiscal.getSelectionModel().select(Integer.valueOf(Preferences.userRoot().node("MG").getInt("PeriodoFiscal", LocalDate.now().getYear())));
 
         txtDataDir.visibleProperty().bind(rbServidor.selectedProperty());
     }
@@ -122,7 +122,9 @@ public class AdminConfigController implements Initializable {
         Preferences.userRoot().node("MG").put("modoImpresion", cboTransferencias.getSelectionModel().getSelectedItem());
         Preferences.userRoot().node("MG").put("formatoFactura", cboFacturasFormato.getSelectionModel().getSelectedItem());
         Preferences.userRoot().node("MG").put("cobrarAC", String.valueOf(rbAyCPorMes.isSelected()));
-        Preferences.userRoot().node("MG").put("PeriodoFiscal", String.valueOf(cboPeriodoFiscal.getSelectionModel().getSelectedItem()));
+        Preferences.userRoot().node("MG").putInt("PeriodoFiscal", cboPeriodoFiscal.getSelectionModel().getSelectedItem());
+
+        App.periodoFiscal = cboPeriodoFiscal.getSelectionModel().getSelectedItem();
 
         LoginManager.getInstance().showMainView();
     }

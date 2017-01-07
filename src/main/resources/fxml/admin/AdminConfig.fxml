@@ -78,7 +78,6 @@
                </children>
             </HBox>
             <Button fx:id="cmdUpdateSET" mnemonicParsing="false" onAction="#cmdUpdateSET" text="Actualizar Base de Datos RUC de la SET" GridPane.rowIndex="9" />
-            <Button fx:id="cmdNombresComma" mnemonicParsing="false" onAction="#cmdNombresComma" text="Generar Nombres y Apellidos a partir de Apellidos, Nombres" GridPane.rowIndex="10" />
             <Label fx:id="lblUpdateSET" GridPane.columnIndex="1" GridPane.rowIndex="9" />
             <Label text="Periodo Fiscal" GridPane.rowIndex="3" />
             <ComboBox fx:id="cboPeriodoFiscal" GridPane.columnIndex="1" GridPane.rowIndex="3" />
