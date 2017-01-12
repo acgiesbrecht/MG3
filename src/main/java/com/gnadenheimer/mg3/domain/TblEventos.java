@@ -72,7 +72,7 @@ public class TblEventos implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "PORCENTAJE_APORTE")
-    private Integer porcentajeAporte;
+    private Integer porcentajeAporte = 0;
     @JoinColumn(name = "ID_CENTRO_DE_COSTO", referencedColumnName = "ID")
     @ManyToOne
     private TblCentrosDeCosto idCentroDeCosto;
@@ -86,7 +86,7 @@ public class TblEventos implements Serializable {
     @ManyToOne(optional = false)
     private TblUsers idUser;
     @Transient
-    private Integer porcentajeDonacion;
+    private Integer porcentajeDonacion = 0;
 
     public TblEventos() {
     }

@@ -4,6 +4,7 @@
  */
 package com.gnadenheimer.mg3;
 
+import com.gnadenheimer.mg3.utils.Utils;
 import com.panemu.tiwulfx.common.TableCriteria;
 import com.panemu.tiwulfx.common.TableData;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import javafx.scene.control.TableColumn.SortType;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -30,7 +32,7 @@ public class DaoBase<T> {
 
     private Class<T> voClass;
 //    EntityManager em = JavaApplication6.factory.createEntityManager();
-    EntityManager em = App.factory.createEntityManager();
+    EntityManager em = Utils.getInstance().getEntityManagerFactory().createEntityManager();
 
     public DaoBase(Class<T> clazz) {
 //        this.em = em;
@@ -58,8 +60,12 @@ public class DaoBase<T> {
 
     public List<T> getList(String query) {
         try {
-
-            List<T> result = (List<T>) em.createQuery(query).setParameter("trueValue", true).getResultList();
+            Query q = em.createQuery(query);
+            //Derby no soporta boolean por defecto
+            if (query.contains("trueValue")) {
+                q.setParameter("trueValue", true);
+            }
+            List<T> result = (List<T>) q.getResultList();
 
             return result;
         } catch (Exception ex) {
@@ -87,7 +93,7 @@ public class DaoBase<T> {
             List<SortType> sortingVersus,
             int maxResult, List<String> lstJoin) {
         try {
-            //em = App.factory.createEntityManager();
+            //em = Utils.getInstance().getEntityManagerFactory().createEntityManager();
             CriteriaBuilder builder = em.getCriteriaBuilder();
             CriteriaQuery<T> cq = builder.createQuery(voClass);
             Root<T> root = cq.from(voClass);
@@ -276,7 +282,7 @@ public class DaoBase<T> {
 //    }
     public List<T> insert(List<T> records) {
         try {
-            //em = App.factory.createEntityManager();
+            //em = Utils.getInstance().getEntityManagerFactory().createEntityManager();
             em.getTransaction().begin();
             for (T record : records) {
                 em.persist(record);
@@ -296,7 +302,7 @@ public class DaoBase<T> {
 
     public T insert(T record) {
         try {
-            //em = App.factory.createEntityManager();
+            //em = Utils.getInstance().getEntityManagerFactory().createEntityManager();
             em.getTransaction().begin();
             em.persist(record);
             em.getTransaction().commit();
@@ -314,7 +320,7 @@ public class DaoBase<T> {
 
     public List<T> delete(List<T> records) {
         try {
-            //em = App.factory.createEntityManager();
+            //em = Utils.getInstance().getEntityManagerFactory().createEntityManager();
             em.getTransaction().begin();
             for (T record : records) {
                 em.remove(em.merge(record));
@@ -330,7 +336,7 @@ public class DaoBase<T> {
 
     public T delete(T record) {
         try {
-            //em = App.factory.createEntityManager();
+            //em = Utils.getInstance().getEntityManagerFactory().createEntityManager();
             em.getTransaction().begin();
             em.remove(record);
             em.getTransaction().commit();
@@ -349,7 +355,7 @@ public class DaoBase<T> {
          */
         try {
             List<T> result = new ArrayList<>();
-            //em = App.factory.createEntityManager();
+            //em = Utils.getInstance().getEntityManagerFactory().createEntityManager();
             em.getTransaction().begin();
             for (T record : records) {
                 result.add(em.merge(record));
@@ -365,7 +371,7 @@ public class DaoBase<T> {
 
     public T update(T record) {
         try {
-            //em = App.factory.createEntityManager();
+            //em = Utils.getInstance().getEntityManagerFactory().createEntityManager();
             em.getTransaction().begin();
             record = em.merge(record);
             em.getTransaction().commit();
@@ -379,7 +385,7 @@ public class DaoBase<T> {
 
     public List<T> initRelationship(List<T> records, String joinTable) {
         try {
-            //em = App.factory.createEntityManager();
+            //em = Utils.getInstance().getEntityManagerFactory().createEntityManager();
             CriteriaBuilder builder = em.getCriteriaBuilder();
             CriteriaQuery<T> cq = builder.createQuery(voClass);
             Root<T> root = cq.from(voClass);
@@ -399,7 +405,7 @@ public class DaoBase<T> {
 
     public T initRelationship(T record, String joinTable) {
         try {
-            //em = App.factory.createEntityManager();
+            //em = Utils.getInstance().getEntityManagerFactory().createEntityManager();
             CriteriaBuilder builder = em.getCriteriaBuilder();
             CriteriaQuery<T> cq = builder.createQuery(voClass);
             Root<T> root = cq.from(voClass);

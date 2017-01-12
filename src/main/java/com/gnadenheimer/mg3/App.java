@@ -8,6 +8,7 @@ import com.gnadenheimer.mg3.utils.CurrentUser;
 import com.gnadenheimer.mg3.utils.LoginManager;
 import com.gnadenheimer.mg3.utils.Utils;
 import com.panemu.tiwulfx.common.TiwulFXUtil;
+import java.io.File;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -31,12 +32,11 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import org.apache.derby.drda.NetworkServerControl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -46,7 +46,7 @@ public class App extends Application {
 
     public static CurrentUser currentUser = CurrentUser.getInstance();
     private static final Logger LOGGER = LogManager.getLogger(App.class);
-    public static EntityManagerFactory factory;
+
     Map<String, String> persistenceMap = new HashMap<>();
     private static final BorderPane root = new BorderPane();
     public static Stage mainStage;
@@ -64,18 +64,21 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         try {
-            persistenceMap = Utils.getInstance().getPersistenceMap();
-
             if (Boolean.parseBoolean(Preferences.userRoot().node("MG").get("isServer", "true"))) {
+                Properties p = System.getProperties();
+                p.setProperty("derby.system.home", Preferences.userRoot().node("MG").get("Datadir", System.getProperty("user.dir") + File.separator + "javadb"));
+                p.setProperty("derby.drda.host", "0.0.0.0");
+                p.setProperty("derby.language.sequence.preallocator", "1");
                 NetworkServerControl server = new NetworkServerControl();
                 server.start(null);
             }
 
-            factory = Persistence.createEntityManagerFactory("mg_PU", persistenceMap);
+            Utils.getInstance().setEntityManagerFactory();
+
             databaseUpdate();
             //AUTO LOGIN-------------------------------
             currentUser.setUser(null);
-            EntityManager entityManager = factory.createEntityManager();
+            EntityManager entityManager = Utils.getInstance().getEntityManagerFactory().createEntityManager();
             List<TblUsers> list = entityManager.createQuery("SELECT t FROM TblUsers t").getResultList();
             for (TblUsers user : list) {
                 if (user.getNombre().equals("adrian") && BCrypt.checkpw(String.valueOf("adrian"), user.getPassword())) {
@@ -180,7 +183,7 @@ public class App extends Application {
 
     private void databaseUpdate() {
         try {
-            EntityManager entityManager = factory.createEntityManager();
+            EntityManager entityManager = Utils.getInstance().getEntityManagerFactory().createEntityManager();
             entityManager.getTransaction().begin();
 
             try {

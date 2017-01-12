@@ -39,6 +39,9 @@ public class AdminEventosController implements Initializable {
 
     CurrentUser currentUser = CurrentUser.getInstance();
     private DaoBase<TblEventos> daoTblEventos = new DaoBase<>(TblEventos.class);
+    private DaoBase<TblEventoTipos> daoTblEventoTipos = new DaoBase<>(TblEventoTipos.class);
+    private DaoBase<TblGrupos> daoTblGrupos = new DaoBase<>(TblGrupos.class);
+    private DaoBase<TblCentrosDeCosto> daoTblCentrosDeCosto = new DaoBase<>(TblCentrosDeCosto.class);
 
     @FXML
     private TableControl<TblEventos> eventosTable;
@@ -57,16 +60,25 @@ public class AdminEventosController implements Initializable {
         cFecha.setMinWidth(150);
 
         TypeAheadColumn<TblEventos, TblEventoTipos> cTipo = new TypeAheadColumn<>("idEventoTipo");
+        daoTblEventoTipos.getList("select t from TblEventoTipos t where t.id < 4").forEach((e) -> {
+            cTipo.addItem(e.getDescripcion(), e);
+        });
         cTipo.setText("Tipo de Evento");
 
         TextColumn<TblEventos> cDescripcion = new TextColumn<>("descripcion");
         cDescripcion.setText("Descripcion");
 
         TypeAheadColumn<TblEventos, TblCentrosDeCosto> cCentroDeCosto = new TypeAheadColumn<>("idCentroDeCosto");
+        daoTblCentrosDeCosto.getList().forEach((e) -> {
+            cCentroDeCosto.addItem(e.getDescripcion(), e);
+        });
         cCentroDeCosto.setText("Centro de Costo");
 
         TypeAheadColumn<TblEventos, TblGrupos> cGrupo = new TypeAheadColumn<>("idGrupo");
-        cGrupo.setText("Grupo con acceso");
+        daoTblGrupos.getList().forEach((e) -> {
+            cGrupo.addItem(e.getDescripcion(), e);
+        });
+        cGrupo.setText("Grupo de Acceso");
 
         NumberColumn<TblEventos, Integer> cAporte = new NumberColumn<>("porcentajeAporte", Integer.class);
         cAporte.setText("% Aporte");
@@ -96,6 +108,16 @@ public class AdminEventosController implements Initializable {
         @Override
         public List<TblEventos> insert(List<TblEventos> newRecords) {
             return daoTblEventos.insert(newRecords);
+        }
+
+        @Override
+        public TblEventos preInsert(TblEventos newRecord) {
+            daoTblCentrosDeCosto.getList().stream().filter((c) -> (c.getPreferido())).forEach((c) -> {
+                newRecord.setIdCentroDeCosto(c);
+            });
+            newRecord.setIdGrupo(currentUser.getUser().getTblGruposList().get(0));
+            newRecord.setIdUser(currentUser.getUser());
+            return newRecord;
         }
 
         @Override

@@ -44,7 +44,6 @@ import ru.vas7n.va.widgets.MaskField;
  */
 public class AdminConfigController implements Initializable {
 
-    private TextField txtDataDirectory;
     @FXML
     private Button cmdDataDirectory;
     @FXML
@@ -87,18 +86,23 @@ public class AdminConfigController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        cboTransferencias.getItems().addAll("Normal", "Triplicado");
-        cboFacturasFormato.getItems().addAll("Preimpreso con rejilla", "Preimpreso sin rejilla", "Preimpreso con rejilla modelo especial Bethel Theodor");
-        cboPeriodoFiscal.getItems().addAll(2016, 2017);
-        txtIP.setText(Preferences.userRoot().node("MG").get("DatabaseIP", "127.000.000.001"));
-        txtDataDir.setText(Preferences.userRoot().node("MG").get("Datadir", "C:\\javadb"));
-        rbServidor.setSelected(Boolean.parseBoolean(Preferences.userRoot().node("MG").get("isServer", "true")));
-        cboTransferencias.getSelectionModel().select(Preferences.userRoot().node("MG").get("modoImpresion", "Normal"));
-        cboFacturasFormato.getSelectionModel().select(Preferences.userRoot().node("MG").get("formatoFactura", "Preimpreso sin rejilla"));
-        rbAyCPorMes.setSelected(Boolean.parseBoolean(Preferences.userRoot().node("MG").get("cobrarAC", "true")));
-        cboPeriodoFiscal.getSelectionModel().select(Integer.valueOf(Preferences.userRoot().node("MG").getInt("PeriodoFiscal", LocalDate.now().getYear())));
+        try {
+            cboTransferencias.getItems().addAll("Normal", "Triplicado");
+            cboFacturasFormato.getItems().addAll("Preimpreso con rejilla", "Preimpreso sin rejilla", "Preimpreso con rejilla modelo especial Bethel Theodor");
+            cboPeriodoFiscal.getItems().addAll(2016, 2017);
+            txtIP.setText(Preferences.userRoot().node("MG").get("DatabaseIP", "127.000.000.001"));
+            txtDataDir.setText(Preferences.userRoot().node("MG").get("Datadir", System.getProperty("user.dir") + File.separator + "javadb"));
+            rbServidor.setSelected(Boolean.parseBoolean(Preferences.userRoot().node("MG").get("isServer", "true")));
+            rbCliente.setSelected(!Boolean.parseBoolean(Preferences.userRoot().node("MG").get("isServer", "truemaster   1")));
+            cboTransferencias.getSelectionModel().select(Preferences.userRoot().node("MG").get("modoImpresion", "Normal"));
+            cboFacturasFormato.getSelectionModel().select(Preferences.userRoot().node("MG").get("formatoFactura", "Preimpreso sin rejilla"));
+            rbAyCPorMes.setSelected(Boolean.parseBoolean(Preferences.userRoot().node("MG").get("cobrarAC", "true")));
+            cboPeriodoFiscal.getSelectionModel().select(Integer.valueOf(Preferences.userRoot().node("MG").getInt("PeriodoFiscal", LocalDate.now().getYear())));
 
-        txtDataDir.visibleProperty().bind(rbServidor.selectedProperty());
+            txtDataDir.visibleProperty().bind(rbServidor.selectedProperty());
+        } catch (Exception ex) {
+            App.showException(this.getClass().getName(), ex.getMessage(), ex);
+        }
     }
 
     @FXML
@@ -107,7 +111,7 @@ public class AdminConfigController implements Initializable {
             DirectoryChooser directoryChooser = new DirectoryChooser();
             File selectedDirectory = directoryChooser.showDialog(App.mainStage);
             if (selectedDirectory != null) {
-                txtDataDirectory.setText(selectedDirectory.getAbsolutePath());
+                txtDataDir.setText(selectedDirectory.getAbsolutePath());
             }
         } catch (Exception ex) {
             App.showException(this.getClass().getName(), ex.getMessage(), ex);
@@ -116,17 +120,22 @@ public class AdminConfigController implements Initializable {
 
     @FXML
     private void cmdSave(ActionEvent event) {
-        Preferences.userRoot().node("MG").put("DatabaseIP", txtIP.getText());
-        Preferences.userRoot().node("MG").put("Datadir", txtDataDir.getText());
-        Preferences.userRoot().node("MG").put("isServer", String.valueOf(rbServidor.isSelected()));
-        Preferences.userRoot().node("MG").put("modoImpresion", cboTransferencias.getSelectionModel().getSelectedItem());
-        Preferences.userRoot().node("MG").put("formatoFactura", cboFacturasFormato.getSelectionModel().getSelectedItem());
-        Preferences.userRoot().node("MG").put("cobrarAC", String.valueOf(rbAyCPorMes.isSelected()));
-        Preferences.userRoot().node("MG").putInt("PeriodoFiscal", cboPeriodoFiscal.getSelectionModel().getSelectedItem());
+        try {
+            Preferences.userRoot().node("MG").put("DatabaseIP", txtIP.getText());
+            Preferences.userRoot().node("MG").put("Datadir", txtDataDir.getText());
+            Preferences.userRoot().node("MG").put("isServer", String.valueOf(rbServidor.isSelected()));
+            Preferences.userRoot().node("MG").put("modoImpresion", cboTransferencias.getSelectionModel().getSelectedItem());
+            Preferences.userRoot().node("MG").put("formatoFactura", cboFacturasFormato.getSelectionModel().getSelectedItem());
+            Preferences.userRoot().node("MG").put("cobrarAC", String.valueOf(rbAyCPorMes.isSelected()));
+            Preferences.userRoot().node("MG").putInt("PeriodoFiscal", cboPeriodoFiscal.getSelectionModel().getSelectedItem());
 
-        App.periodoFiscal = cboPeriodoFiscal.getSelectionModel().getSelectedItem();
+            App.periodoFiscal = cboPeriodoFiscal.getSelectionModel().getSelectedItem();
+            Utils.getInstance().setEntityManagerFactory();
 
-        LoginManager.getInstance().showMainView();
+            LoginManager.getInstance().showMainView();
+        } catch (Exception ex) {
+            App.showException(this.getClass().getName(), ex.getMessage(), ex);
+        }
     }
 
     @FXML
@@ -136,6 +145,7 @@ public class AdminConfigController implements Initializable {
 
     @FXML
     private void rbServidor(ActionEvent event) {
+        txtIP.setText("127.000.000.001");
     }
 
     @FXML
@@ -166,8 +176,7 @@ public class AdminConfigController implements Initializable {
             @Override
             public Void call() {
                 try {
-                    Map<String, String> persistenceMap = Utils.getInstance().getPersistenceMap();
-                    EntityManager entityManager = App.factory.createEntityManager();
+                    EntityManager entityManager = Utils.getInstance().getEntityManagerFactory().createEntityManager();
                     entityManager.getTransaction().begin();
                     String temp = "";
                     Integer count = 0;

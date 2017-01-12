@@ -31,6 +31,10 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.prefs.Preferences;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -58,6 +62,7 @@ public class Utils extends Component {
     private static final Utils UTILS = new Utils();
     private static final Logger LOGGER = LogManager.getLogger(Utils.class);
     CurrentUser currentUser = CurrentUser.getInstance();
+    private EntityManagerFactory entityManagerFactory;
 
     /* A private Constructor prevents any other
      * class from instantiating.
@@ -115,10 +120,7 @@ public class Utils extends Component {
 
     public Map<String, String> getPersistenceMap() {
         try {
-            Properties p = System.getProperties();
-            p.setProperty("derby.system.home", Preferences.userRoot().node("MG").get("Datadir", (new JFileChooser()).getFileSystemView().getDefaultDirectory().toString() + "\\javadb"));
-            p.setProperty("derby.drda.host", "0.0.0.0");
-            p.setProperty("derby.language.sequence.preallocator", "1");
+
             String databaseIP;
             databaseIP = Preferences.userRoot().node("MG").get("DatabaseIP", "127.0.0.1");
             Map<String, String> persistenceMap = new HashMap<>();
@@ -521,5 +523,13 @@ public class Utils extends Component {
 
     public static LocalDate finPeriodoFiscal() {
         return LocalDate.of(App.periodoFiscal, Month.DECEMBER, 31);
+    }
+
+    public void setEntityManagerFactory() {
+        this.entityManagerFactory = Persistence.createEntityManagerFactory("mg_PU", getPersistenceMap());
+    }
+
+    public EntityManagerFactory getEntityManagerFactory() {
+        return this.entityManagerFactory;
     }
 }
