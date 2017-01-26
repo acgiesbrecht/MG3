@@ -91,6 +91,8 @@ public class TblTransferencias implements Serializable {
 
     private TblUsers idUser;
 
+    private final IntegerProperty seqPago = new SimpleIntegerProperty();
+
     public TblTransferencias() {
     }
 
@@ -243,6 +245,17 @@ public class TblTransferencias implements Serializable {
 
     public void setIdUser(TblUsers idUser) {
         this.idUser = idUser;
+    }
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "SEQ_PAGO")
+    public Integer getSeqPago() {
+        return seqPago.get();
+    }
+
+    public void setSeqPago(Integer seqPago) {
+        this.seqPago.set(seqPago);
     }
 
     /*

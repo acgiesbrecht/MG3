@@ -30,8 +30,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
 
 /**
  * FXML Controller class
@@ -61,6 +59,16 @@ public class InformesContabilidadController implements Initializable {
 
     private final ObjectProperty<LocalDateTime> startDate = new SimpleObjectProperty<>();
     private final ObjectProperty<LocalDateTime> endDate = new SimpleObjectProperty<>();
+    @FXML
+    private Button cmdLibroIngresos;
+    @FXML
+    private Button cmdLibroEgresos;
+    @FXML
+    private Button cmdExtractoDetalle;
+    @FXML
+    private Button cmdExtractoResumen;
+    @FXML
+    private TypeAheadControl<TblCentrosDeCosto> cboExtractoCdC;
 
     /**
      * Initializes the controller class.
@@ -75,38 +83,41 @@ public class InformesContabilidadController implements Initializable {
 
         List<TblCentrosDeCosto> lCdC = daoTblCentrosDeCosto.getList();
         cboMayorCdC.addItem("TODOS", cdcTodos);
+        cboExtractoCdC.addItem("TODOS", cdcTodos);
         lCdC.forEach((p) -> {
             cboMayorCdC.addItem(p.getDescripcion(), p);
+            cboExtractoCdC.addItem(p.getDescripcion(), p);
         });
         cboMayorCdC.setValue(cdcTodos);
+        cboExtractoCdC.setValue(cdcTodos);
 
 //        startDate.bind(startDate);
-        selectPreiodo(new ActionEvent());
+        selectPeriodo(new ActionEvent());
     }
 
     @FXML
-    private void selectPreiodo(ActionEvent event) {
-        LocalDateTime startDate = LocalDateTime.now().withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0);
-        LocalDateTime endDate = LocalDateTime.now().withDayOfMonth(LocalDate.now().lengthOfMonth()).withHour(23).withMinute(59).withSecond(59);
+    private void selectPeriodo(ActionEvent event) {
+        LocalDateTime startDateL = LocalDateTime.now().withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0);
+        LocalDateTime endDateL = LocalDateTime.now().withDayOfMonth(LocalDate.now().lengthOfMonth()).withHour(23).withMinute(59).withSecond(59);
 
         switch (cboPeriodo.getSelectionModel().getSelectedItem()) {
             case "Este año":
-                startDate = LocalDateTime.now().withDayOfYear(1).toLocalDate().atStartOfDay();
-                endDate = startDate.plusYears(1).minusNanos(1);
+                startDateL = LocalDateTime.now().withDayOfYear(1).toLocalDate().atStartOfDay();
+                endDateL = startDateL.plusYears(1).minusNanos(1);
                 break;
             case "Este mes":
-                startDate = LocalDateTime.now().withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
-                endDate = startDate.plusMonths(1).minusNanos(1);
+                startDateL = LocalDateTime.now().withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
+                endDateL = startDateL.plusMonths(1).minusNanos(1);
                 break;
             case "Hoy":
-                startDate = LocalDateTime.now().toLocalDate().atStartOfDay();
-                endDate = startDate.plusDays(1).minusNanos(1);
+                startDateL = LocalDateTime.now().toLocalDate().atStartOfDay();
+                endDateL = startDateL.plusDays(1).minusNanos(1);
                 break;
         }
-        dpDesde.setValue(startDate.toLocalDate());
-        ttDesde.setText(startDate.toLocalTime().format(DateTimeFormatter.ISO_LOCAL_TIME));
-        dpHasta.setValue(endDate.toLocalDate());
-        ttHasta.setText(endDate.toLocalTime().format(DateTimeFormatter.ISO_LOCAL_TIME));
+        dpDesde.setValue(startDateL.toLocalDate());
+        ttDesde.setText(startDateL.toLocalTime().format(DateTimeFormatter.ISO_LOCAL_TIME));
+        dpHasta.setValue(endDateL.toLocalDate());
+        ttHasta.setText(endDateL.toLocalTime().format(DateTimeFormatter.ISO_LOCAL_TIME));
     }
 
     @FXML
@@ -116,7 +127,7 @@ public class InformesContabilidadController implements Initializable {
             parameters.put("fechaDesde", Timestamp.valueOf(getStartDate()));
             parameters.put("fechaHasta", Timestamp.valueOf(getEndDate()));
             TblCentrosDeCosto cdc = cboMayorCdC.getValue();
-            if (cdc == null) {
+            if (cdc.getDescripcion() == null) {
                 if (chbMayorSoloTotales.isSelected()) {
                     Utils.getInstance().showReport("libro_mayor", "libro_mayor_solo_totales_subreport", "libro_mayor_subreport_saldo_anterior", parameters, false);
                 } else {
@@ -174,6 +185,68 @@ public class InformesContabilidadController implements Initializable {
      */
     public void setEndDate(LocalDateTime endDate) {
         this.endDate.set(endDate);
+    }
+
+    @FXML
+    private void cmdLibroIngresos(ActionEvent event) {
+        try {
+            Map parameters = new HashMap();
+            parameters.put("fechaDesde", Timestamp.valueOf(getStartDate()));
+            parameters.put("fechaHasta", Timestamp.valueOf(getEndDate()));
+            Utils.getInstance().showReport("libro_ingresos", parameters, true);
+        } catch (Exception ex) {
+            App.showException("Error", ex.getMessage(), ex);
+        }
+    }
+
+    @FXML
+    private void cmdLibroEgresos(ActionEvent event) {
+        try {
+            Map parameters = new HashMap();
+            parameters.put("fechaDesde", Timestamp.valueOf(getStartDate()));
+            parameters.put("fechaHasta", Timestamp.valueOf(getEndDate()));
+            Utils.getInstance().showReport("libro_egresos", parameters, true);
+        } catch (Exception ex) {
+            App.showException("Error", ex.getMessage(), ex);
+        }
+    }
+
+    @FXML
+    private void cmdExtractoDetalle(ActionEvent event) {
+        try {
+            Map parameters = new HashMap();
+            parameters.put("fechaDesde", Timestamp.valueOf(getStartDate()));
+            parameters.put("fechaHasta", Timestamp.valueOf(getEndDate()));
+            TblCentrosDeCosto cdc = cboExtractoCdC.getValue();
+            if (cdc.getDescripcion() == null) {
+                Utils.getInstance().showReport("extracto_ctacte", "extracto_ctacte_subreport_saldo_anterior", parameters, false);
+            } else {
+                parameters.put("centroDeCosto", cdc.getId());
+                parameters.put("centroDeCostoNombre", cdc.getDescripcion());
+                Utils.getInstance().showReport("extracto_ctacte_cc", "extracto_ctacte_subreport_saldo_anterior_cc", parameters, false);
+            }
+        } catch (Exception ex) {
+            App.showException("Error", ex.getMessage(), ex);
+        }
+    }
+
+    @FXML
+    private void cmdExtractoResumen(ActionEvent event) {
+        try {
+            Map parameters = new HashMap();
+            parameters.put("fechaDesde", Timestamp.valueOf(getStartDate()));
+            parameters.put("fechaHasta", Timestamp.valueOf(getEndDate()));
+            TblCentrosDeCosto cdc = cboExtractoCdC.getValue();
+            if (cdc == null) {
+                Utils.getInstance().showReport("extracto_ctacte_resumen", "extracto_ctacte_subreport_saldo_anterior", parameters, false);
+            } else {
+                parameters.put("centroDeCosto", cdc.getId());
+                parameters.put("centroDeCostoNombre", cdc.getDescripcion());
+                Utils.getInstance().showReport("extracto_ctacte_resumen_cc", "extracto_ctacte_subreport_saldo_anterior_cc", parameters, false);
+            }
+        } catch (Exception ex) {
+            App.showException("Error", ex.getMessage(), ex);
+        }
     }
 
 }

@@ -15,11 +15,11 @@
 
 <AnchorPane id="AnchorPane" prefHeight="445.0" prefWidth="841.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gnadenheimer.mg3.controller.informes.InformesContabilidadController">
     <children>
-        <GridPane hgap="5.0" layoutX="107.0" layoutY="66.0" vgap="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <GridPane hgap="5.0" layoutX="107.0" layoutY="66.0" vgap="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
             <columnConstraints>
                 <ColumnConstraints halignment="RIGHT" hgrow="NEVER" maxWidth="161.0" minWidth="142.0" prefWidth="161.0" />
-                <ColumnConstraints hgrow="NEVER" maxWidth="313.0" minWidth="226.0" prefWidth="226.0" />
-                <ColumnConstraints halignment="RIGHT" hgrow="NEVER" maxWidth="415.0" minWidth="295.0" prefWidth="415.0" />
+                <ColumnConstraints hgrow="NEVER" maxWidth="360.0" minWidth="226.0" prefWidth="348.0" />
+                <ColumnConstraints halignment="RIGHT" hgrow="NEVER" maxWidth="415.0" minWidth="281.0" prefWidth="293.0" />
             </columnConstraints>
             <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -36,7 +36,7 @@
             <children>
                 <Label text="Periodo" />
                 <Label text="Desde" GridPane.rowIndex="1" />
-                <ComboBox fx:id="cboPeriodo" onAction="#selectPreiodo" prefWidth="150.0" GridPane.columnIndex="1" />
+                <ComboBox fx:id="cboPeriodo" onAction="#selectPeriodo" prefWidth="150.0" GridPane.columnIndex="1" />
             <Label text="Libro Diario" GridPane.rowIndex="4" />
             <Label text="Libro Mayor" GridPane.rowIndex="5" />
             <Label text="Libro Ingresos" GridPane.rowIndex="6" />
@@ -50,12 +50,13 @@
                   <Button fx:id="cmdMayor" mnemonicParsing="false" onAction="#verLibroMayor" prefHeight="25.0" prefWidth="71.0" text="Ver" textAlignment="CENTER" />
                </children>
             </HBox>
-            <Button mnemonicParsing="false" text="Ver" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <Button mnemonicParsing="false" text="Ver" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Button fx:id="cmdLibroIngresos" mnemonicParsing="false" onAction="#cmdLibroIngresos" text="Ver" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Button fx:id="cmdLibroEgresos" mnemonicParsing="false" onAction="#cmdLibroEgresos" text="Ver" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="7" />
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
                <children>
-                  <Button mnemonicParsing="false" text="Ver Detalle" textAlignment="CENTER" />
-                  <Button mnemonicParsing="false" text="Ver Resumen" textAlignment="CENTER" />
+                  <TypeAheadControl fx:id="cboExtractoCdC" promptText="Centro de Costo" />
+                  <Button fx:id="cmdExtractoDetalle" mnemonicParsing="false" onAction="#cmdExtractoDetalle" text="Ver Detalle" textAlignment="CENTER" />
+                  <Button fx:id="cmdExtractoResumen" mnemonicParsing="false" onAction="#cmdExtractoResumen" text="Ver Resumen" textAlignment="CENTER" />
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -71,13 +72,7 @@
                       <TimeTextField fx:id="ttHasta" prefHeight="25.0" prefWidth="70.0" />
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="2" GridPane.rowIndex="8">
-               <children>
-                  <TypeAheadControl promptText="Centro de Costo" />
-                  <Button mnemonicParsing="false" text="Ver Detalle" textAlignment="CENTER" />
-                  <Button mnemonicParsing="false" text="Ver Resumen" textAlignment="CENTER" />
-               </children>
-            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="2" GridPane.rowIndex="8" />
             </children>
         </GridPane>
     </children>

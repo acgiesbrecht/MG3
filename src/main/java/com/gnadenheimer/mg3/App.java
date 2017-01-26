@@ -2,7 +2,6 @@ package com.gnadenheimer.mg3;
 
 import com.gnadenheimer.mg3.domain.TblDatabaseUpdates;
 import com.gnadenheimer.mg3.domain.TblRoles;
-import com.gnadenheimer.mg3.domain.TblTransferencias;
 import com.gnadenheimer.mg3.domain.TblUsers;
 import com.gnadenheimer.mg3.utils.CurrentUser;
 import com.gnadenheimer.mg3.utils.LoginManager;
@@ -18,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.prefs.Preferences;
 import javafx.application.Application;
@@ -26,13 +26,13 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
@@ -136,10 +136,35 @@ public class App extends Application {
         launch(args);
     }
 
+    public static Boolean showConfirmation(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+
+        alert.initStyle(StageStyle.UTILITY);
+        alert.setTitle("Consulta");
+        alert.setHeaderText(title);
+        alert.setContentText(message);
+
+        alert.showAndWait();
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.get() == ButtonType.OK;
+    }
+
     public static void showWarning(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
+
         alert.initStyle(StageStyle.UTILITY);
         alert.setTitle("Warning");
+        alert.setHeaderText(title);
+        alert.setContentText(message);
+
+        alert.showAndWait();
+    }
+
+    public static void showInfo(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+        alert.initStyle(StageStyle.UTILITY);
+        alert.setTitle("Informacion");
         alert.setHeaderText(title);
         alert.setContentText(message);
 
@@ -192,77 +217,133 @@ public class App extends Application {
                 Utils.getInstance().executeSQL("/sql/javadb.sql");
             }
 
-            Boolean hasBackedUp = false;
+            Boolean hasUpdated = false;
 
             try {
                 Object o = entityManager.createNativeQuery("select count(*) from tbl_database_updates where 1=2").getSingleResult();
             } catch (Exception e) {
-                hasBackedUp = Utils.getInstance().executeUpdateSQL("/sql/javadb_20160224.sql", hasBackedUp);
+                hasUpdated = Utils.getInstance().executeUpdateSQL("/sql/javadb_20160224.sql", hasUpdated);
+                if (!hasUpdated) {
+                    App.showException("ERROR de Base de Datos", e.getMessage(), e);
+                }
             }
 
             if (entityManager.find(TblDatabaseUpdates.class, "/sql/javadb_20160219.sql") == null) {
-                hasBackedUp = Utils.getInstance().executeUpdateSQL("/sql/javadb_20160219.sql", hasBackedUp);
+                hasUpdated = Utils.getInstance().executeUpdateSQL("/sql/javadb_20160219.sql", hasUpdated);
+                if (!hasUpdated) {
+                    return;
+                }
             }
-
             if (entityManager.find(TblDatabaseUpdates.class, "/sql/javadb_20160219.sql") == null) {
-                hasBackedUp = Utils.getInstance().executeUpdateSQL("/sql/javadb_20160219.sql", hasBackedUp);
+                hasUpdated = Utils.getInstance().executeUpdateSQL("/sql/javadb_20160219.sql", hasUpdated);
+                if (!hasUpdated) {
+                    return;
+                }
             }
-
             if (entityManager.find(TblDatabaseUpdates.class, "/sql/javadb_20160323.sql") == null) {
-                hasBackedUp = Utils.getInstance().executeUpdateSQL("/sql/javadb_20160323.sql", hasBackedUp);
+                hasUpdated = Utils.getInstance().executeUpdateSQL("/sql/javadb_20160323.sql", hasUpdated);
+                if (!hasUpdated) {
+                    return;
+                }
             }
             if (entityManager.find(TblDatabaseUpdates.class, "/sql/javadb_contabilidad_y_compras.sql") == null) {
-                hasBackedUp = Utils.getInstance().executeUpdateSQL("/sql/javadb_contabilidad_y_compras.sql", hasBackedUp);
+                hasUpdated = Utils.getInstance().executeUpdateSQL("/sql/javadb_contabilidad_y_compras.sql", hasUpdated);
+                if (!hasUpdated) {
+                    return;
+                }
             }
             if (entityManager.find(TblDatabaseUpdates.class, "/sql/javadb_20160330.sql") == null) {
-                hasBackedUp = Utils.getInstance().executeUpdateSQL("/sql/javadb_20160330.sql", hasBackedUp);
+                hasUpdated = Utils.getInstance().executeUpdateSQL("/sql/javadb_20160330.sql", hasUpdated);
+                if (!hasUpdated) {
+                    return;
+                }
             }
             if (entityManager.find(TblDatabaseUpdates.class, "/sql/javadb_20160409.sql") == null) {
-                hasBackedUp = Utils.getInstance().executeUpdateSQL("/sql/javadb_20160409.sql", hasBackedUp);
+                hasUpdated = Utils.getInstance().executeUpdateSQL("/sql/javadb_20160409.sql", hasUpdated);
+                if (!hasUpdated) {
+                    return;
+                }
             }
             if (entityManager.find(TblDatabaseUpdates.class, "/sql/javadb_20160429.sql") == null) {
-                hasBackedUp = Utils.getInstance().executeUpdateSQL("/sql/javadb_20160429.sql", hasBackedUp);
+                hasUpdated = Utils.getInstance().executeUpdateSQL("/sql/javadb_20160429.sql", hasUpdated);
+                if (!hasUpdated) {
+                    return;
+                }
             }
             if (entityManager.find(TblDatabaseUpdates.class, "/sql/javadb_20160507.sql") == null) {
-                hasBackedUp = Utils.getInstance().executeUpdateSQL("/sql/javadb_20160507.sql", hasBackedUp);
-                List<TblTransferencias> listT = entityManager.createQuery("SELECT t FROM TblTransferencias t").getResultList();
-                if (listT != null) {
-                    for (TblTransferencias t : listT) {
-                        if (t.getFechahoraCompromiso() == null) {
-                            t.setFechahoraCompromiso(t.getFechahora());
-                            entityManager.merge(t);
-                        }
-                    }
-                    entityManager.getTransaction().commit();
-                    entityManager.getTransaction().begin();
+                hasUpdated = Utils.getInstance().executeUpdateSQL("/sql/javadb_20160507.sql", hasUpdated);
+                if (!hasUpdated) {
+                    return;
                 }
             }
             if (entityManager.find(TblDatabaseUpdates.class, "/sql/javadb_20160601.sql") == null) {
-                hasBackedUp = Utils.getInstance().executeUpdateSQL("/sql/javadb_20160601.sql", hasBackedUp);
+                hasUpdated = Utils.getInstance().executeUpdateSQL("/sql/javadb_20160601.sql", hasUpdated);
+                if (!hasUpdated) {
+                    return;
+                }
             }
             if (entityManager.find(TblDatabaseUpdates.class, "/sql/javadb_20160715.sql") == null) {
-                hasBackedUp = Utils.getInstance().executeUpdateSQL("/sql/javadb_20160715.sql", hasBackedUp);
+                hasUpdated = Utils.getInstance().executeUpdateSQL("/sql/javadb_20160715.sql", hasUpdated);
+                if (!hasUpdated) {
+                    return;
+                }
             }
             if (entityManager.find(TblDatabaseUpdates.class, "/sql/javadb_20160810.sql") == null) {
-                hasBackedUp = Utils.getInstance().executeUpdateSQL("/sql/javadb_20160810.sql", hasBackedUp);
+                hasUpdated = Utils.getInstance().executeUpdateSQL("/sql/javadb_20160810.sql", hasUpdated);
+                if (!hasUpdated) {
+                    return;
+                }
             }
             if (entityManager.find(TblDatabaseUpdates.class, "/sql/javadb_20160815.sql") == null) {
-                hasBackedUp = Utils.getInstance().executeUpdateSQL("/sql/javadb_20160815.sql", hasBackedUp);
+                hasUpdated = Utils.getInstance().executeUpdateSQL("/sql/javadb_20160815.sql", hasUpdated);
+                if (!hasUpdated) {
+                    return;
+                }
             }
             if (entityManager.find(TblDatabaseUpdates.class, "/sql/javadb_20160902.sql") == null) {
-                hasBackedUp = Utils.getInstance().executeUpdateSQL("/sql/javadb_20160902.sql", hasBackedUp);
+                hasUpdated = Utils.getInstance().executeUpdateSQL("/sql/javadb_20160902.sql", hasUpdated);
+                if (!hasUpdated) {
+                    return;
+                }
             }
             if (entityManager.find(TblDatabaseUpdates.class, "/sql/javadb_20160905.sql") == null) {
-                hasBackedUp = Utils.getInstance().executeUpdateSQL("/sql/javadb_20160905.sql", hasBackedUp);
+                hasUpdated = Utils.getInstance().executeUpdateSQL("/sql/javadb_20160905.sql", hasUpdated);
+                if (!hasUpdated) {
+                    return;
+                }
             }
             if (entityManager.find(TblDatabaseUpdates.class, "/sql/javadb_20160912.sql") == null) {
-                hasBackedUp = Utils.getInstance().executeUpdateSQL("/sql/javadb_20160912.sql", hasBackedUp);
+                hasUpdated = Utils.getInstance().executeUpdateSQL("/sql/javadb_20160912.sql", hasUpdated);
+                if (!hasUpdated) {
+                    return;
+                }
             }
             if (entityManager.find(TblDatabaseUpdates.class, "/sql/javadb_20161104.sql") == null) {
-                hasBackedUp = Utils.getInstance().executeUpdateSQL("/sql/javadb_20161104.sql", hasBackedUp);
+                hasUpdated = Utils.getInstance().executeUpdateSQL("/sql/javadb_20161104.sql", hasUpdated);
+                if (!hasUpdated) {
+                    return;
+                }
             }
             if (entityManager.find(TblDatabaseUpdates.class, "/sql/javadb_20161115.sql") == null) {
-                hasBackedUp = Utils.getInstance().executeUpdateSQL("/sql/javadb_20161115.sql", hasBackedUp);
+                hasUpdated = Utils.getInstance().executeUpdateSQL("/sql/javadb_20161115.sql", hasUpdated);
+                if (!hasUpdated) {
+                    return;
+                }
+            }
+            if (entityManager.find(TblDatabaseUpdates.class, "/sql/javadb_20170122.sql") == null) {
+                hasUpdated = Utils.getInstance().executeUpdateSQL("/sql/javadb_20170122.sql", hasUpdated);
+                if (!hasUpdated) {
+                    return;
+                }
+            }
+            if (entityManager.find(TblDatabaseUpdates.class, "/sql/javadb_20170123.sql") == null) {
+                hasUpdated = Utils.getInstance().executeUpdateSQL("/sql/javadb_20170123.sql", hasUpdated);
+                if (!hasUpdated) {
+                    return;
+                }
+            }
+            if (hasUpdated) {
+                App.showInfo("Exito", "La Base de datos se ha actualizado con exito.");
             }
         } catch (Exception ex) {
             App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
