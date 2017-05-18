@@ -31,7 +31,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.prefs.Preferences;
-import javafx.stage.DirectoryChooser;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import net.sf.jasperreports.engine.JREmptyDataSource;
@@ -47,6 +46,8 @@ import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.bouncycastle.util.Strings;
+import org.jooq.DataType;
+import org.jooq.impl.SQLDataType;
 
 /**
  *
@@ -523,4 +524,7 @@ public class Utils extends Component {
     public EntityManagerFactory getEntityManagerFactory() {
         return this.entityManagerFactory;
     }
+
+    public DataType<LocalDate> typeLocalDate = SQLDataType.DATE.asConvertedDataType(new LocalDateConverter());
+    public DataType<LocalDateTime> typeLocalDateTime = SQLDataType.TIMESTAMP.asConvertedDataType(new LocalDateTimeConverter());
 }

@@ -22,6 +22,7 @@ import com.panemu.tiwulfx.table.TableControl;
 import com.panemu.tiwulfx.table.TableController;
 import com.panemu.tiwulfx.table.TypeAheadColumn;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -71,6 +72,8 @@ public class FacturasCompraEditController extends AnchorPane implements Initiali
     private Button btnCancel;
     @FXML
     private LocalDateControl dtpFecha;
+    // @FXML
+    // private Form<TblFacturasCompra> facturaForm;
 
     /**
      * Initializes the controller class.
@@ -131,10 +134,13 @@ public class FacturasCompraEditController extends AnchorPane implements Initiali
         tableAsientos.addColumn(cCdCD, cCCD, cCdCH, cCCH, cMonto);
         tableAsientos.setVisibleComponents(false, TableControl.Component.BUTTON_PAGINATION);
         tableAsientos.setVisibleComponents(false, TableControl.Component.BUTTON_RELOAD);
+        tableAsientos.setVisibleComponents(false, TableControl.Component.BUTTON_SAVE);
 
+        //facturaForm.bindChildren();
     }
 
     public void setTblFacturasCompra(TblFacturasCompra factura) {
+        //facturaForm.setRecord(factura);
         tblFacturasCompra.set(factura);
         txtNro.setValue(factura.getNro());
         txtTimbrado.setValue(factura.getNroTimbrado());
@@ -143,17 +149,24 @@ public class FacturasCompraEditController extends AnchorPane implements Initiali
         txtRuc.setValue(factura.getRuc());
         vencimientoTimbrado.setValue(factura.getVencimientoTimbrado());
         tableAsientos.reload();
+        //tableAsientos.refresh();
         //tableAsientos.getTableView().setItems(FXCollections.observableList(factura.getTblAsientosList()));
     }
 
     public TblFacturasCompra getTblFacturasCompra() {
+        tblFacturasCompra.get().setNro(txtNro.getValue());
+        tblFacturasCompra.get().setNroTimbrado(txtTimbrado.getValue());
+        tblFacturasCompra.get().setFechahora(dtpFecha.getValue());
+        tblFacturasCompra.get().setRazonSocial(txtRazonSocial.getValue());
+        tblFacturasCompra.get().setRuc(txtRuc.getValue());
+        tblFacturasCompra.get().setVencimientoTimbrado(vencimientoTimbrado.getValue());
+        tblFacturasCompra.get().setTblAsientosList(tableAsientos.getRecords());
         return tblFacturasCompra.get();
     }
 
     public ObjectProperty<TblFacturasCompra> tblFacturasCompraProperty() {
         return tblFacturasCompra;
     }
-
     private final TableController<TblAsientos> cntlTblAsientos = new TableController<TblAsientos>() {
         @Override
         public TableData loadData(int startIndex, List<TableCriteria> filteredColumns, List<String> sortedColumns, List<TableColumn.SortType> sortingOrders, int maxResult) {
@@ -218,6 +231,7 @@ public class FacturasCompraEditController extends AnchorPane implements Initiali
 
     public void setMode(Form.Mode mode) {
         this.mode.set(mode);
+        //facturaForm.setMode(mode);
     }
 
     public ObjectProperty<Form.Mode> modeProperty() {
@@ -226,9 +240,23 @@ public class FacturasCompraEditController extends AnchorPane implements Initiali
 
     @FXML
     private void save(ActionEvent event) {
-        SaveService ss = new SaveService();
+        try {
+            TblFacturasCompra factura = getTblFacturasCompra();
+
+            if (mode.get().equals(Form.Mode.EDIT)) {
+                daoTblFacturasCompra.update(factura);
+            } else {
+                daoTblFacturasCompra.insert(factura);
+            }
+            dialogStage.close();
+            //facturaForm.setRecord(factura);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        /*SaveService ss = new SaveService();
         ss.runSaveInBackground(mode.get());
         dialogStage.close();
+         */
     }
 
     @FXML
@@ -256,7 +284,7 @@ public class FacturasCompraEditController extends AnchorPane implements Initiali
         }
     }
 
-    private class SaveTask extends Task<List<TblFacturasCompra>> {
+    private class SaveTask extends Task<TblFacturasCompra> {
 
         private Form.Mode prevMode;
 
@@ -265,14 +293,20 @@ public class FacturasCompraEditController extends AnchorPane implements Initiali
         }
 
         @Override
-        protected List<TblFacturasCompra> call() throws Exception {
-            List<TblFacturasCompra> lstResult = new ArrayList<>();
-            if (prevMode.equals(Form.Mode.EDIT)) {
-                daoTblFacturasCompra.update(tblFacturasCompra.get());
-            } else {
-                daoTblFacturasCompra.insert(tblFacturasCompra.get());
+        protected TblFacturasCompra call() throws Exception {
+            try {
+                TblFacturasCompra factura = getTblFacturasCompra();
+                if (prevMode.equals(Form.Mode.EDIT)) {
+                    daoTblFacturasCompra.update(factura);
+                } else {
+                    daoTblFacturasCompra.insert(factura);
+                }
+                //facturaForm.setRecord(factura);
+                return factura;
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                return null;
             }
-            return lstResult;
         }
 
     }

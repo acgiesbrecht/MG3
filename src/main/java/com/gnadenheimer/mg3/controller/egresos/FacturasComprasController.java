@@ -122,7 +122,7 @@ public class FacturasComprasController implements Initializable {
                 facturasCompraEditController.setMode(mode);
                 facturasCompraEditController.setDialogStage(dialogStage);
                 dialogStage.showAndWait();
-                masterTable.reload();
+                masterTable.refresh();
             } catch (Exception ex) {
                 App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
             }

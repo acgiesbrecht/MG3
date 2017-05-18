@@ -161,7 +161,12 @@
             <artifactId>commons-lang</artifactId>
             <version>2.6</version>
         </dependency>
-
+<!-- https://mvnrepository.com/artifact/org.jooq/jooq -->
+<dependency>
+    <groupId>org.jooq</groupId>
+    <artifactId>jooq</artifactId>
+    <version>3.9.2</version>
+</dependency>
         <!-- Logging
 
         <dependency>
