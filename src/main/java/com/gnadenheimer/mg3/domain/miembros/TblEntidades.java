@@ -12,8 +12,9 @@ import com.gnadenheimer.mg3.domain.TblRecibos;
 import com.gnadenheimer.mg3.domain.TblTransferencias;
 import com.gnadenheimer.mg3.domain.TblUsers;
 import java.io.Serializable;
-import java.util.List;
 import java.time.LocalDate;
+import java.util.List;
+import java.time.LocalDateTime;
 import java.time.Period;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -99,15 +100,15 @@ public class TblEntidades implements Serializable {
 
     private Long aporteSaldoAnterior;
 
-    private LocalDate fechaNacimiento;
+    private LocalDateTime fechaNacimiento;
 
-    private LocalDate fechaBautismo;
+    private LocalDateTime fechaBautismo;
 
-    private LocalDate fechaEntradaCongregacion;
+    private LocalDateTime fechaEntradaCongregacion;
 
-    private LocalDate fechaSalidaCongregacion;
+    private LocalDateTime fechaSalidaCongregacion;
 
-    private LocalDate fechaDefuncion;
+    private LocalDateTime fechaDefuncion;
 
     private List<TblMiembrosRelaciones> tblMiembrosRelacionesList;
 
@@ -268,47 +269,47 @@ public class TblEntidades implements Serializable {
     }
 
     @Column(name = "FECHA_NACIMIENTO")
-    public LocalDate getFechaNacimiento() {
+    public LocalDateTime getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+    public void setFechaNacimiento(LocalDateTime fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
     @Column(name = "FECHA_BAUTISMO")
-    public LocalDate getFechaBautismo() {
+    public LocalDateTime getFechaBautismo() {
         return fechaBautismo;
     }
 
-    public void setFechaBautismo(LocalDate fechaBautismo) {
+    public void setFechaBautismo(LocalDateTime fechaBautismo) {
         this.fechaBautismo = fechaBautismo;
     }
 
     @Column(name = "FECHA_ENTRADA_CONGREGACION")
-    public LocalDate getFechaEntradaCongregacion() {
+    public LocalDateTime getFechaEntradaCongregacion() {
         return fechaEntradaCongregacion;
     }
 
-    public void setFechaEntradaCongregacion(LocalDate fechaEntradaCongregacion) {
+    public void setFechaEntradaCongregacion(LocalDateTime fechaEntradaCongregacion) {
         this.fechaEntradaCongregacion = fechaEntradaCongregacion;
     }
 
     @Column(name = "FECHA_SALIDA_CONGREGACION")
-    public LocalDate getFechaSalidaCongregacion() {
+    public LocalDateTime getFechaSalidaCongregacion() {
         return fechaSalidaCongregacion;
     }
 
-    public void setFechaSalidaCongregacion(LocalDate fechaSalidaCongregacion) {
+    public void setFechaSalidaCongregacion(LocalDateTime fechaSalidaCongregacion) {
         this.fechaSalidaCongregacion = fechaSalidaCongregacion;
     }
 
     @Column(name = "FECHA_DEFUNCION")
-    public LocalDate getFechaDefuncion() {
+    public LocalDateTime getFechaDefuncion() {
         return fechaDefuncion;
     }
 
-    public void setFechaDefuncion(LocalDate fechaDefuncion) {
+    public void setFechaDefuncion(LocalDateTime fechaDefuncion) {
         this.fechaDefuncion = fechaDefuncion;
     }
 
@@ -525,7 +526,7 @@ public class TblEntidades implements Serializable {
     @Transient
     public Integer getEdad() {
         if (getFechaNacimiento() != null) {
-            return Period.between(getFechaNacimiento(), LocalDate.now()).getYears();
+            return Period.between(getFechaNacimiento().toLocalDate(), LocalDate.now()).getYears();
         } else {
             return 0;
         }
@@ -534,7 +535,7 @@ public class TblEntidades implements Serializable {
     @Transient
     public String getEdadText() {
         if (getFechaNacimiento() != null) {
-            return "Edad: " + String.valueOf(Period.between(getFechaNacimiento(), LocalDate.now()).getYears()) + " años. ";
+            return "Edad: " + String.valueOf(Period.between(getFechaNacimiento().toLocalDate(), LocalDate.now()).getYears()) + " años. ";
         } else {
             return "Edad: No disponible.";
         }
@@ -545,7 +546,7 @@ public class TblEntidades implements Serializable {
     @Transient
     public String getEdadBautismoText() {
         if (getFechaBautismo() != null) {
-            return "Bautizado hace: " + String.valueOf(Period.between(getFechaBautismo(), LocalDate.now()).getYears()) + " años. ";
+            return "Bautizado hace: " + String.valueOf(Period.between(getFechaBautismo().toLocalDate(), LocalDate.now()).getYears()) + " años. ";
         } else {
             return "Bautizado hace: No disponible.";
         }

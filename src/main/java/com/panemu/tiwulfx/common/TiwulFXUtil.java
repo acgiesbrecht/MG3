@@ -192,12 +192,31 @@ public class TiwulFXUtil {
         return date;
     }
 
+    public static Date toDate(LocalDateTime localDateTime) {
+        if (localDateTime == null) {
+            return null;
+        }
+
+        Instant instant = localDateTime.atZone(ZoneId.systemDefault()).toInstant();
+        Date date = Date.from(instant);
+        return date;
+    }
+
     public static LocalDate toLocalDate(Date date) {
         if (date == null) {
             return null;
         }
         Instant instant = Instant.ofEpochMilli(date.getTime());
         LocalDate res = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate();
+        return res;
+    }
+
+    public static LocalDateTime toLocalDateTime(Date date) {
+        if (date == null) {
+            return null;
+        }
+        Instant instant = Instant.ofEpochMilli(date.getTime());
+        LocalDateTime res = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
         return res;
     }
 
