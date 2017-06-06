@@ -6,7 +6,10 @@
 package com.gnadenheimer.mg3.controller.admin;
 
 import com.gnadenheimer.mg3.DaoBase;
+import com.gnadenheimer.mg3.DaoBaseJooq;
+import com.gnadenheimer.mg3.domain.TblFacturasCompra;
 import com.gnadenheimer.mg3.domain.TblTransferencias;
+import static com.gnadenheimer.mg3.domain.jooq.tables.TblTransferencias.TBL_TRANSFERENCIAS;
 import com.gnadenheimer.mg3.domain.miembros.TblEntidades;
 import com.panemu.tiwulfx.common.TableCriteria;
 import com.panemu.tiwulfx.common.TableData;
@@ -110,10 +113,15 @@ public class AdminTransferenciasController implements Initializable {
     }
 
     private final TableController<TblTransferencias> cntlTblTransferencias = new TableController<TblTransferencias>() {
+        private DaoBaseJooq daojooq = new DaoBaseJooq();
 
         @Override
         public TableData loadData(int startIndex, List<TableCriteria> filteredColumns, List<String> sortedColumns, List<TableColumn.SortType> sortingOrders, int maxResult) {
-            return daoTblTransferencias.fetch(startIndex, filteredColumns, sortedColumns, sortingOrders, maxResult);
+            List<TblTransferencias> listF = daojooq.getDsl().select().from(TBL_TRANSFERENCIAS).fetchInto(TblTransferencias.class);
+
+            return new TableData(listF, false, listF.size());
+
+//return daoTblTransferencias.fetch(startIndex, filteredColumns, sortedColumns, sortingOrders, maxResult);
         }
 
         @Override

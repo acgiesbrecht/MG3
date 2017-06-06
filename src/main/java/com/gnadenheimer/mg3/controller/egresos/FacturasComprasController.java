@@ -7,7 +7,10 @@ package com.gnadenheimer.mg3.controller.egresos;
 
 import com.gnadenheimer.mg3.App;
 import com.gnadenheimer.mg3.DaoBase;
+import com.gnadenheimer.mg3.DaoBaseJooq;
 import com.gnadenheimer.mg3.domain.TblFacturasCompra;
+import static com.gnadenheimer.mg3.domain.jooq.tables.TblFacturasCompra.TBL_FACTURAS_COMPRA;
+import com.gnadenheimer.mg3.domain.jooq.tables.records.TblFacturasCompraRecord;
 import com.panemu.tiwulfx.common.TableCriteria;
 import com.panemu.tiwulfx.common.TableData;
 import com.panemu.tiwulfx.dialog.MessageDialogBuilder;
@@ -17,8 +20,11 @@ import com.panemu.tiwulfx.table.TableControl;
 import com.panemu.tiwulfx.table.TableController;
 import com.panemu.tiwulfx.table.TextColumn;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -29,6 +35,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jooq.Record;
+import org.jooq.ResultQuery;
+import org.sfm.jdbc.JdbcMapper;
+import org.sfm.jdbc.JdbcMapperFactory;
 
 /**
  * FXML Controller class
@@ -39,6 +49,7 @@ public class FacturasComprasController implements Initializable {
 
     private static final Logger LOGGER = LogManager.getLogger(FacturasComprasController.class);
     private DaoBase<TblFacturasCompra> daoTblFacturasCompra = new DaoBase<>(TblFacturasCompra.class);
+    private DaoBaseJooq daojooq = new DaoBaseJooq();
 
     @FXML
     private TableControl<TblFacturasCompra> masterTable;
@@ -69,7 +80,18 @@ public class FacturasComprasController implements Initializable {
 
         @Override
         public TableData loadData(int startIndex, List<TableCriteria> filteredColumns, List<String> sortedColumns, List<TableColumn.SortType> sortingOrders, int maxResult) {
-            return daoTblFacturasCompra.fetch(startIndex, filteredColumns, sortedColumns, sortingOrders, maxResult);
+            //Result<Record> result = daojooq.getDsl().select().from(TBL_FACTURAS_COMPRA).fetch();
+            JdbcMapper mapper = JdbcMapperFactory.newInstance().newMapper(TblFacturasCompra.class);
+            ResultQuery<Record> query = daojooq.getDsl().select().from(TBL_FACTURAS_COMPRA);
+            List<TblFacturasCompra> listF = new ArrayList<>();
+//List<TblFacturasCompra> listF = daojooq.getDsl().select().from(TBL_FACTURAS_COMPRA).fetchInto(TblFacturasCompra.class);
+            try (ResultSet rs = query.fetchResultSet()) {
+                listF = (List<TblFacturasCompra>) mapper.stream(rs).collect(Collectors.toList());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+            return new TableData(listF, false, listF.size());
         }
 
         @Override
