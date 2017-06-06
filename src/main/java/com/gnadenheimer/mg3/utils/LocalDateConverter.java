@@ -7,8 +7,7 @@ package com.gnadenheimer.mg3.utils;
 
 import java.sql.Date;
 import java.time.LocalDate;
-
-import org.jooq.Converter;
+import javax.persistence.Converter;
 
 public class LocalDateConverter implements Converter<Date, LocalDate> {
 

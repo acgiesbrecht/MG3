@@ -46,8 +46,6 @@ import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.bouncycastle.util.Strings;
-import org.jooq.DataType;
-import org.jooq.impl.SQLDataType;
 
 /**
  *
@@ -525,6 +523,4 @@ public class Utils extends Component {
         return this.entityManagerFactory;
     }
 
-    public DataType<LocalDate> typeLocalDate = SQLDataType.DATE.asConvertedDataType(new LocalDateConverter());
-    public DataType<LocalDateTime> typeLocalDateTime = SQLDataType.TIMESTAMP.asConvertedDataType(new LocalDateTimeConverter());
 }
