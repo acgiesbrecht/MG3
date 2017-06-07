@@ -100,7 +100,7 @@ public class FacturasCompraEditController extends AnchorPane implements Initiali
         TableCriteria tc = new TableCriteria("imputable", TableCriteria.Operator.eq, true);
         List<TableCriteria> listTc = new ArrayList<>();
         listTc.add(tc);
-        List<TblCuentasContables> lCC = daoTblCuentasContables.getList("select t from TblCuentasContables t where t.imputable = :trueValue order by id");
+        List<TblCuentasContables> lCC = daoTblCuentasContables.getList("select t from TblCuentasContables t where t.imputable = :trueValue order by t.id");
         lCC.forEach((p) -> {
             cCCD.addItem(p.getDescripcion(), p);
         });
@@ -267,6 +267,8 @@ public class FacturasCompraEditController extends AnchorPane implements Initiali
         @Override
         protected List<TblFacturasCompra> call() throws Exception {
             List<TblFacturasCompra> lstResult = new ArrayList<>();
+            tblFacturasCompra.get().setRazonSocial(txtRazonSocial.getValue());
+            tblFacturasCompra.get().setTblAsientosList(tableAsientos.getRecords());
             if (prevMode.equals(Form.Mode.EDIT)) {
                 daoTblFacturasCompra.update(tblFacturasCompra.get());
             } else {
