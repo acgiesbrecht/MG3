@@ -95,20 +95,21 @@ public class TblFacturasCompra implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "VENCIMIENTO_TIMBRADO")
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDate vencimientoTimbrado;
     @Basic(optional = false)
     @NotNull
     @Column(name = "CONDICION_CONTADO")
     private Boolean condicionContado;
     @Column(name = "FECHA_VENCIMIENTO_CREDITO")
-
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDate fechaVencimientoCredito;
     @Column(name = "CUOTAS_CREDITO")
     private Integer cuotasCredito;
     @Basic(optional = false)
     @NotNull
     @Column(name = "FECHAHORA")
-
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDate fechahora;
     @Basic(optional = false)
     @NotNull
