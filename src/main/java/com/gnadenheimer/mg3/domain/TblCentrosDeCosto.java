@@ -33,16 +33,20 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "TBL_CENTROS_DE_COSTO")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "TblCentrosDeCosto.findAll", query = "SELECT t FROM TblCentrosDeCosto t"),
-    @NamedQuery(name = "TblCentrosDeCosto.findById", query = "SELECT t FROM TblCentrosDeCosto t WHERE t.id = :id"),
-    @NamedQuery(name = "TblCentrosDeCosto.findByDescripcion", query = "SELECT t FROM TblCentrosDeCosto t WHERE t.descripcion = :descripcion"),
-    @NamedQuery(name = "TblCentrosDeCosto.findByCtaCte", query = "SELECT t FROM TblCentrosDeCosto t WHERE t.ctaCte = :ctaCte"),
+    @NamedQuery(name = "TblCentrosDeCosto.findAll", query = "SELECT t FROM TblCentrosDeCosto t")
+    ,
+    @NamedQuery(name = "TblCentrosDeCosto.findById", query = "SELECT t FROM TblCentrosDeCosto t WHERE t.id = :id")
+    ,
+    @NamedQuery(name = "TblCentrosDeCosto.findByDescripcion", query = "SELECT t FROM TblCentrosDeCosto t WHERE t.descripcion = :descripcion")
+    ,
+    @NamedQuery(name = "TblCentrosDeCosto.findByCtaCte", query = "SELECT t FROM TblCentrosDeCosto t WHERE t.ctaCte = :ctaCte")
+    ,
     @NamedQuery(name = "TblCentrosDeCosto.findByPreferido", query = "SELECT t FROM TblCentrosDeCosto t WHERE t.preferido = :preferido")})
 public class TblCentrosDeCosto implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCentroDeCostoDebe")
     private List<TblAsientos> tblAsientosList;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCentroDeCostoHaber")
     private List<TblAsientos> tblAsientosList1;
 
@@ -78,6 +82,10 @@ public class TblCentrosDeCosto implements Serializable {
     @JoinColumn(name = "ID_CUENTA_CONTABLE_EFECTIVO_POR_DEFECTO", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private TblCuentasContables idCuentaContableEfectivoPorDefecto;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "ES_DONACION_EXTERNA")
+    private Boolean esDonacionExterna = false;
 
     public TblCentrosDeCosto() {
     }
@@ -133,7 +141,7 @@ public class TblCentrosDeCosto implements Serializable {
     public void setTblAsientosTemporalesList(List<TblAsientosTemporales> tblAsientosTemporalesList) {
         this.tblAsientosTemporalesList = tblAsientosTemporalesList;
     }
-    
+
     @XmlTransient
     public List<TblAsientosTemporales> getTblAsientosTemporalesList1() {
         return tblAsientosTemporalesList1;
@@ -201,7 +209,7 @@ public class TblCentrosDeCosto implements Serializable {
     public void setTblAsientosList(List<TblAsientos> tblAsientosList) {
         this.tblAsientosList = tblAsientosList;
     }
-    
+
     @XmlTransient
     public List<TblAsientos> getTblAsientosList1() {
         return tblAsientosList1;
@@ -209,6 +217,20 @@ public class TblCentrosDeCosto implements Serializable {
 
     public void setTblAsientosList1(List<TblAsientos> tblAsientosList) {
         this.tblAsientosList1 = tblAsientosList;
+    }
+
+    /**
+     * @return the esDonacionExterna
+     */
+    public Boolean getEsDonacionExterna() {
+        return esDonacionExterna;
+    }
+
+    /**
+     * @param esDonacionExterna the esDonacionExterna to set
+     */
+    public void setEsDonacionExterna(Boolean esDonacionExterna) {
+        this.esDonacionExterna = esDonacionExterna;
     }
 
 }

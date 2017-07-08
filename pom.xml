@@ -84,7 +84,7 @@
                             <outputJarVersions>true</outputJarVersions>
                             <verbose>true</verbose>
                             <ui>
-                                <name>NIS 3.1</name>
+                                <name>MG 3</name>
                                 <progress>80, 244, 196, 11</progress>
                                 <progressText>FFFFFF</progressText>
                                 <statusText>FFFFFF</statusText>
@@ -144,12 +144,6 @@
             <artifactId>commons-io</artifactId>
             <version>2.4</version>
         </dependency>
-        <!-- MigLayout -->
-        <dependency>
-            <groupId>commons-beanutils</groupId>
-            <artifactId>commons-beanutils</artifactId>
-            <version>1.9.3</version>
-        </dependency>
         <dependency>
             <groupId>com.miglayout</groupId>
             <artifactId>miglayout-javafx</artifactId>
@@ -168,7 +162,7 @@
             <version>2.6</version>
         </dependency>
 
-        <!-- Logging  -->
+        <!-- Logging
 
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -184,7 +178,7 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.22</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
@@ -262,11 +256,6 @@
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>1.1.0.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jdesktop</groupId>
-            <artifactId>beansbinding</artifactId>
-            <version>1.2.1</version>
         </dependency>
     </dependencies>
 

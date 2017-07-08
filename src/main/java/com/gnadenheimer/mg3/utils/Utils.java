@@ -13,6 +13,7 @@ import com.gnadenheimer.mg3.domain.TblNotasDeCredito;
 import com.gnadenheimer.mg3.domain.miembros.TblEntidades;
 import com.gnadenheimer.mg3.domain.models.CuotaModel;
 import java.awt.Component;
+import java.io.File;
 import java.io.IOException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -29,16 +30,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Properties;
 import java.util.prefs.Preferences;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.stage.DirectoryChooser;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.swing.DefaultListModel;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.ListModel;
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRParameter;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -141,10 +136,10 @@ public class Utils extends Component {
             persistenceMap.put("hibernate.c3p0.testConnectionOnCheckout", "true");
             persistenceMap.put("connection.provider_class", "org.hibernate.connection.C3P0ConnectionProvider");*/
 
-            persistenceMap.put("backUpDir", Preferences.userRoot().node("MG").get("Datadir", (new JFileChooser()).getFileSystemView().getDefaultDirectory().toString() + "\\javadb") + "\\autoBackUp");
+            persistenceMap.put("backUpDir", Preferences.userRoot().node("MG").get("Datadir", System.getProperty("user.dir") + File.separator + "javadb") + File.separator + "autoBackUp");
             return persistenceMap;
         } catch (Exception exx) {
-            JOptionPane.showMessageDialog(null, Thread.currentThread().getStackTrace()[1].getMethodName() + " - " + exx.getMessage());
+            App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), exx.getMessage(), exx);
             LOGGER.error(Thread.currentThread().getStackTrace()[1].getMethodName(), exx);
             return null;
         }
@@ -265,6 +260,7 @@ public class Utils extends Component {
         }
     }
 
+    /*
     public Integer getIndexOfModel(ListModel model, Object value) {
         if (value == null) {
             return -1;
@@ -279,28 +275,28 @@ public class Utils extends Component {
         }
         return -1;
     }
-
+     */
     public String getNombreCompleto(TblEntidades ent) {
         return ent.getNombres() + " " + ent.getApellidos();
     }
 
-    public Boolean executeUpdateSQL(String filename, Boolean hasBackedUp) {
-        if (!hasBackedUp) {
-            Integer reply = JOptionPane.showConfirmDialog(null, "Se encuentró una actualización de la base de datos. Se procederá a hacer un BackUp de sus base de datos existente. Desea proceder?", "Seguridad", JOptionPane.YES_NO_OPTION);
-            if (reply == JOptionPane.YES_OPTION) {
-                hasBackedUp = exectueBackUp(getPersistenceMap().get("backUpDir"));
-                executeSQL(filename);
+    public Boolean executeUpdateSQL(String filename, Boolean firstUpdate) {
+        Boolean success = false;
+        if (firstUpdate) {
+            if (App.showConfirmation("Seguridad", "Se encuentro una actualizacion de la base de datos. Se procedera a hacer un BackUp de sus base de datos existente. Desea proceder?")) {
+                exectueBackUp(getPersistenceMap().get("backUpDir"));
+                success = executeSQL(filename);
             }
         } else {
-            executeSQL(filename);
+            success = executeSQL(filename);
         }
-        return hasBackedUp;
+        return success;
     }
 
-    public void executeSQL(String filename) {
+    public Boolean executeSQL(String filename) {
         try {
             Map<String, String> persistenceMap = Utils.getInstance().getPersistenceMap();
-            Boolean error = false;
+            Boolean success = false;
             Connection conn = DriverManager.getConnection(persistenceMap.get("javax.persistence.jdbc.url"), persistenceMap.get("javax.persistence.jdbc.user"), persistenceMap.get("javax.persistence.jdbc.password"));
             //JOptionPane.showMessageDialog(null, filename);
             String ss = IOUtils.toString(getClass().getResourceAsStream(filename));
@@ -310,8 +306,8 @@ public class Utils extends Component {
                 try {
                     stmt.executeUpdate(s);
                 } catch (SQLException exx) {
-                    error = true;
-                    JOptionPane.showMessageDialog(null, exx.getMessage() + String.valueOf(exx.getErrorCode()));
+                    success = false;
+                    App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), exx.getMessage(), exx);
                     LOGGER.error(Thread.currentThread().getStackTrace()[1].getMethodName(), exx);
                 }
             }
@@ -320,24 +316,19 @@ public class Utils extends Component {
                 try {
                     stmt.executeUpdate("INSERT INTO TBL_DATABASE_UPDATES (ID) VALUES('" + filename + "')");
                 } catch (SQLException exx) {
-                    error = true;
-                    JOptionPane.showMessageDialog(null, exx.getMessage() + String.valueOf(exx.getErrorCode()));
+                    success = false;
+                    App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), exx.getMessage(), exx);
                     LOGGER.error(Thread.currentThread().getStackTrace()[1].getMethodName(), exx);
                 }
             }
 
-            if (error) {
-                JOptionPane.showMessageDialog(null, "Error. Por favor pruebe otra vez.");
-            } else {
-                JOptionPane.showMessageDialog(null, "Base de Datos actualizada con exito!");
-
-            }
-
             stmt.close();
             conn.close();
+            return success;
         } catch (SQLException | IOException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
+            App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
             LOGGER.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
+            return false;
         }
     }
 
@@ -356,7 +347,7 @@ public class Utils extends Component {
                 LOGGER.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
                 App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
             }
-            JOptionPane.showMessageDialog(null, "BackUp guardado con exito en: " + backupfile);
+            App.showInfo("BackUp", "BackUp guardado con exito en: " + backupfile);
             return true;
         } catch (Exception ex) {
             LOGGER.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
