@@ -8,11 +8,6 @@ import com.panemu.tiwulfx.common.TableCriteria.Operator;
 import com.panemu.tiwulfx.common.TiwulFXUtil;
 import com.panemu.tiwulfx.control.DateFieldController;
 import com.panemu.tiwulfx.control.DateTimeFieldController;
-import java.text.DateFormat;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Node;
@@ -22,6 +17,11 @@ import javafx.scene.control.TableColumn;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import jfxtras.scene.control.LocalDateTimeTextField;
+
+import java.text.DateFormat;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -158,10 +158,10 @@ public class DateTimeColumn<R> extends BaseColumn<R, LocalDateTime> {
     }
 
     /**
-     * This method will set a controller that will decide which dates are
+     * This method will set a ui that will decide which dates are
      * enabled. A disabled date is not selectable neither using calendar popup
      * or shortcut (up/down arrow, Ctrl+up/down arrow). If user type-in a
-     * disable date, by default the controller will display an error message and
+     * disable date, by default the ui will display an error message and
      * revert the value back. To change this behavior, override {@link DateFieldController#onDisabledDateSelected(com.panemu.tiwulfx.control.DateField, java.util.Date, java.util.Date)
      * DateFieldController.onDisabledDateSelected}
      *

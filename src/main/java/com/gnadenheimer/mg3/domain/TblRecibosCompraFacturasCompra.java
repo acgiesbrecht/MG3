@@ -5,18 +5,10 @@
  */
 package com.gnadenheimer.mg3.domain;
 
-import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 /**
  *
@@ -108,15 +100,12 @@ public class TblRecibosCompraFacturasCompra implements Serializable {
             return false;
         }
         TblRecibosCompraFacturasCompra other = (TblRecibosCompraFacturasCompra) object;
-        if ((this.tblRecibosCompraFacturasCompraPK == null && other.tblRecibosCompraFacturasCompraPK != null) || (this.tblRecibosCompraFacturasCompraPK != null && !this.tblRecibosCompraFacturasCompraPK.equals(other.tblRecibosCompraFacturasCompraPK))) {
-            return false;
-        }
-        return true;
+        return (this.tblRecibosCompraFacturasCompraPK != null || other.tblRecibosCompraFacturasCompraPK == null) && (this.tblRecibosCompraFacturasCompraPK == null || this.tblRecibosCompraFacturasCompraPK.equals(other.tblRecibosCompraFacturasCompraPK));
     }
 
     @Override
     public String toString() {
-        return "com.gnadenheimer.mg.domain.TblRecibosCompraFacturasCompra[ tblRecibosCompraFacturasCompraPK=" + tblRecibosCompraFacturasCompraPK + " ]";
+        return "com.gnadenheimer.mg3.domain.TblRecibosCompraFacturasCompra[ tblRecibosCompraFacturasCompraPK=" + tblRecibosCompraFacturasCompraPK + " ]";
     }
 
 }

@@ -8,6 +8,9 @@ package com.gnadenheimer.mg3.utils;
 import com.gnadenheimer.mg3.domain.TblRoles;
 import com.gnadenheimer.mg3.domain.TblUsers;
 
+import javax.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
 public class CurrentUser {
 
     private TblUsers user;
@@ -17,12 +20,8 @@ public class CurrentUser {
     /* A private Constructor prevents any other
      * class from instantiating.
      */
-    private CurrentUser() {
-    }
 
-    /* Static 'instance' method */
-    public static CurrentUser getInstance() {
-        return currentUser;
+    private CurrentUser() {
     }
 
     /**

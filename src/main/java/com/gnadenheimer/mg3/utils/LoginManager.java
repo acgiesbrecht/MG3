@@ -6,12 +6,24 @@
 package com.gnadenheimer.mg3.utils;
 
 import com.gnadenheimer.mg3.App;
-import java.io.IOException;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.MenuBar;
-import javafx.scene.layout.AnchorPane;
+import com.gnadenheimer.mg3.ui.LoginView;
+import com.gnadenheimer.mg3.ui.LoginViewModel;
+import com.gnadenheimer.mg3.ui.WelcomeView;
+import com.gnadenheimer.mg3.ui.WelcomeViewModel;
+import de.saxsys.mvvmfx.FluentViewLoader;
+import de.saxsys.mvvmfx.ViewTuple;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+
+@ApplicationScoped
 public class LoginManager {
+
+    @Inject
+    private Stage primaryStage;
+
 
     private static final LoginManager loginManager = new LoginManager();
 
@@ -21,22 +33,16 @@ public class LoginManager {
     private LoginManager() {
     }
 
-    /* Static 'instance' method */
-    public static LoginManager getInstance() {
-        return loginManager;
-    }
-
     public void logout() {
         showLoginScreen();
     }
 
     public void showLoginScreen() {
         try {
-            AnchorPane login = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
-            //scene.setRoot((Parent) loader.load());
-            App.getRoot().setTop(null);
-            App.getRoot().setCenter(login);
-
+            final ViewTuple<LoginView, LoginViewModel> tuple = FluentViewLoader.fxmlView(LoginView.class).load();
+            BorderPane bp = (BorderPane) primaryStage.getScene().getRoot();
+            bp.setTop(null);
+            bp.setCenter(tuple.getView());
         } catch (Exception ex) {
             App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
         }
@@ -44,14 +50,13 @@ public class LoginManager {
 
     public void showMainView() {
         try {
+            final ViewTuple<LoginView, LoginViewModel> menu = FluentViewLoader.fxmlView(LoginView.class).load();
+            final ViewTuple<WelcomeView, WelcomeViewModel> welcome = FluentViewLoader.fxmlView(WelcomeView.class).load();
+            BorderPane bp = (BorderPane) primaryStage.getScene().getRoot();
+            bp.setTop(menu.getView());
+            bp.setCenter(welcome.getView());
 
-            MenuBar menu = FXMLLoader.load(getClass().getResource("/fxml/MenuPrincipal.fxml"));
-            AnchorPane welcomePane = FXMLLoader.load(getClass().getResource("/fxml/Welcome.fxml"));
-
-            App.getRoot().setTop(menu);
-            App.getRoot().setCenter(welcomePane);
-
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
         }
     }

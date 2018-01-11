@@ -5,35 +5,17 @@
  */
 package com.gnadenheimer.mg3.domain.miembros;
 
-import com.gnadenheimer.mg3.domain.TblEventoDetalle;
-import com.gnadenheimer.mg3.domain.TblFacturas;
-import com.gnadenheimer.mg3.domain.TblFormasDePago;
-import com.gnadenheimer.mg3.domain.TblRecibos;
-import com.gnadenheimer.mg3.domain.TblTransferencias;
-import com.gnadenheimer.mg3.domain.TblUsers;
-import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.List;
-import java.time.LocalDateTime;
-import java.time.Period;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import com.gnadenheimer.mg3.domain.*;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.List;
 
 /**
  *
@@ -77,67 +59,106 @@ import javax.xml.bind.annotation.XmlTransient;
 public class TblEntidades implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ID")
     private Integer id;
-
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 128)
+    @Column(name = "NOMBRES")
     private String nombres;
-
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 128)
+    @Column(name = "APELLIDOS")
     private String apellidos = "";
-
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 256)
+    @Column(name = "RAZON_SOCIAL")
     private String razonSocial = "";
-
+    @Size(max = 20)
+    @Column(name = "RUC_SIN_DV")
     private String rucSinDv = "44444401";
-
-    private Integer ctacte = 99999;
-
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "CTACTE")
+    private Integer ctacte = 909999;
+    @Size(max = 50)
+    @Column(name = "DOMICILIO")
     private String domicilio;
-
+    @Column(name = "BOX")
     private Integer box;
-
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "IS_MIEMBRO_ACTIVO")
     private Boolean isMiembroActivo;
-
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "APORTE_MENSUAL")
     private Integer aporteMensual;
-
+    @Column(name = "APORTE_SALDO_ANTERIOR")
     private Long aporteSaldoAnterior;
-
-    private LocalDateTime fechaNacimiento;
-
-    private LocalDateTime fechaBautismo;
-
-    private LocalDateTime fechaEntradaCongregacion;
-
-    private LocalDateTime fechaSalidaCongregacion;
-
-    private LocalDateTime fechaDefuncion;
-
+    @Column(name = "FECHA_NACIMIENTO")
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDate fechaNacimiento;
+    @Column(name = "FECHA_BAUTISMO")
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDate fechaBautismo;
+    @Column(name = "FECHA_ENTRADA_CONGREGACION")
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDate fechaEntradaCongregacion;
+    @Column(name = "FECHA_SALIDA_CONGREGACION")
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDate fechaSalidaCongregacion;
+    @Column(name = "FECHA_DEFUNCION")
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDate fechaDefuncion;
+    @OneToMany(mappedBy = "idEntidad2", fetch = FetchType.LAZY)
     private List<TblMiembrosRelaciones> tblMiembrosRelacionesList;
-
+    @OneToMany(mappedBy = "idEntidad1", fetch = FetchType.LAZY)
     private List<TblMiembrosRelaciones> tblMiembrosRelacionesList1;
-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEntidad", fetch = FetchType.LAZY)
     private List<TblEventoDetalle> tblEventoDetalleList;
-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEntidad", fetch = FetchType.LAZY)
     private List<TblRecibos> tblRecibosList;
-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEntidad", fetch = FetchType.LAZY)
     private List<TblTransferencias> tblTransferenciasList;
-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEntidad", fetch = FetchType.LAZY)
     private List<TblFacturas> tblFacturasList;
-
+    @JoinColumn(name = "ID_AREA_SERVICIO_EN_IGLESIA", referencedColumnName = "ID")
+    @ManyToOne(fetch = FetchType.LAZY)
     private TblAreasServicioEnIglesia idAreaServicioEnIglesia;
-
+    @OneToMany(mappedBy = "idEntidadPaganteAportes", fetch = FetchType.LAZY)
     private List<TblEntidades> tblEntidadesList;
-
+    @JoinColumn(name = "ID_ENTIDAD_PAGANTE_APORTES", referencedColumnName = "ID")
+    @ManyToOne(fetch = FetchType.LAZY)
     private TblEntidades idEntidadPaganteAportes;
-
+    @JoinColumn(name = "ID_FORMA_DE_PAGO_PREFERIDA", referencedColumnName = "ID")
+    @ManyToOne(fetch = FetchType.LAZY)
     private TblFormasDePago idFormaDePagoPreferida;
-
+    @JoinColumn(name = "ID_MIEMBROS_ALERGIA", referencedColumnName = "ID")
+    @ManyToOne(fetch = FetchType.LAZY)
     private TblMiembrosAlergias idMiembrosAlergia;
-
+    @JoinColumn(name = "ID_MIEMBROS_CATEGORIA_DE_PAGO", referencedColumnName = "ID")
+    @ManyToOne(fetch = FetchType.LAZY)
     private TblMiembrosCategoriasDePago idMiembrosCategoriaDePago;
-
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "MES_INICIO_APORTE")
     private Integer mesInicioAporte;
-
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "MES_FIN_APORTE")
     private Integer mesFinAporte;
-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEntidad", fetch = FetchType.LAZY)
+    private List<TblEntidadesHistoricoCategorias> tblEntidadesHistoricoCategoriasList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEntidad", fetch = FetchType.LAZY)
+    private List<TblAportesImporteMensualSaldoAnterior> tblAportesImporteMensualSaldoAnteriorList;
+    @JoinColumn(name = "ID_USER", referencedColumnName = "ID")
+    @ManyToOne(fetch = FetchType.LAZY)
     private TblUsers idUser;
 
     public TblEntidades() {
@@ -158,10 +179,6 @@ public class TblEntidades implements Serializable {
         this.aporteMensual = aporteMensual;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "ID")
     public Integer getId() {
         return id;
     }
@@ -170,10 +187,6 @@ public class TblEntidades implements Serializable {
         this.id = id;
     }
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 128)
-    @Column(name = "NOMBRES")
     public String getNombres() {
         return nombres;
     }
@@ -182,10 +195,6 @@ public class TblEntidades implements Serializable {
         this.nombres = nombres;
     }
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 128)
-    @Column(name = "APELLIDOS")
     public String getApellidos() {
         return apellidos;
     }
@@ -194,10 +203,6 @@ public class TblEntidades implements Serializable {
         this.apellidos = apellidos;
     }
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 256)
-    @Column(name = "RAZON_SOCIAL")
     public String getRazonSocial() {
         return razonSocial;
     }
@@ -206,8 +211,6 @@ public class TblEntidades implements Serializable {
         this.razonSocial = razonSocial;
     }
 
-    @Size(max = 20)
-    @Column(name = "RUC_SIN_DV")
     public String getRucSinDv() {
         return rucSinDv;
     }
@@ -216,9 +219,6 @@ public class TblEntidades implements Serializable {
         this.rucSinDv = rucSinDv;
     }
 
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "CTACTE")
     public Integer getCtacte() {
         return ctacte;
     }
@@ -227,8 +227,6 @@ public class TblEntidades implements Serializable {
         this.ctacte = ctacte;
     }
 
-    @Size(max = 50)
-    @Column(name = "DOMICILIO")
     public String getDomicilio() {
         return domicilio;
     }
@@ -237,7 +235,6 @@ public class TblEntidades implements Serializable {
         this.domicilio = domicilio;
     }
 
-    @Column(name = "BOX")
     public Integer getBox() {
         return box;
     }
@@ -246,9 +243,6 @@ public class TblEntidades implements Serializable {
         this.box = box;
     }
 
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "IS_MIEMBRO_ACTIVO")
     public Boolean getIsMiembroActivo() {
         return isMiembroActivo;
     }
@@ -257,9 +251,6 @@ public class TblEntidades implements Serializable {
         this.isMiembroActivo = isMiembroActivo;
     }
 
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "APORTE_MENSUAL")
     public Integer getAporteMensual() {
         return aporteMensual;
     }
@@ -268,53 +259,47 @@ public class TblEntidades implements Serializable {
         this.aporteMensual = aporteMensual;
     }
 
-    @Column(name = "FECHA_NACIMIENTO")
-    public LocalDateTime getFechaNacimiento() {
+    public LocalDate getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(LocalDateTime fechaNacimiento) {
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    @Column(name = "FECHA_BAUTISMO")
-    public LocalDateTime getFechaBautismo() {
+    public LocalDate getFechaBautismo() {
         return fechaBautismo;
     }
 
-    public void setFechaBautismo(LocalDateTime fechaBautismo) {
+    public void setFechaBautismo(LocalDate fechaBautismo) {
         this.fechaBautismo = fechaBautismo;
     }
 
-    @Column(name = "FECHA_ENTRADA_CONGREGACION")
-    public LocalDateTime getFechaEntradaCongregacion() {
+    public LocalDate getFechaEntradaCongregacion() {
         return fechaEntradaCongregacion;
     }
 
-    public void setFechaEntradaCongregacion(LocalDateTime fechaEntradaCongregacion) {
+    public void setFechaEntradaCongregacion(LocalDate fechaEntradaCongregacion) {
         this.fechaEntradaCongregacion = fechaEntradaCongregacion;
     }
 
-    @Column(name = "FECHA_SALIDA_CONGREGACION")
-    public LocalDateTime getFechaSalidaCongregacion() {
+    public LocalDate getFechaSalidaCongregacion() {
         return fechaSalidaCongregacion;
     }
 
-    public void setFechaSalidaCongregacion(LocalDateTime fechaSalidaCongregacion) {
+    public void setFechaSalidaCongregacion(LocalDate fechaSalidaCongregacion) {
         this.fechaSalidaCongregacion = fechaSalidaCongregacion;
     }
 
-    @Column(name = "FECHA_DEFUNCION")
-    public LocalDateTime getFechaDefuncion() {
+    public LocalDate getFechaDefuncion() {
         return fechaDefuncion;
     }
 
-    public void setFechaDefuncion(LocalDateTime fechaDefuncion) {
+    public void setFechaDefuncion(LocalDate fechaDefuncion) {
         this.fechaDefuncion = fechaDefuncion;
     }
 
     @XmlTransient
-    @OneToMany(mappedBy = "idEntidad2")
     public List<TblMiembrosRelaciones> getTblMiembrosRelacionesList() {
         return tblMiembrosRelacionesList;
     }
@@ -324,7 +309,6 @@ public class TblEntidades implements Serializable {
     }
 
     @XmlTransient
-    @OneToMany(mappedBy = "idEntidad1")
     public List<TblMiembrosRelaciones> getTblMiembrosRelacionesList1() {
         return tblMiembrosRelacionesList1;
     }
@@ -334,7 +318,6 @@ public class TblEntidades implements Serializable {
     }
 
     @XmlTransient
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEntidad")
     public List<TblEventoDetalle> getTblEventoDetalleList() {
         return tblEventoDetalleList;
     }
@@ -344,7 +327,6 @@ public class TblEntidades implements Serializable {
     }
 
     @XmlTransient
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEntidad")
     public List<TblRecibos> getTblRecibosList() {
         return tblRecibosList;
     }
@@ -354,7 +336,6 @@ public class TblEntidades implements Serializable {
     }
 
     @XmlTransient
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEntidad")
     public List<TblTransferencias> getTblTransferenciasList() {
         return tblTransferenciasList;
     }
@@ -364,7 +345,6 @@ public class TblEntidades implements Serializable {
     }
 
     @XmlTransient
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEntidad")
     public List<TblFacturas> getTblFacturasList() {
         return tblFacturasList;
     }
@@ -373,8 +353,6 @@ public class TblEntidades implements Serializable {
         this.tblFacturasList = tblFacturasList;
     }
 
-    @JoinColumn(name = "ID_AREA_SERVICIO_EN_IGLESIA", referencedColumnName = "ID")
-    @ManyToOne
     public TblAreasServicioEnIglesia getIdAreaServicioEnIglesia() {
         return idAreaServicioEnIglesia;
     }
@@ -384,7 +362,6 @@ public class TblEntidades implements Serializable {
     }
 
     @XmlTransient
-    @OneToMany(mappedBy = "idEntidadPaganteAportes")
     public List<TblEntidades> getTblEntidadesList() {
         return tblEntidadesList;
     }
@@ -393,8 +370,6 @@ public class TblEntidades implements Serializable {
         this.tblEntidadesList = tblEntidadesList;
     }
 
-    @JoinColumn(name = "ID_ENTIDAD_PAGANTE_APORTES", referencedColumnName = "ID")
-    @ManyToOne
     public TblEntidades getIdEntidadPaganteAportes() {
         return idEntidadPaganteAportes;
     }
@@ -403,8 +378,6 @@ public class TblEntidades implements Serializable {
         this.idEntidadPaganteAportes = idEntidadPaganteAportes;
     }
 
-    @JoinColumn(name = "ID_FORMA_DE_PAGO_PREFERIDA", referencedColumnName = "ID")
-    @ManyToOne
     public TblFormasDePago getIdFormaDePagoPreferida() {
         return idFormaDePagoPreferida;
     }
@@ -413,8 +386,6 @@ public class TblEntidades implements Serializable {
         this.idFormaDePagoPreferida = idFormaDePagoPreferida;
     }
 
-    @JoinColumn(name = "ID_MIEMBROS_ALERGIA", referencedColumnName = "ID")
-    @ManyToOne
     public TblMiembrosAlergias getIdMiembrosAlergia() {
         return idMiembrosAlergia;
     }
@@ -423,8 +394,6 @@ public class TblEntidades implements Serializable {
         this.idMiembrosAlergia = idMiembrosAlergia;
     }
 
-    @JoinColumn(name = "ID_MIEMBROS_CATEGORIA_DE_PAGO", referencedColumnName = "ID")
-    @ManyToOne
     public TblMiembrosCategoriasDePago getIdMiembrosCategoriaDePago() {
         return idMiembrosCategoriaDePago;
     }
@@ -433,8 +402,24 @@ public class TblEntidades implements Serializable {
         this.idMiembrosCategoriaDePago = idMiembrosCategoriaDePago;
     }
 
-    @JoinColumn(name = "ID_USER", referencedColumnName = "ID")
-    @ManyToOne
+    @XmlTransient
+    public List<TblAportesImporteMensualSaldoAnterior> getTblAportesImporteMensualSaldoAnteriorList() {
+        return tblAportesImporteMensualSaldoAnteriorList;
+    }
+
+    public void setTblAportesImporteMensualSaldoAnteriorList(List<TblAportesImporteMensualSaldoAnterior> tblAportesImporteMensualSaldoAnteriorList) {
+        this.tblAportesImporteMensualSaldoAnteriorList = tblAportesImporteMensualSaldoAnteriorList;
+    }
+
+    @XmlTransient
+    public List<TblEntidadesHistoricoCategorias> getTblEntidadesHistoricoCategoriasList() {
+        return tblEntidadesHistoricoCategoriasList;
+    }
+
+    public void setTblEntidadesHistoricoCategoriasList(List<TblEntidadesHistoricoCategorias> tblEntidadesHistoricoCategoriasList) {
+        this.tblEntidadesHistoricoCategoriasList = tblEntidadesHistoricoCategoriasList;
+    }
+
     public TblUsers getIdUser() {
         return idUser;
     }
@@ -443,7 +428,6 @@ public class TblEntidades implements Serializable {
         this.idUser = idUser;
     }
 
-    /*
     @Override
     public int hashCode() {
         Integer hash = 0;
@@ -458,13 +442,9 @@ public class TblEntidades implements Serializable {
             return false;
         }
         TblEntidades other = (TblEntidades) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
-     */
-    @Transient
+
     public String getNombreCompleto() {
         return apellidos + " " + nombres;
     }
@@ -477,7 +457,6 @@ public class TblEntidades implements Serializable {
     /**
      * @return the aporteSaldoAnterior
      */
-    @Column(name = "APORTE_SALDO_ANTERIOR")
     public Long getAporteSaldoAnterior() {
         return aporteSaldoAnterior;
     }
@@ -492,9 +471,6 @@ public class TblEntidades implements Serializable {
     /**
      * @return the mesInicioAporte
      */
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "MES_INICIO_APORTE")
     public Integer getMesInicioAporte() {
         return mesInicioAporte;
     }
@@ -509,9 +485,6 @@ public class TblEntidades implements Serializable {
     /**
      * @return the mesFinAporte
      */
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "MES_FIN_APORTE")
     public Integer getMesFinAporte() {
         return mesFinAporte;
     }
@@ -523,30 +496,25 @@ public class TblEntidades implements Serializable {
         this.mesFinAporte = mesFinAporte;
     }
 
-    @Transient
     public Integer getEdad() {
         if (getFechaNacimiento() != null) {
-            return Period.between(getFechaNacimiento().toLocalDate(), LocalDate.now()).getYears();
+            return Period.between(getFechaNacimiento(), LocalDate.now()).getYears();
         } else {
             return 0;
         }
     }
 
-    @Transient
     public String getEdadText() {
         if (getFechaNacimiento() != null) {
-            return "Edad: " + String.valueOf(Period.between(getFechaNacimiento().toLocalDate(), LocalDate.now()).getYears()) + " años. ";
+            return "Edad: " + String.valueOf(Period.between(getFechaNacimiento(), LocalDate.now()).getYears()) + " años. ";
         } else {
             return "Edad: No disponible.";
         }
     }
 
-    private String edadBautismoText;
-
-    @Transient
     public String getEdadBautismoText() {
         if (getFechaBautismo() != null) {
-            return "Bautizado hace: " + String.valueOf(Period.between(getFechaBautismo().toLocalDate(), LocalDate.now()).getYears()) + " años. ";
+            return "Bautizado hace: " + String.valueOf(Period.between(getFechaBautismo(), LocalDate.now()).getYears()) + " años. ";
         } else {
             return "Bautizado hace: No disponible.";
         }

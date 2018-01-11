@@ -6,22 +6,11 @@
 package com.gnadenheimer.mg3.domain.miembros;
 
 import com.gnadenheimer.mg3.domain.TblUsers;
+
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.time.LocalDate;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -44,10 +33,10 @@ public class TblMiembrosRelaciones implements Serializable {
     @Column(name = "ID")
     private Integer id;
     @Column(name = "FECHA_INICIO")
-    
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDate fechaInicio;
     @Column(name = "FECHA_FIN")
-    
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDate fechaFin;
     @JoinColumn(name = "ID_ENTIDAD_2", referencedColumnName = "ID")
     @ManyToOne
@@ -172,15 +161,12 @@ public class TblMiembrosRelaciones implements Serializable {
             return false;
         }
         TblMiembrosRelaciones other = (TblMiembrosRelaciones) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 
     @Override
     public String toString() {
-        return "com.gnadenheimer.mg.domain.TblMiembrosRelaciones[ id=" + id + " ]";
+        return "com.gnadenheimer.mg3.domain.TblMiembrosRelaciones[ id=" + id + " ]";
     }
 
 }

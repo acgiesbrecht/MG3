@@ -5,15 +5,9 @@
  */
 package com.gnadenheimer.mg3.domain;
 
-import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 /**
  *
@@ -62,15 +56,12 @@ public class TblDatabaseUpdates implements Serializable {
             return false;
         }
         TblDatabaseUpdates other = (TblDatabaseUpdates) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 
     @Override
     public String toString() {
-        return "com.gnadenheimer.mg.domain.TblDatabaseUpdates[ id=" + id + " ]";
+        return "com.gnadenheimer.mg3.domain.TblDatabaseUpdates[ id=" + id + " ]";
     }
 
 }

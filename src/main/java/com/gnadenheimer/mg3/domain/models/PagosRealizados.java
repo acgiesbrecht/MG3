@@ -8,12 +8,12 @@ package com.gnadenheimer.mg3.domain.models;
 import com.gnadenheimer.mg3.domain.TblAsientosTemporales;
 import com.gnadenheimer.mg3.domain.TblEventoTipos;
 import com.gnadenheimer.mg3.domain.miembros.TblEntidades;
-import java.io.Serializable;
-import java.util.List;
-import java.time.LocalDate;
-import javax.persistence.ElementCollection;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.List;
 
 /**
  *
@@ -27,8 +27,6 @@ public class PagosRealizados implements Serializable {
     @Id
     private TblEntidades entidad;
     private LocalDate fecha;
-    
-    @ElementCollection(targetClass=TblAsientosTemporales.class)
     private List<TblAsientosTemporales> asientosTemporalesList;
     private TblEventoTipos eventoTipo;
     private Integer montoAporte;
@@ -52,7 +50,6 @@ public class PagosRealizados implements Serializable {
     /**
      * @return the asientosTemporalesList
      */
-    
     public List<TblAsientosTemporales> getAsientosTemporalesList() {
         return asientosTemporalesList;
     }

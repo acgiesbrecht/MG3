@@ -6,9 +6,10 @@
 package com.gnadenheimer.mg3.domain.models;
 
 import com.gnadenheimer.mg3.domain.miembros.TblEntidades;
-import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 /**
  *

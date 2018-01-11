@@ -5,11 +5,11 @@
  */
 package com.gnadenheimer.mg3.domain;
 
-import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  *
@@ -54,8 +54,8 @@ public class TblRecibosCompraFacturasCompraPK implements Serializable {
     @Override
     public int hashCode() {
         Integer hash = 0;
-        hash += (Integer) idRecibo;
-        hash += (Integer) idFacturaCompra;
+        hash += idRecibo;
+        hash += idFacturaCompra;
         return hash;
     }
 
@@ -69,15 +69,12 @@ public class TblRecibosCompraFacturasCompraPK implements Serializable {
         if (this.idRecibo != other.idRecibo) {
             return false;
         }
-        if (this.idFacturaCompra != other.idFacturaCompra) {
-            return false;
-        }
-        return true;
+        return this.idFacturaCompra == other.idFacturaCompra;
     }
 
     @Override
     public String toString() {
-        return "com.gnadenheimer.mg.domain.TblRecibosCompraFacturasCompraPK[ idRecibo=" + idRecibo + ", idFacturaCompra=" + idFacturaCompra + " ]";
+        return "com.gnadenheimer.mg3.domain.TblRecibosCompraFacturasCompraPK[ idRecibo=" + idRecibo + ", idFacturaCompra=" + idFacturaCompra + " ]";
     }
 
 }

@@ -12,35 +12,7 @@ import com.gnadenheimer.mg3.domain.TblFacturas;
 import com.gnadenheimer.mg3.domain.TblNotasDeCredito;
 import com.gnadenheimer.mg3.domain.miembros.TblEntidades;
 import com.gnadenheimer.mg3.domain.models.CuotaModel;
-import java.awt.Component;
-import java.io.File;
-import java.io.IOException;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.prefs.Preferences;
-import javafx.stage.DirectoryChooser;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import net.sf.jasperreports.engine.JREmptyDataSource;
-import net.sf.jasperreports.engine.JRParameter;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperPrintManager;
-import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.type.WhenNoDataTypeEnum;
 import net.sf.jasperreports.view.JasperViewer;
 import org.apache.commons.io.IOUtils;
@@ -48,26 +20,35 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.bouncycastle.util.Strings;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import java.io.File;
+import java.io.IOException;
+import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+import java.util.prefs.Preferences;
+
 /**
  *
- * @author user
+ * @author usermasters
  */
-public class Utils extends Component {
+@ApplicationScoped
+public class Utils {
 
     private static final Utils UTILS = new Utils();
     private static final Logger LOGGER = LogManager.getLogger(Utils.class);
-    CurrentUser currentUser = CurrentUser.getInstance();
-    private EntityManagerFactory entityManagerFactory;
+
+    @Inject
+    CurrentUser currentUser;
 
     /* A private Constructor prevents any other
      * class from instantiating.
      */
     private Utils() {
-    }
-
-    /* Static 'instance' method */
-    public static Utils getInstance() {
-        return UTILS;
     }
 
     public List<CuotaModel> getCuotas(TblEventoCuotas eventoCuotas, Integer monto) {
@@ -295,7 +276,7 @@ public class Utils extends Component {
 
     public Boolean executeSQL(String filename) {
         try {
-            Map<String, String> persistenceMap = Utils.getInstance().getPersistenceMap();
+            Map<String, String> persistenceMap = getPersistenceMap();
             Boolean success = false;
             Connection conn = DriverManager.getConnection(persistenceMap.get("javax.persistence.jdbc.url"), persistenceMap.get("javax.persistence.jdbc.user"), persistenceMap.get("javax.persistence.jdbc.password"));
             //JOptionPane.showMessageDialog(null, filename);
@@ -515,7 +496,7 @@ public class Utils extends Component {
     public static LocalDate finPeriodoFiscal() {
         return LocalDate.of(App.periodoFiscal, Month.DECEMBER, 31);
     }
-
+/*
     public void setEntityManagerFactory() {
         this.entityManagerFactory = Persistence.createEntityManagerFactory("mg_PU", getPersistenceMap());
     }
@@ -523,4 +504,6 @@ public class Utils extends Component {
     public EntityManagerFactory getEntityManagerFactory() {
         return this.entityManagerFactory;
     }
+
+    */
 }

@@ -4,34 +4,15 @@
  */
 package com.panemu.tiwulfx.table;
 
-import com.panemu.tiwulfx.common.ExceptionHandler;
-import com.panemu.tiwulfx.common.ExceptionHandlerFactory;
-import com.panemu.tiwulfx.common.LiteralUtil;
-import com.panemu.tiwulfx.common.TableCriteria;
-import com.panemu.tiwulfx.common.TableData;
-import com.panemu.tiwulfx.common.TiwulFXUtil;
+import com.panemu.tiwulfx.common.*;
 import com.panemu.tiwulfx.dialog.MessageDialog;
 import com.panemu.tiwulfx.dialog.MessageDialogBuilder;
 import com.sun.javafx.scene.control.skin.VirtualFlow;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.binding.BooleanBinding;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -46,38 +27,20 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Cell;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ScrollBar;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
+import javafx.scene.control.*;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableColumn.SortType;
-import javafx.scene.control.TablePosition;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
-import javafx.scene.control.ToolBar;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.Clipboard;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.input.*;
+import javafx.scene.layout.*;
 import javafx.stage.Window;
 import javafx.util.Callback;
 import org.apache.commons.beanutils.PropertyUtils;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -124,24 +87,6 @@ public class TableControl<R> extends VBox {
     private String configurationID;
     private Logger logger = Logger.getLogger(LiteralUtil.class.getName());
 
-    public static enum Mode {
-
-        INSERT, EDIT, READ
-    }
-
-    /**
-     * UI component in TableControl which their visibility could be manipulated
-     *
-     * @see #setVisibleComponents(boolean,
-     * com.panemu.tiwulfx.table.TableControl.Component[])
-     *
-     */
-    public static enum Component {
-
-        BUTTON_RELOAD, BUTTON_INSERT, BUTTON_EDIT, BUTTON_SAVE, BUTTON_DELETE,
-        BUTTON_EXPORT, BUTTON_PAGINATION, TOOLBAR, FOOTER;
-    }
-
     public TableControl(Class<R> recordClass) {
         this.recordClass = recordClass;
         initControls();
@@ -163,10 +108,7 @@ public class TableControl<R> extends VBox {
 
             @Override
             protected boolean computeValue() {
-                if ((mode.get() == Mode.INSERT && lstChangedRow.size() < 2) || tblView.getSelectionModel().selectedItemProperty().get() == null || mode.get() == Mode.EDIT) {
-                    return true;
-                }
-                return false;
+                return (mode.get() == Mode.INSERT && lstChangedRow.size() < 2) || tblView.getSelectionModel().selectedItemProperty().get() == null || mode.get() == Mode.EDIT;
             }
         });
         tblView.editableProperty().bind(mode.isNotEqualTo(Mode.READ));
@@ -248,6 +190,158 @@ public class TableControl<R> extends VBox {
             }
         });
         attachWindowVisibilityListener();
+    }
+
+    /**
+     * Paste text on clipboard. Doesn't work on READ mode.
+     */
+    public void paste() {
+        if (mode.get() == Mode.READ) {
+            return;
+        }
+        final Clipboard clipboard = Clipboard.getSystemClipboard();
+        if (clipboard.hasString()) {
+            final String text = clipboard.getString();
+            if (text != null) {
+                List<TablePosition> cells = tblView.getSelectionModel().getSelectedCells();
+                if (cells.isEmpty()) {
+                    return;
+                }
+                TablePosition cell = cells.get(0);
+                List<TableColumn<R, ?>> lstColumn = getLeafColumns();
+                TableColumn startColumn = null;
+                for (TableColumn clm : lstColumn) {
+                    if (clm instanceof BaseColumn && clm == cell.getTableColumn()) {
+                        startColumn = clm;
+                        break;
+                    }
+                }
+                if (startColumn == null) {
+                    return;
+                }
+                int rowIndex = cell.getRow();
+                String[] arrString = text.split("\n");
+                boolean stopPasting = false;
+                for (String line : arrString) {
+                    if (stopPasting) {
+                        break;
+                    }
+                    R item = null;
+                    if (rowIndex < tblView.getItems().size()) {
+                        item = tblView.getItems().get(rowIndex);
+                    } else if (mode.get() == Mode.EDIT) {
+                        /**
+                         * Will ensure the content display to TEXT_ONLY because
+                         * there is no way to update cell editors value (in
+                         * agile editing mode)
+                         */
+                        tblView.getSelectionModel().clearSelection();
+                        return;//stop pasting as it already touched last row
+                    }
+
+                    if (!lstChangedRow.contains(item)) {
+                        if (mode.get() == Mode.INSERT) {
+                            //means that selected row is not new row. Let's create new row
+                            createNewRow(rowIndex);
+                            item = tblView.getItems().get(rowIndex);
+                        } else {
+                            lstChangedRow.add(item);
+                        }
+                    }
+
+                    showRow(rowIndex);
+                    /**
+                     * Handle multicolumn paste
+                     */
+                    String[] stringCellValues = line.split("\t");
+                    TableColumn toFillColumn = startColumn;
+                    tblView.getSelectionModel().select(rowIndex, toFillColumn);
+                    for (String stringCellValue : stringCellValues) {
+                        if (toFillColumn == null) {
+                            break;
+                        }
+                        if (toFillColumn instanceof BaseColumn && toFillColumn.isEditable() && toFillColumn.isVisible()) {
+                            try {
+                                Object oldValue = toFillColumn.getCellData(item);
+                                Object newValue = ((BaseColumn) toFillColumn).convertFromString(stringCellValue);
+                                PropertyUtils.setSimpleProperty(item, ((BaseColumn) toFillColumn).getPropertyName(), newValue);
+                                if (mode.get() == Mode.EDIT) {
+                                    ((BaseColumn) toFillColumn).addRecordChange(item, oldValue, newValue);
+                                }
+                            } catch (Exception ex) {
+                                MessageDialog.Answer answer = MessageDialogBuilder
+                                        .error(ex)
+                                        .message("msg.paste.error", stringCellValue, toFillColumn.getText())
+                                        .buttonType(MessageDialog.ButtonType.YES_NO)
+                                        .yesOkButtonText("continue.pasting")
+                                        .noButtonText("stop")
+                                        .show(getScene().getWindow());
+                                if (answer == MessageDialog.Answer.NO) {
+                                    stopPasting = true;
+                                    break;
+                                }
+                            }
+                        }
+                        tblView.getSelectionModel().selectRightCell();
+                        TablePosition nextCell = tblView.getSelectionModel().getSelectedCells().get(0);
+                        if (nextCell.getTableColumn() instanceof BaseColumn && nextCell.getTableColumn() != toFillColumn) {
+                            toFillColumn = nextCell.getTableColumn();
+                        } else {
+                            toFillColumn = null;
+                        }
+                    }
+                    rowIndex++;
+                }
+
+                refresh();
+
+                /**
+                 * Will ensure the content display to TEXT_ONLY because there is
+                 * no way to update cell editors value (in agile editing mode)
+                 */
+                tblView.getSelectionModel().clearSelection();
+            }
+        }
+    }
+
+    private void initColumn(TableColumn<R, ?> clm) {
+        List<TableColumn<R, ?>> lstColumn = new ArrayList<>();
+        lstColumn.add(clm);
+        lstColumn = getColumnsRecursively(lstColumn);
+        for (TableColumn column : lstColumn) {
+            if (column instanceof BaseColumn) {
+                final BaseColumn baseColumn = (BaseColumn) column;
+                baseColumn.tableCriteriaProperty().addListener(tableCriteriaListener);
+                baseColumn.sortTypeProperty().addListener(sortTypeChangeListener);
+                baseColumn.addEventHandler(TableColumn.editCommitEvent(), new EventHandler<TableColumn.CellEditEvent<R, ?>>() {
+                    @Override
+                    public void handle(CellEditEvent<R, ?> t) {
+                        try {
+                            if (!(t.getTablePosition().getRow() < t.getTableView().getItems().size())) {
+                                return;
+                            }
+                            Object persistentObj = t.getTableView().getItems().get(t.getTablePosition().getRow());
+                            if ((t.getNewValue() == null && t.getOldValue() == null)
+                                    || (t.getNewValue() != null && t.getNewValue().equals(t.getOldValue()))) {
+                            }
+                            if (mode.get().equals(Mode.EDIT)
+                                    && t.getOldValue() != t.getNewValue()
+                                    && (t.getOldValue() == null || !t.getOldValue().equals(t.getNewValue()))) {
+                                if (!lstChangedRow.contains(persistentObj)) {
+                                    lstChangedRow.add((R) persistentObj);
+                                }
+                                baseColumn.addRecordChange(persistentObj, t.getOldValue(), t.getNewValue());
+                            }
+                            PropertyUtils.setSimpleProperty(persistentObj, baseColumn.getPropertyName(), t.getNewValue());
+                            baseColumn.validate(persistentObj);
+                        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                });
+
+            }
+        }
     }
 
     private int lastColumnIndex = 0;
@@ -490,115 +584,26 @@ public class TableControl<R> extends VBox {
     }
 
     /**
-     * Paste text on clipboard. Doesn't work on READ mode.
+     * Return false if the insertion is canceled because the ui return
+     * null object. It is ui's way to abort insertion.
+     *
+     * @param rowIndex
+     * @return
      */
-    public void paste() {
-        if (mode.get() == Mode.READ) {
-            return;
+    private void createNewRow(int rowIndex) {
+        R newRecord;
+        try {
+            newRecord = (R) Class.forName(recordClass.getName()).newInstance();
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+            throw new RuntimeException(ex);
         }
-        final Clipboard clipboard = Clipboard.getSystemClipboard();
-        if (clipboard.hasString()) {
-            final String text = clipboard.getString();
-            if (text != null) {
-                List<TablePosition> cells = tblView.getSelectionModel().getSelectedCells();
-                if (cells.isEmpty()) {
-                    return;
-                }
-                TablePosition cell = cells.get(0);
-                List<TableColumn<R, ?>> lstColumn = getLeafColumns();
-                TableColumn startColumn = null;
-                for (TableColumn clm : lstColumn) {
-                    if (clm instanceof BaseColumn && clm == cell.getTableColumn()) {
-                        startColumn = (BaseColumn) clm;
-                        break;
-                    }
-                }
-                if (startColumn == null) {
-                    return;
-                }
-                int rowIndex = cell.getRow();
-                String[] arrString = text.split("\n");
-                boolean stopPasting = false;
-                for (String line : arrString) {
-                    if (stopPasting) {
-                        break;
-                    }
-                    R item = null;
-                    if (rowIndex < tblView.getItems().size()) {
-                        item = tblView.getItems().get(rowIndex);
-                    } else if (mode.get() == Mode.EDIT) {
-                        /**
-                         * Will ensure the content display to TEXT_ONLY because
-                         * there is no way to update cell editors value (in
-                         * agile editing mode)
-                         */
-                        tblView.getSelectionModel().clearSelection();
-                        return;//stop pasting as it already touched last row
-                    }
 
-                    if (!lstChangedRow.contains(item)) {
-                        if (mode.get() == Mode.INSERT) {
-                            //means that selected row is not new row. Let's create new row
-                            createNewRow(rowIndex);
-                            item = tblView.getItems().get(rowIndex);
-                        } else {
-                            lstChangedRow.add(item);
-                        }
-                    }
-
-                    showRow(rowIndex);
-                    /**
-                     * Handle multicolumn paste
-                     */
-                    String[] stringCellValues = line.split("\t");
-                    TableColumn toFillColumn = startColumn;
-                    tblView.getSelectionModel().select(rowIndex, toFillColumn);
-                    for (String stringCellValue : stringCellValues) {
-                        if (toFillColumn == null) {
-                            break;
-                        }
-                        if (toFillColumn instanceof BaseColumn && toFillColumn.isEditable() && toFillColumn.isVisible()) {
-                            try {
-                                Object oldValue = toFillColumn.getCellData(item);
-                                Object newValue = ((BaseColumn) toFillColumn).convertFromString(stringCellValue);
-                                PropertyUtils.setSimpleProperty(item, ((BaseColumn) toFillColumn).getPropertyName(), newValue);
-                                if (mode.get() == Mode.EDIT) {
-                                    ((BaseColumn) toFillColumn).addRecordChange(item, oldValue, newValue);
-                                }
-                            } catch (Exception ex) {
-                                MessageDialog.Answer answer = MessageDialogBuilder
-                                        .error(ex)
-                                        .message("msg.paste.error", stringCellValue, toFillColumn.getText())
-                                        .buttonType(MessageDialog.ButtonType.YES_NO)
-                                        .yesOkButtonText("continue.pasting")
-                                        .noButtonText("stop")
-                                        .show(getScene().getWindow());
-                                if (answer == MessageDialog.Answer.NO) {
-                                    stopPasting = true;
-                                    break;
-                                }
-                            }
-                        }
-                        tblView.getSelectionModel().selectRightCell();
-                        TablePosition nextCell = tblView.getSelectionModel().getSelectedCells().get(0);
-                        if (nextCell.getTableColumn() instanceof BaseColumn && nextCell.getTableColumn() != toFillColumn) {
-                            toFillColumn = (BaseColumn) nextCell.getTableColumn();
-                        } else {
-                            toFillColumn = null;
-                        }
-                    }
-                    rowIndex++;
-                }
-
-                refresh();
-
-                /**
-                 * Will ensure the content display to TEXT_ONLY because there is
-                 * no way to update cell editors value (in agile editing mode)
-                 */
-                tblView.getSelectionModel().clearSelection();
-            }
+        if (tblView.getItems().size() == 0) {
+            rowIndex = 0;
         }
+
+        tblView.getItems().add(rowIndex, newRecord);
+        lstChangedRow.add(newRecord);
     }
 
     /**
@@ -921,44 +926,13 @@ public class TableControl<R> extends VBox {
         this.controller = controller;
     }
 
-    private void initColumn(TableColumn<R, ?> clm) {
-        List<TableColumn<R, ?>> lstColumn = new ArrayList<>();
-        lstColumn.add(clm);
-        lstColumn = getColumnsRecursively(lstColumn);
-        for (TableColumn column : lstColumn) {
-            if (column instanceof BaseColumn) {
-                final BaseColumn baseColumn = (BaseColumn) column;
-                baseColumn.tableCriteriaProperty().addListener(tableCriteriaListener);
-                baseColumn.sortTypeProperty().addListener(sortTypeChangeListener);
-                baseColumn.addEventHandler(TableColumn.editCommitEvent(), new EventHandler<TableColumn.CellEditEvent<R, ?>>() {
-                    @Override
-                    public void handle(CellEditEvent<R, ?> t) {
-                        try {
-                            if (!(t.getTablePosition().getRow() < t.getTableView().getItems().size())) {
-                                return;
-                            }
-                            Object persistentObj = t.getTableView().getItems().get(t.getTablePosition().getRow());
-                            if ((t.getNewValue() == null && t.getOldValue() == null)
-                                    || (t.getNewValue() != null && t.getNewValue().equals(t.getOldValue()))) {
-                            }
-                            if (mode.get().equals(Mode.EDIT)
-                                    && t.getOldValue() != t.getNewValue()
-                                    && (t.getOldValue() == null || !t.getOldValue().equals(t.getNewValue()))) {
-                                if (!lstChangedRow.contains((R) persistentObj)) {
-                                    lstChangedRow.add((R) persistentObj);
-                                }
-                                baseColumn.addRecordChange(persistentObj, t.getOldValue(), t.getNewValue());
-                            }
-                            PropertyUtils.setSimpleProperty(persistentObj, baseColumn.getPropertyName(), t.getNewValue());
-                            baseColumn.validate(persistentObj);
-                        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException ex) {
-                            throw new RuntimeException(ex);
-                        }
-                    }
-                });
-
-            }
-        }
+    /**
+     * Export table to Excel. All pages will be exported. The criteria set on
+     * columns are taken into account. This method is called by export button.
+     */
+    public void export() {
+        //ui.exportToExcel("Override TableController.exportToExcel to reset the title.", maxResult.get(), this, lstCriteria);
+        service.runExportInBackground();
     }
 
     /**
@@ -1141,27 +1115,70 @@ public class TableControl<R> extends VBox {
         }
     }
 
-    /**
-     * Return false if the insertion is canceled because the controller return
-     * null object. It is controller's way to abort insertion.
-     *
-     * @param rowIndex
-     * @return
-     */
-    private void createNewRow(int rowIndex) {
-        R newRecord;
-        try {
-            newRecord = (R) Class.forName(recordClass.getName()).newInstance();
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-            throw new RuntimeException(ex);
+    private void postLoadAction(TableData<R> vol) {
+        if (vol.getRows() == null) {
+            vol.setRows(new ArrayList<>());
         }
 
-        if (tblView.getItems().size() == 0) {
-            rowIndex = 0;
+        totalRows = vol.getTotalRows();
+
+        //keep track of previous selected row
+        int selectedIndex = tblView.getSelectionModel().getSelectedIndex();
+        TableColumn selectedColumn = null;
+        if (!tblView.getSelectionModel().getSelectedCells().isEmpty()) {
+            selectedColumn = tblView.getSelectionModel().getSelectedCells().get(0).getTableColumn();
         }
 
-        tblView.getItems().add(rowIndex, newRecord);
-        lstChangedRow.add(newRecord);
+        if (isACellInEditing()) {
+            /**
+             * Trigger cancelEdit if there is cell being edited. Otherwise
+             * ArrayIndexOutOfBound exception happens since tblView items are
+             * cleared (see next lines) but setOnEditCommit listener is
+             * executed.
+             */
+            tblView.edit(-1, tblView.getColumns().get(0));
+        }
+
+        //clear items and add with objects that has just been retrieved
+        tblView.getItems().clear();
+        tblView.getItems().addAll(vol.getRows());
+
+        if (selectedIndex < vol.getRows().size()) {
+            tblView.getSelectionModel().select(selectedIndex, selectedColumn);
+        } else {
+            tblView.getSelectionModel().select(vol.getRows().size() - 1, selectedColumn);
+        }
+
+        long page = vol.getTotalRows() / maxResult.get();
+        if (vol.getTotalRows() % maxResult.get() != 0) {
+            page++;
+        }
+        cmbPage.setDisable(page == 0);
+        startIndex.removeListener(startIndexChangeListener);
+        cmbPage.getItems().clear();
+        for (int i = 1; i <= page; i++) {
+            cmbPage.getItems().add(i);
+        }
+        cmbPage.getSelectionModel().select(startIndex.get() / maxResult.get());
+        startIndex.addListener(startIndexChangeListener);
+        toggleButtons(page > 0, vol.isMoreRows());
+
+        mode.set(Mode.READ);
+
+        clearChange();
+        if (fitColumnAfterReload) {
+            for (TableColumn clm : tblView.getColumns()) {
+                resizeToFit(clm, -1);
+            }
+        }
+        lblTotalRow.setText(TiwulFXUtil.getLiteral("total.record.param", totalRows));
+
+        for (TableColumn clm : getLeafColumns()) {
+            if (clm instanceof BaseColumn) {
+                ((BaseColumn) clm).getInvalidRecordMap().clear();
+            }
+        }
+        controller.postLoadData();
     }
 
     /**
@@ -1288,13 +1305,27 @@ public class TableControl<R> extends VBox {
         }
     }
 
-    /**
-     * Export table to Excel. All pages will be exported. The criteria set on
-     * columns are taken into account. This method is called by export button.
-     */
-    public void export() {
-        //controller.exportToExcel("Override TableController.exportToExcel to reset the title.", maxResult.get(), this, lstCriteria);
-        service.runExportInBackground();
+    private void postSaveAction(List<R> lstResult, Mode prevMode) {
+        mode.set(Mode.READ);
+        /**
+         * In case objects in lstResult differ with original object. Ex: In SOA
+         * architecture, sent objects always differ with received object due to
+         * serialization.
+         */
+        int i = 0;
+        for (R row : lstChangedRow) {
+            int index = tblView.getItems().indexOf(row);
+            tblView.getItems().remove(index);
+            tblView.getItems().add(index, lstResult.get(i));
+            i++;
+        }
+
+        /**
+         * Refresh cells. They won't refresh automatically if the entity's
+         * properties bound to the cells are not javaFX property object.
+         */
+        clearChange();
+        controller.postSave(prevMode);
     }
 
     private class StartIndexChangeListener implements ChangeListener<Number> {
@@ -1529,70 +1560,9 @@ public class TableControl<R> extends VBox {
         return controller.isRecordEditable(item);
     }
 
-    private void postLoadAction(TableData<R> vol) {
-        if (vol.getRows() == null) {
-            vol.setRows(new ArrayList<>());
-        }
+    public enum Mode {
 
-        totalRows = vol.getTotalRows();
-
-        //keep track of previous selected row
-        int selectedIndex = tblView.getSelectionModel().getSelectedIndex();
-        TableColumn selectedColumn = null;
-        if (!tblView.getSelectionModel().getSelectedCells().isEmpty()) {
-            selectedColumn = tblView.getSelectionModel().getSelectedCells().get(0).getTableColumn();
-        }
-
-        if (isACellInEditing()) {
-            /**
-             * Trigger cancelEdit if there is cell being edited. Otherwise
-             * ArrayIndexOutOfBound exception happens since tblView items are
-             * cleared (see next lines) but setOnEditCommit listener is
-             * executed.
-             */
-            tblView.edit(-1, tblView.getColumns().get(0));
-        }
-
-        //clear items and add with objects that has just been retrieved
-        tblView.getItems().clear();
-        tblView.getItems().addAll(vol.getRows());
-
-        if (selectedIndex < vol.getRows().size()) {
-            tblView.getSelectionModel().select(selectedIndex, selectedColumn);
-        } else {
-            tblView.getSelectionModel().select(vol.getRows().size() - 1, selectedColumn);
-        }
-
-        long page = vol.getTotalRows() / maxResult.get();
-        if (vol.getTotalRows() % maxResult.get() != 0) {
-            page++;
-        }
-        cmbPage.setDisable(page == 0);
-        startIndex.removeListener(startIndexChangeListener);
-        cmbPage.getItems().clear();
-        for (int i = 1; i <= page; i++) {
-            cmbPage.getItems().add(i);
-        }
-        cmbPage.getSelectionModel().select((int) (startIndex.get() / maxResult.get()));
-        startIndex.addListener(startIndexChangeListener);
-        toggleButtons(page > 0, vol.isMoreRows());
-
-        mode.set(Mode.READ);
-
-        clearChange();
-        if (fitColumnAfterReload) {
-            for (TableColumn clm : tblView.getColumns()) {
-                resizeToFit(clm, -1);
-            }
-        }
-        lblTotalRow.setText(TiwulFXUtil.getLiteral("total.record.param", totalRows));
-
-        for (TableColumn clm : getLeafColumns()) {
-            if (clm instanceof BaseColumn) {
-                ((BaseColumn) clm).getInvalidRecordMap().clear();
-            }
-        }
-        controller.postLoadData();
+        INSERT, EDIT, READ
     }
 
     /**
@@ -1609,27 +1579,16 @@ public class TableControl<R> extends VBox {
     public void setErrorHandlerCallback(Callback<Throwable, Void> callback) {
     }
 
-    private void postSaveAction(List<R> lstResult, Mode prevMode) {
-        mode.set(Mode.READ);
-        /**
-         * In case objects in lstResult differ with original object. Ex: In SOA
-         * architecture, sent objects always differ with received object due to
-         * serialization.
-         */
-        int i = 0;
-        for (R row : lstChangedRow) {
-            int index = tblView.getItems().indexOf(row);
-            tblView.getItems().remove((int) index);
-            tblView.getItems().add(index, lstResult.get(i));
-            i++;
-        }
+    /**
+     * UI component in TableControl which their visibility could be manipulated
+     *
+     * @see #setVisibleComponents(boolean,
+     * com.panemu.tiwulfx.table.TableControl.Component[])
+     */
+    public enum Component {
 
-        /**
-         * Refresh cells. They won't refresh automatically if the entity's
-         * properties bound to the cells are not javaFX property object.
-         */
-        clearChange();
-        controller.postSave(prevMode);
+        BUTTON_RELOAD, BUTTON_INSERT, BUTTON_EDIT, BUTTON_SAVE, BUTTON_DELETE,
+        BUTTON_EXPORT, BUTTON_PAGINATION, TOOLBAR, FOOTER
     }
 
     private void postDeleteAction(List<R> lstDeleted, int selectedRow) {
@@ -1926,7 +1885,7 @@ public class TableControl<R> extends VBox {
         }
 
         @Override
-        protected TableData<R> call() throws Exception {
+        protected TableData<R> call() {
 
             return controller.loadData(startIndex.get(), lstCriteria,
                     lstSortedColumn, sortingOrders, maxResult.get());
@@ -1951,7 +1910,7 @@ public class TableControl<R> extends VBox {
         }
 
         @Override
-        protected List<R> call() throws Exception {
+        protected List<R> call() {
             List<R> lstResult = new ArrayList<>();
             if (mode.get().equals(Mode.EDIT)) {
                 lstResult = controller.update(lstChangedRow);
@@ -1980,7 +1939,7 @@ public class TableControl<R> extends VBox {
         }
 
         @Override
-        protected Void call() throws Exception {
+        protected Void call() {
             controller.delete(lstToDelete);
             return null;
         }
@@ -1996,7 +1955,7 @@ public class TableControl<R> extends VBox {
         }
 
         @Override
-        protected Void call() throws Exception {
+        protected Void call() {
             controller.exportToExcel("Override TableController.exportToExcel to reset the title.", maxResult.get(), TableControl.this, lstCriteria);
             return null;
         }

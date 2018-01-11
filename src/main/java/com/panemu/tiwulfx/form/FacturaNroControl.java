@@ -4,16 +4,19 @@
  */
 package com.panemu.tiwulfx.form;
 
+/*
 import com.gnadenheimer.mg3.utils.Utils;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import ru.vas7n.va.widgets.MaskField;
+import javafx.scene.control.TextField;
+import jidefx.scene.control.field.MaskTextField;
 
+/*
 /**
  *
  * @author Amrullah <amrullah@panemu.com>
- */
-public class FacturaNroControl extends BaseControl<String, MaskField> {
+ *//*
+public class FacturaNroControl extends BaseControl<String, TextField> {
 
     private MaskField textField;
 
@@ -22,7 +25,7 @@ public class FacturaNroControl extends BaseControl<String, MaskField> {
     }
 
     public FacturaNroControl(String propertyName) {
-        super(propertyName, new MaskField());
+        super(propertyName, new MaskTextField());
         textField = getInputComponent();
         textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
@@ -59,3 +62,4 @@ public class FacturaNroControl extends BaseControl<String, MaskField> {
     }
 
 }
+*/

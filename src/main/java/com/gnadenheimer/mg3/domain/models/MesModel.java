@@ -6,7 +6,6 @@
 package com.gnadenheimer.mg3.domain.models;
 
 import com.gnadenheimer.mg3.utils.Utils;
-import java.time.LocalDate;
 
 /**
  *

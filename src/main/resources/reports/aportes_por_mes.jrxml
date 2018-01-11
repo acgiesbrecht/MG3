@@ -35,7 +35,8 @@
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font size="22" isBold="true"/>
                 </textElement>
-                <textFieldExpression><![CDATA["Detalle de Aportes de " + com.gnadenheimer.mg.utils.Utils.getMesUpperCase($P{pMes}) + " / " + $P{pAno}]]></textFieldExpression>
+                <textFieldExpression>
+                    <![CDATA["Detalle de Aportes de " + com.gnadenheimer.mg3.utils.Utils.getMesUpperCase($P{pMes}) + " / " + $P{pAno}]]></textFieldExpression>
             </textField>
             <subreport>
                 <reportElement x="0" y="0" width="555" height="20" uuid="e3d4dc27-5db1-48be-ab9f-5dbed0fab1d6">
