@@ -2,7 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <MenuBar xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111"
-         fx:controller="com.gnadenheimer.mg3.ui.MenuView">
+         fx:controller="com.gnadenheimer.mg3.ui.main.menu.MenuView">
     <menus>
         <Menu mnemonicParsing="false" text="Sesión">
             <items>

@@ -4,7 +4,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" id="AnchorPane" prefHeight="572.0" prefWidth="666.0"
-            xmlns="http://javafx.com/javafx/8.0.111" fx:controller="com.gnadenheimer.mg3.ui.LoginView">
+            xmlns="http://javafx.com/javafx/8.0.111" fx:controller="com.gnadenheimer.mg3.ui.main.welcome.WelcomeView">
     <children>
         <GridPane layoutX="-4.0" layoutY="-4.0" prefHeight="579.0" prefWidth="652.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <columnConstraints>
@@ -20,7 +20,7 @@
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <image>
-                   <Image url="@../../../../../resources/images/mg3.png"/>
+                   <Image url="@../../../../../../resources/images/mg3.png"/>
                </image>
             </ImageView>
          </children>

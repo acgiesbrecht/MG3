@@ -5,7 +5,7 @@
  */
 package com.gnadenheimer.mg3.ui.admin;
 
-import com.gnadenheimer.mg3.DaoBase;
+import com.gnadenheimer.mg3.dao.DaoBase;
 import com.gnadenheimer.mg3.domain.TblCentrosDeCosto;
 import com.gnadenheimer.mg3.domain.TblEventoTipos;
 import com.gnadenheimer.mg3.domain.TblEventos;

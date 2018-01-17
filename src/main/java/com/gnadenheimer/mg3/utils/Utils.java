@@ -16,9 +16,9 @@ import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.type.WhenNoDataTypeEnum;
 import net.sf.jasperreports.view.JasperViewer;
 import org.apache.commons.io.IOUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.bouncycastle.util.Strings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -40,7 +40,7 @@ import java.util.prefs.Preferences;
 public class Utils {
 
     private static final Utils UTILS = new Utils();
-    private static final Logger LOGGER = LogManager.getLogger(Utils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Utils.class);
 
     @Inject
     CurrentUser currentUser;

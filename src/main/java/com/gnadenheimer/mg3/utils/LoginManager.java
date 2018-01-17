@@ -6,10 +6,12 @@
 package com.gnadenheimer.mg3.utils;
 
 import com.gnadenheimer.mg3.App;
-import com.gnadenheimer.mg3.ui.LoginView;
-import com.gnadenheimer.mg3.ui.LoginViewModel;
-import com.gnadenheimer.mg3.ui.WelcomeView;
-import com.gnadenheimer.mg3.ui.WelcomeViewModel;
+import com.gnadenheimer.mg3.ui.main.login.LoginView;
+import com.gnadenheimer.mg3.ui.main.login.LoginViewModel;
+import com.gnadenheimer.mg3.ui.main.menu.MenuView;
+import com.gnadenheimer.mg3.ui.main.menu.MenuViewModel;
+import com.gnadenheimer.mg3.ui.main.welcome.WelcomeView;
+import com.gnadenheimer.mg3.ui.main.welcome.WelcomeViewModel;
 import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.ViewTuple;
 import javafx.scene.layout.BorderPane;
@@ -50,7 +52,7 @@ public class LoginManager {
 
     public void showMainView() {
         try {
-            final ViewTuple<LoginView, LoginViewModel> menu = FluentViewLoader.fxmlView(LoginView.class).load();
+            final ViewTuple<MenuView, MenuViewModel> menu = FluentViewLoader.fxmlView(MenuView.class).load();
             final ViewTuple<WelcomeView, WelcomeViewModel> welcome = FluentViewLoader.fxmlView(WelcomeView.class).load();
             BorderPane bp = (BorderPane) primaryStage.getScene().getRoot();
             bp.setTop(menu.getView());

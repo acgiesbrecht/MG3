@@ -1,4 +1,4 @@
-package com.gnadenheimer.mg3.ui;
+package com.gnadenheimer.mg3.ui.main.login;
 
 import com.gnadenheimer.mg3.App;
 import com.gnadenheimer.mg3.domain.TblRoles;

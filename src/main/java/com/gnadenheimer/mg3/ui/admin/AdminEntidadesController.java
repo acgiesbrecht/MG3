@@ -5,7 +5,7 @@
  */
 package com.gnadenheimer.mg3.ui.admin;
 
-import com.gnadenheimer.mg3.DaoBase;
+import com.gnadenheimer.mg3.dao.DaoBase;
 import com.gnadenheimer.mg3.domain.miembros.TblEntidades;
 import com.panemu.tiwulfx.common.TableCriteria;
 import com.panemu.tiwulfx.common.TableData;

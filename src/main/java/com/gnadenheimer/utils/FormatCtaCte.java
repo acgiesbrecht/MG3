@@ -1,8 +1,9 @@
 package com.gnadenheimer.utils;
 
-import javax.swing.JOptionPane;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.swing.*;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,20 +16,20 @@ import org.apache.logging.log4j.Logger;
  */
 public class FormatCtaCte {
 
-    private static final Logger LOGGER = LogManager.getLogger(FormatCtaCte.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FormatCtaCte.class);
 
     public static String format(Integer ctaCte) {
         try {
             String sCta = String.valueOf(ctaCte);
-            if (sCta.length() == 5 || sCta.length() == 7) {
+            if (sCta.length() == 6 || sCta.length() == 8) {
                 sCta = "0" + sCta;
             }
 
-            if (sCta.length() == 8) {
-                sCta = sCta.substring(0, 2) + "-" + sCta.substring(2, 5) + "-" + sCta.substring(5, 6) + "/" + sCta.substring(6, 8);
+            if (sCta.length() == 9) {
+                sCta = sCta.substring(0, 2) + "-" + sCta.substring(2, 6) + "-" + sCta.substring(6, 7) + "/" + sCta.substring(7, 9);
             }
-            if (sCta.length() == 6) {
-                sCta = sCta.substring(0, 2) + "-" + sCta.substring(2, 5) + "-" + sCta.substring(5, 6);
+            if (sCta.length() == 7) {
+                sCta = sCta.substring(0, 2) + "-" + sCta.substring(2, 6) + "-" + sCta.substring(6, 7);
             }
             return sCta;
         } catch (Exception exx) {

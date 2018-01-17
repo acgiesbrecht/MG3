@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -49,10 +49,10 @@ public class TblTransferencias implements Serializable {
     @NotNull
     @Column(name = "FECHAHORA")
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDate fechahora;
+    private LocalDateTime fechahora;
     @Column(name = "FECHAHORA_COMPROMISO")
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDate fechahoraCompromiso;
+    private LocalDateTime fechahoraCompromiso;
     @Size(max = 50)
     @Column(name = "CONCEPTO")
     private String concepto;
@@ -98,7 +98,7 @@ public class TblTransferencias implements Serializable {
         this.id = id;
     }
 
-    public TblTransferencias(Integer id, LocalDate fechahora, Integer montoAporte, Integer montoDonacion, Boolean cobrado) {
+    public TblTransferencias(Integer id, LocalDateTime fechahora, Integer montoAporte, Integer montoDonacion, Boolean cobrado) {
         this.id = id;
         this.fechahora = fechahora;
         this.montoAporte = montoAporte;
@@ -114,19 +114,19 @@ public class TblTransferencias implements Serializable {
         this.id = id;
     }
 
-    public LocalDate getFechahora() {
+    public LocalDateTime getFechahora() {
         return fechahora;
     }
 
-    public void setFechahora(LocalDate fechahora) {
+    public void setFechahora(LocalDateTime fechahora) {
         this.fechahora = fechahora;
     }
 
-    public LocalDate getFechahoraCompromiso() {
+    public LocalDateTime getFechahoraCompromiso() {
         return fechahoraCompromiso;
     }
 
-    public void setFechahoraCompromiso(LocalDate fechahoraCompromiso) {
+    public void setFechahoraCompromiso(LocalDateTime fechahoraCompromiso) {
         this.fechahoraCompromiso = fechahoraCompromiso;
     }
 

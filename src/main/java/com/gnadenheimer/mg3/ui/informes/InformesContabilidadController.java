@@ -6,7 +6,7 @@
 package com.gnadenheimer.mg3.ui.informes;
 
 import com.gnadenheimer.mg3.App;
-import com.gnadenheimer.mg3.DaoBase;
+import com.gnadenheimer.mg3.dao.DaoBase;
 import com.gnadenheimer.mg3.domain.TblCentrosDeCosto;
 import com.gnadenheimer.mg3.utils.TimeTextField;
 import com.gnadenheimer.mg3.utils.Utils;

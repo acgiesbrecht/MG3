@@ -2,7 +2,7 @@
  * License BSD License
  * Copyright (C) 2013 Amrullah <amrullah@panemu.com>.
  */
-package com.gnadenheimer.mg3;
+package com.gnadenheimer.mg3.dao;
 
 import com.panemu.tiwulfx.common.TableCriteria;
 import com.panemu.tiwulfx.common.TableData;

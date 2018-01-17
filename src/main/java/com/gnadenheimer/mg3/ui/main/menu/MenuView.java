@@ -3,19 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gnadenheimer.mg3.ui;
+package com.gnadenheimer.mg3.ui.main.menu;
 
 import com.gnadenheimer.mg3.App;
+import com.gnadenheimer.mg3.ui.admin.transferencias.AdminTransferenciasView;
+import com.gnadenheimer.mg3.ui.admin.transferencias.AdminTransferenciasViewModel;
 import com.gnadenheimer.mg3.utils.CurrentUser;
+import com.gnadenheimer.mg3.utils.Utils;
 import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 import de.saxsys.mvvmfx.ViewTuple;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.MenuItem;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
 
 import javax.inject.Inject;
+import java.io.File;
 
 /**
  * FXML Controller class
@@ -26,6 +34,11 @@ public class MenuView implements FxmlView<MenuViewModel> {
 
     @Inject
     CurrentUser currentUser;
+    @Inject
+    Utils utils;
+    @Inject
+    Stage primaryStage;
+
     @InjectViewModel
     private MenuViewModel viewModel;
 
@@ -152,38 +165,39 @@ public class MenuView implements FxmlView<MenuViewModel> {
         mnuInfContabilidad.setDisable(!currentUser.hasRole(3));
     }
 
-    /*@FXML
+    @FXML
     private void mnuAdEntidades(ActionEvent event) {
-        setPane("/fxml/admin/AdminEntidades.fxml");
-    }*/
+    //    setPane("/fxml/admin/AdminEntidades.fxml");
+    }
 
-    private void setPane(FxmlView fxmlView) {
+    private void setView(Parent view) {
         try {
-            final ViewTuple<LoginView, LoginViewModel> tuple = FluentViewLoader.fxmlView(LoginView.class).load();
-            App.getRoot().setCenter(tuple.getView());
+            BorderPane bp = (BorderPane)primaryStage.getScene().getRoot();
+            bp.setCenter(view);
         } catch (Exception ex) {
             App.showException(this.getClass().getName(), ex.getMessage(), ex);
         }
     }
 
-    /*@FXML
+    @FXML
     private void mnuEgFacturas(ActionEvent event) {
-        setPane("/fxml/egresos/FacturasCompras.fxml");
+  //      setPane("/fxml/egresos/FacturasCompras.fxml");
     }
 
     @FXML
     private void mnuAdTransferencias(ActionEvent event) {
-        setPane("/fxml/admin/AdminTransferencias.fxml");
+        final ViewTuple<AdminTransferenciasView, AdminTransferenciasViewModel> tuple = FluentViewLoader.fxmlView(AdminTransferenciasView.class).load();
+        setView(tuple.getView());
     }
 
     @FXML
     private void mnuInfContabilidad(ActionEvent event) {
-        setPane("/fxml/informes/InformesContabilidad.fxml");
+ //       setPane("/fxml/informes/InformesContabilidad.fxml");
     }
 
     @FXML
     private void mnuAdConfig(ActionEvent event) {
-        setPane("/fxml/admin/AdminConfig.fxml");
+ //       setPane("/fxml/admin/AdminConfig.fxml");
     }
 
     @FXML
@@ -202,7 +216,7 @@ public class MenuView implements FxmlView<MenuViewModel> {
 
     @FXML
     private void mnuAdEventos(ActionEvent event) {
-        setPane("/fxml/admin/AdminEventos.fxml");
-    }*/
+ //       setPane("/fxml/admin/AdminEventos.fxml");
+    }
 
 }

@@ -5,7 +5,7 @@
  */
 package com.gnadenheimer.mg3.ui.egresos;
 
-import com.gnadenheimer.mg3.DaoBase;
+import com.gnadenheimer.mg3.dao.DaoBase;
 import com.gnadenheimer.mg3.domain.TblAsientos;
 import com.gnadenheimer.mg3.domain.TblCentrosDeCosto;
 import com.gnadenheimer.mg3.domain.TblCuentasContables;

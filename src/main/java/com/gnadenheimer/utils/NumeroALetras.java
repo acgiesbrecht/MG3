@@ -5,11 +5,13 @@
  */
 package com.gnadenheimer.utils;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.swing.*;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import javax.swing.JOptionPane;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /**
  *
@@ -17,7 +19,7 @@ import org.apache.logging.log4j.Logger;
  */
 public abstract class NumeroALetras {
 
-    private static final Logger LOGGER = LogManager.getLogger(NumeroALetras.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(NumeroALetras.class);
     /**
      * Esta clase provee la funcionalidad de convertir un numero representado en
      * digitos a una representacion en letras. Mejorado para leer centavos

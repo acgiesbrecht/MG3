@@ -1,4 +1,4 @@
-package com.gnadenheimer.mg3.ui;
+package com.gnadenheimer.mg3.ui.main.menu;
 
 import com.gnadenheimer.mg3.utils.LoginManager;
 import de.saxsys.mvvmfx.ViewModel;

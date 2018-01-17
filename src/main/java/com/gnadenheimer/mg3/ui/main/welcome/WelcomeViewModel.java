@@ -1,4 +1,4 @@
-package com.gnadenheimer.mg3.ui;
+package com.gnadenheimer.mg3.ui.main.welcome;
 
 import de.saxsys.mvvmfx.ViewModel;
 
