@@ -1,22 +1,23 @@
+/*import com.gnadenheimer.mg3.DaoBase;
+import com.gnadenheimer.mg3.model.domain.miembros.TblEntidades;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.TableColumn;
+
+import java.net.URL;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.ResourceBundle;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- */
+ *
 package com.gnadenheimer.mg3.controller.admin;
 
 import com.gnadenheimer.mg3.DaoBase;
-import com.gnadenheimer.mg3.domain.miembros.TblEntidades;
-import com.panemu.tiwulfx.common.TableCriteria;
-import com.panemu.tiwulfx.common.TableData;
-import com.panemu.tiwulfx.table.CheckBoxColumn;
-import com.panemu.tiwulfx.table.CtaCteColumn;
-import com.panemu.tiwulfx.table.LocalDateColumn;
-import com.panemu.tiwulfx.table.NumberColumn;
-import com.panemu.tiwulfx.table.RucColumn;
-import com.panemu.tiwulfx.table.TableControl;
-import com.panemu.tiwulfx.table.TableController;
-import com.panemu.tiwulfx.table.TextColumn;
+import com.gnadenheimer.mg3.model.domain.miembros.TblEntidades;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -25,11 +26,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 
-/**
- * FXML Controller class
- *
- * @author AdminLocal
- */
 public class AdminEntidadesController implements Initializable {
 
     private DaoBase<TblEntidades> daoTblEntidades = new DaoBase<>(TblEntidades.class);
@@ -39,7 +35,7 @@ public class AdminEntidadesController implements Initializable {
 
     /**
      * Initializes the controller class.
-     */
+     *
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         entidadesTable.setController(cntlTblEntidades);
@@ -112,7 +108,7 @@ public class AdminEntidadesController implements Initializable {
                         + "\nthere are Persons refer to it!").show(getScene().getWindow());
             }
             return nochildren;
-        }*/
+        }
         @Override
         public void delete(List<TblEntidades> records) {
             daoTblEntidades.delete(records);
@@ -120,3 +116,4 @@ public class AdminEntidadesController implements Initializable {
     };
 
 }
+*/

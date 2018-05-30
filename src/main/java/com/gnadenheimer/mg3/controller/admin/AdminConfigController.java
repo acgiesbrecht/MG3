@@ -6,36 +6,30 @@
 package com.gnadenheimer.mg3.controller.admin;
 
 import com.gnadenheimer.mg3.App;
-import com.gnadenheimer.mg3.domain.TblContribuyentes;
-import com.gnadenheimer.mg3.domain.TblFacturas;
+import com.gnadenheimer.mg3.model.domain.TblContribuyentes;
+import com.gnadenheimer.mg3.model.domain.TblFacturas;
 import com.gnadenheimer.mg3.utils.CurrentUser;
 import com.gnadenheimer.mg3.utils.LoginManager;
 import com.gnadenheimer.mg3.utils.Utils;
+import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.stage.DirectoryChooser;
+import org.apache.commons.lang.StringEscapeUtils;
+import ru.vas7n.va.widgets.MaskField;
+
+import javax.persistence.EntityManager;
 import java.io.File;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.util.prefs.Preferences;
 import java.util.zip.ZipInputStream;
-import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
-import javafx.stage.DirectoryChooser;
-import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
-import org.apache.commons.lang.StringEscapeUtils;
-import ru.vas7n.va.widgets.MaskField;
 
 /**
  * FXML Controller class

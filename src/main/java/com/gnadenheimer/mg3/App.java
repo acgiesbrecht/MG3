@@ -1,29 +1,18 @@
 package com.gnadenheimer.mg3;
 
-import com.gnadenheimer.mg3.domain.TblDatabaseUpdates;
-import com.gnadenheimer.mg3.domain.TblRoles;
-import com.gnadenheimer.mg3.domain.TblUsers;
+import com.gnadenheimer.mg3.model.domain.TblDatabaseUpdates;
+import com.gnadenheimer.mg3.model.domain.TblRoles;
+import com.gnadenheimer.mg3.model.domain.TblUsers;
+import com.gnadenheimer.mg3.ui.admin.entidades.TblEntidadesView;
+import com.gnadenheimer.mg3.ui.admin.entidades.TblEntidadesViewModel;
 import com.gnadenheimer.mg3.utils.CurrentUser;
-import com.gnadenheimer.mg3.utils.LoginManager;
 import com.gnadenheimer.mg3.utils.Utils;
-import com.panemu.tiwulfx.common.TiwulFXUtil;
-import java.io.File;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Properties;
-import java.util.prefs.Preferences;
-import javafx.application.Application;
-import static javafx.application.Application.launch;
+import de.saxsys.mvvmfx.FluentViewLoader;
+import de.saxsys.mvvmfx.ViewTuple;
+import de.saxsys.mvvmfx.cdi.MvvmfxCdiApplication;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -36,15 +25,26 @@ import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-import javax.persistence.EntityManager;
 import org.apache.derby.drda.NetworkServerControl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.mindrot.jbcrypt.BCrypt;
 
-public class App extends Application {
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import java.io.File;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.time.LocalDate;
+import java.util.*;
+import java.util.prefs.Preferences;
 
-    public static CurrentUser currentUser = CurrentUser.getInstance();
+public class App extends MvvmfxCdiApplication {
+
+    @Inject
+    CurrentUser currentUser;
+
     private static final Logger LOGGER = LogManager.getLogger(App.class);
 
     Map<String, String> persistenceMap = new HashMap<>();
@@ -62,7 +62,7 @@ public class App extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void startMvvmfx(final Stage stage) throws Exception {
         try {
             if (Boolean.parseBoolean(Preferences.userRoot().node("MG").get("isServer", "true"))) {
                 Properties p = System.getProperties();
@@ -94,11 +94,21 @@ public class App extends Application {
             App.showException(this.toString(), ex.getMessage(), ex);
         }
 
-        TiwulFXUtil.setLocale(new Locale("es", "PY"));
+        /*TiwulFXUtil.setLocale(new Locale("es", "PY"));
 
         Scene scene = new Scene(root);
         TiwulFXUtil.setTiwulFXStyleSheet(scene);
-        stage.setScene(scene);
+        stage.setScene(scene);*/
+
+        //final ViewTuple<MainView, MainViewModel> tuple = FluentViewLoader.fxmlView(MainView.class).load();
+        final ViewTuple<TblEntidadesView, TblEntidadesViewModel> tuple = FluentViewLoader.fxmlView(TblEntidadesView.class).load();
+
+        // Locate View for loaded FXML file
+        final Parent view = tuple.getView();
+
+        final Scene scene = new Scene(view);
+
+        scene.getStylesheets().add(this.getClass().getResource("/css/main.css").toExternalForm());
 
         InputStream resourceAsStream = this.getClass().getResourceAsStream("/version.properties");
         Properties prop = new Properties();
@@ -118,12 +128,12 @@ public class App extends Application {
         stage.setTitle("MG " + prop.getProperty("project.version") + "." + prop.getProperty("project.build"));
         stage.show();
 
-        //----------------------------------------
+        /*----------------------------------------
         if (currentUser.getUser() == null) {
             LoginManager.getInstance().showLoginScreen();
         } else {
             LoginManager.getInstance().showMainView();
-        }
+        }*/
 
         mainStage = stage;
 

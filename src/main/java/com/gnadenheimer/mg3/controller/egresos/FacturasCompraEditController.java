@@ -2,25 +2,15 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- */
+ *
 package com.gnadenheimer.mg3.controller.egresos;
 
 import com.gnadenheimer.mg3.App;
 import com.gnadenheimer.mg3.DaoBase;
-import com.gnadenheimer.mg3.domain.TblAsientos;
-import com.gnadenheimer.mg3.domain.TblCentrosDeCosto;
-import com.gnadenheimer.mg3.domain.TblCuentasContables;
-import com.gnadenheimer.mg3.domain.TblFacturasCompra;
-import com.panemu.tiwulfx.common.TableCriteria;
-import com.panemu.tiwulfx.common.TableData;
-import com.panemu.tiwulfx.form.FacturaNroControl;
-import com.panemu.tiwulfx.form.Form;
-import com.panemu.tiwulfx.form.LocalDateControl;
-import com.panemu.tiwulfx.form.TextControl;
-import com.panemu.tiwulfx.table.NumberColumn;
-import com.panemu.tiwulfx.table.TableControl;
-import com.panemu.tiwulfx.table.TableController;
-import com.panemu.tiwulfx.table.TypeAheadColumn;
+import com.gnadenheimer.mg3.model.domain.TblAsientos;
+import com.gnadenheimer.mg3.model.domain.TblCentrosDeCosto;
+import com.gnadenheimer.mg3.model.domain.TblCuentasContables;
+import com.gnadenheimer.mg3.model.domain.TblFacturasCompra;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +32,7 @@ import javafx.stage.Stage;
  * FXML Controller class
  *
  * @author AdminLocal
- */
+ *
 public class FacturasCompraEditController extends AnchorPane implements Initializable {
 
     private final DaoBase<TblFacturasCompra> daoTblFacturasCompra = new DaoBase<>(TblFacturasCompra.class);
@@ -74,7 +64,7 @@ public class FacturasCompraEditController extends AnchorPane implements Initiali
 
     /**
      * Initializes the controller class.
-     */
+     *
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -206,12 +196,12 @@ public class FacturasCompraEditController extends AnchorPane implements Initiali
             f.getTblAsientosList().removeAll(records);
             tblFacturasCompraForm.setRecord(f);
             //});
-        }*/
+        }*
     };
 
     /**
      * @return the mode
-     */
+     *
     public Form.Mode getMode() {
         return mode.get();
     }
@@ -281,15 +271,16 @@ public class FacturasCompraEditController extends AnchorPane implements Initiali
 
     /**
      * @return the dialogStage
-     */
+     *
     public Stage getDialogStage() {
         return dialogStage;
     }
 
     /**
      * @param dialogStage the dialogStage to set
-     */
+     *
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
-    }
+    }*
 }
+*/

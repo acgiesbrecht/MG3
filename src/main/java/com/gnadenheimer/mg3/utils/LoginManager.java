@@ -6,10 +6,12 @@
 package com.gnadenheimer.mg3.utils;
 
 import com.gnadenheimer.mg3.App;
-import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.AnchorPane;
+
+import javax.enterprise.inject.Produces;
+import java.io.IOException;
 
 public class LoginManager {
 
@@ -22,6 +24,7 @@ public class LoginManager {
     }
 
     /* Static 'instance' method */
+    @Produces
     public static LoginManager getInstance() {
         return loginManager;
     }

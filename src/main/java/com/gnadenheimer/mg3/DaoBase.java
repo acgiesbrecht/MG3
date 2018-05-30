@@ -1,7 +1,7 @@
 /*
  * License BSD License
  * Copyright (C) 2013 Amrullah <amrullah@panemu.com>.
- */
+ *
 package com.gnadenheimer.mg3;
 
 import com.gnadenheimer.mg3.utils.Utils;
@@ -27,7 +27,7 @@ import javax.persistence.criteria.Root;
 /**
  *
  * @author Amrullah <amrullah@panemu.com>
- */
+ *
 public class DaoBase<T> {
 
     private Class<T> voClass;
@@ -270,7 +270,7 @@ public class DaoBase<T> {
      *
      * @param records
      * @return
-     */
+     *
 //    private long count(Predicate[] predicates, Root root) {
 //        CriteriaBuilder builder = em.getCriteriaBuilder();
 //        CriteriaQuery<Long> cq = builder.createQuery(Long.class);
@@ -352,7 +352,7 @@ public class DaoBase<T> {
         /**
          * This list will hold new object returned from merge execution. The new
          * object should have higher version than the old one
-         */
+         *
         try {
             List<T> result = new ArrayList<>();
             //em = Utils.getInstance().getEntityManagerFactory().createEntityManager();
@@ -423,3 +423,4 @@ public class DaoBase<T> {
         }
     }
 }
+*/

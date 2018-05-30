@@ -6,47 +6,33 @@
 package com.gnadenheimer.mg3.utils;
 
 import com.gnadenheimer.mg3.App;
-import com.gnadenheimer.mg3.domain.TblAutofacturas;
-import com.gnadenheimer.mg3.domain.TblEventoCuotas;
-import com.gnadenheimer.mg3.domain.TblFacturas;
-import com.gnadenheimer.mg3.domain.TblNotasDeCredito;
-import com.gnadenheimer.mg3.domain.miembros.TblEntidades;
-import com.gnadenheimer.mg3.domain.models.CuotaModel;
-import java.awt.Component;
-import java.io.File;
-import java.io.IOException;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.prefs.Preferences;
-import javafx.stage.DirectoryChooser;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import net.sf.jasperreports.engine.JREmptyDataSource;
-import net.sf.jasperreports.engine.JRParameter;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperPrintManager;
-import net.sf.jasperreports.engine.JasperReport;
+import com.gnadenheimer.mg3.model.domain.TblAutofacturas;
+import com.gnadenheimer.mg3.model.domain.TblEventoCuotas;
+import com.gnadenheimer.mg3.model.domain.TblFacturas;
+import com.gnadenheimer.mg3.model.domain.TblNotasDeCredito;
+import com.gnadenheimer.mg3.model.domain.miembros.TblEntidades;
+import com.gnadenheimer.mg3.model.domain.models.CuotaModel;
+import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.type.WhenNoDataTypeEnum;
 import net.sf.jasperreports.view.JasperViewer;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.bouncycastle.util.Strings;
+
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+import java.util.List;
+import java.util.prefs.Preferences;
 
 /**
  *
@@ -300,7 +286,7 @@ public class Utils extends Component {
             Connection conn = DriverManager.getConnection(persistenceMap.get("javax.persistence.jdbc.url"), persistenceMap.get("javax.persistence.jdbc.user"), persistenceMap.get("javax.persistence.jdbc.password"));
             //JOptionPane.showMessageDialog(null, filename);
             String ss = IOUtils.toString(getClass().getResourceAsStream(filename));
-            List<String> sql = Arrays.asList(ss.split(";"));
+            String[] sql = ss.split(";");
             Statement stmt = conn.createStatement();
             for (String s : sql) {
                 try {

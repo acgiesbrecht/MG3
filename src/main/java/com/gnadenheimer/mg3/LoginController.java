@@ -5,24 +5,24 @@
  */
 package com.gnadenheimer.mg3;
 
-import com.gnadenheimer.mg3.domain.TblRoles;
-import com.gnadenheimer.mg3.domain.TblUsers;
+import com.gnadenheimer.mg3.model.domain.TblRoles;
+import com.gnadenheimer.mg3.model.domain.TblUsers;
 import com.gnadenheimer.mg3.utils.CurrentUser;
 import com.gnadenheimer.mg3.utils.LoginManager;
 import com.gnadenheimer.mg3.utils.Utils;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javax.persistence.EntityManager;
 import org.mindrot.jbcrypt.BCrypt;
+
+import javax.persistence.EntityManager;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * FXML Controller class
@@ -65,7 +65,7 @@ public class LoginController implements Initializable {
             if (currentUser.getUser() != null) {
                 LoginManager.getInstance().showMainView();
             } else {
-                App.showWarning("Login", "Usuario o contraseña invalidos.");
+                App.showWarning("Login", "Usuario o contraseÃ±a invalidos.");
             }
 
         } catch (Exception ex) {

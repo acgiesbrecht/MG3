@@ -5,9 +5,12 @@
  */
 package com.gnadenheimer.mg3.utils;
 
-import com.gnadenheimer.mg3.domain.TblRoles;
-import com.gnadenheimer.mg3.domain.TblUsers;
+import com.gnadenheimer.mg3.model.domain.TblRoles;
+import com.gnadenheimer.mg3.model.domain.TblUsers;
 
+import javax.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
 public class CurrentUser {
 
     private TblUsers user;

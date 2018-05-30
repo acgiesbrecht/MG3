@@ -1,13 +1,37 @@
+/*import com.gnadenheimer.mg3.App;
+import com.gnadenheimer.mg3.DaoBase;
+import com.gnadenheimer.mg3.model.domain.TblCentrosDeCosto;
+import com.gnadenheimer.mg3.utils.TimeTextField;
+import com.gnadenheimer.mg3.utils.Utils;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+
+import java.net.URL;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- */
+ *
 package com.gnadenheimer.mg3.controller.informes;
 
 import com.gnadenheimer.mg3.App;
 import com.gnadenheimer.mg3.DaoBase;
-import com.gnadenheimer.mg3.domain.TblCentrosDeCosto;
+import com.gnadenheimer.mg3.model.domain.TblCentrosDeCosto;
 import com.gnadenheimer.mg3.utils.TimeTextField;
 import com.gnadenheimer.mg3.utils.Utils;
 import com.panemu.tiwulfx.form.TypeAheadControl;
@@ -35,7 +59,7 @@ import javafx.scene.control.DatePicker;
  * FXML Controller class
  *
  * @author AdminLocal
- */
+ *
 public class InformesContabilidadController implements Initializable {
 
     private final DaoBase<TblCentrosDeCosto> daoTblCentrosDeCosto = new DaoBase<>(TblCentrosDeCosto.class);
@@ -72,10 +96,10 @@ public class InformesContabilidadController implements Initializable {
 
     /**
      * Initializes the controller class.
-     */
+     *
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        cboPeriodo.getItems().addAll("Este año", "Este mes", "Hoy");
+        cboPeriodo.getItems().addAll("Este aÃ±o", "Este mes", "Hoy");
         cboPeriodo.getSelectionModel().selectFirst();
 
         TblCentrosDeCosto cdcTodos = new TblCentrosDeCosto();
@@ -101,7 +125,7 @@ public class InformesContabilidadController implements Initializable {
         LocalDateTime endDateL = LocalDateTime.now().withDayOfMonth(LocalDate.now().lengthOfMonth()).withHour(23).withMinute(59).withSecond(59);
 
         switch (cboPeriodo.getSelectionModel().getSelectedItem()) {
-            case "Este año":
+            case "Este aÃ±o":
                 startDateL = LocalDateTime.now().withDayOfYear(1).toLocalDate().atStartOfDay();
                 endDateL = startDateL.plusYears(1).minusNanos(1);
                 break;
@@ -147,9 +171,6 @@ public class InformesContabilidadController implements Initializable {
         }
     }
 
-    /**
-     * @return the startDate
-     */
     public ObjectProperty<LocalDateTime> startDateProperty() {
         return startDate;
     }
@@ -160,16 +181,10 @@ public class InformesContabilidadController implements Initializable {
         return startDate.get();
     }
 
-    /**
-     * @param startDate the startDate to set
-     */
     public void setStartDate(LocalDateTime startDate) {
         this.startDate.set(startDate);
     }
 
-    /**
-     * @return the endDate
-     */
     public ObjectProperty<LocalDateTime> endDateProperty() {
         return endDate;
     }
@@ -180,9 +195,6 @@ public class InformesContabilidadController implements Initializable {
         return endDate.get();
     }
 
-    /**
-     * @param endDate the endDate to set
-     */
     public void setEndDate(LocalDateTime endDate) {
         this.endDate.set(endDate);
     }
@@ -250,3 +262,4 @@ public class InformesContabilidadController implements Initializable {
     }
 
 }
+*/
