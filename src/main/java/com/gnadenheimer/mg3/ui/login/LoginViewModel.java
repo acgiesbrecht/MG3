@@ -54,7 +54,7 @@ public class LoginViewModel implements ViewModel {
                 });
             }
             if (currentUser.getUser() != null) {
-                loginManager.showMainView();
+                loginManager.showStartView();
             } else {
                 informationDialog.showWarning("Login", "Usuario o contraseña invalidos.");
             }

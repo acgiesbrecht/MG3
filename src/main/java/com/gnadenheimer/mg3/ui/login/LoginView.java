@@ -30,11 +30,6 @@ public class LoginView implements FxmlView<LoginViewModel> {
     @FXML
     private Button cmdCancel;
 
-    @FXML
-    private void login() {
-        viewModel.login(txtUser.getText(), txtPass.getText());
-    }
-
     public void initialize() {
         Platform.runLater(() -> {
             try {
@@ -45,6 +40,10 @@ public class LoginView implements FxmlView<LoginViewModel> {
                 //App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
                 ex.printStackTrace();
             }
+        });
+
+        cmdLogin.setOnAction((event) -> {
+            viewModel.login(txtUser.getText(), txtPass.getText());
         });
     }
 

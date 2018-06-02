@@ -8,7 +8,6 @@
             xmlns="http://javafx.com/javafx/8.0.121"
             fx:controller="com.gnadenheimer.mg3.ui.main.MainView">
     <top>
-        <fx:include source="../menu/MenuView.fxml"/>
     </top>
     <center>
         <GridPane layoutX="-4.0" layoutY="-4.0" prefHeight="579.0" prefWidth="652.0" AnchorPane.bottomAnchor="0.0"
@@ -26,7 +25,7 @@
             <children>
                 <VBox GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1"
                       GridPane.valignment="CENTER" spacing="10">
-                    <ImageView fx:id="welcomeImage" fitWidth="800.0" pickOnBounds="true" preserveRatio="true"/>
+                    <ImageView fx:id="welcomeImage" fitWidth="100.0" pickOnBounds="true" preserveRatio="true"/>
                     <TextFlow textAlignment="CENTER">
                         <Text text="Version: "/>
                         <Text fx:id="txtVersion" style="-fx-font-weight: bold"/>

@@ -1,7 +1,9 @@
 package com.gnadenheimer.mg3.ui.menu;
 
+import com.gnadenheimer.mg3.App;
 import com.gnadenheimer.mg3.ViewLoaderTask;
 import com.gnadenheimer.mg3.utils.LoginManager;
+import com.gnadenheimer.mg3.utils.Utils;
 import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.scene.Parent;
@@ -13,9 +15,10 @@ import java.util.Properties;
 
 public class MenuViewModel implements ViewModel {
 
-
     @Inject
     LoginManager loginManager;
+    @Inject
+    Utils utils;
 
     public void initialize() {
     }
@@ -38,7 +41,8 @@ public class MenuViewModel implements ViewModel {
         };
         loadTask.setOnSucceeded(evento -> {
             try {
-                loginManager.setView(loadTask.getValue(), name);
+                App.getStage().setTitle("MG "+utils.getVersion() + " - " + name);
+                App.getRootBorderPane().setCenter(loadTask.getValue());
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

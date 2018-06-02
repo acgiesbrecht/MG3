@@ -5,15 +5,30 @@
  */
 package com.gnadenheimer.mg3.model.domain;
 
-import javax.persistence.*;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.List;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 /**
  *
@@ -23,14 +38,10 @@ import java.util.List;
 @Table(name = "TBL_EVENTOS")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "TblEventos.findAll", query = "SELECT t FROM TblEventos t")
-    ,
-    @NamedQuery(name = "TblEventos.findById", query = "SELECT t FROM TblEventos t WHERE t.id = :id")
-    ,
-    @NamedQuery(name = "TblEventos.findByFecha", query = "SELECT t FROM TblEventos t WHERE t.fecha = :fecha")
-    ,
-    @NamedQuery(name = "TblEventos.findByDescripcion", query = "SELECT t FROM TblEventos t WHERE t.descripcion = :descripcion")
-    ,
+    @NamedQuery(name = "TblEventos.findAll", query = "SELECT t FROM TblEventos t"),
+    @NamedQuery(name = "TblEventos.findById", query = "SELECT t FROM TblEventos t WHERE t.id = :id"),
+    @NamedQuery(name = "TblEventos.findByFecha", query = "SELECT t FROM TblEventos t WHERE t.fecha = :fecha"),
+    @NamedQuery(name = "TblEventos.findByDescripcion", query = "SELECT t FROM TblEventos t WHERE t.descripcion = :descripcion"),
     @NamedQuery(name = "TblEventos.findByPorcentajeAporte", query = "SELECT t FROM TblEventos t WHERE t.porcentajeAporte = :porcentajeAporte")})
 public class TblEventos implements Serializable {
 
@@ -51,7 +62,7 @@ public class TblEventos implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "FECHA")
-
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDate fecha;
     @Size(max = 100)
     @Column(name = "DESCRIPCION")
@@ -59,7 +70,7 @@ public class TblEventos implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "PORCENTAJE_APORTE")
-    private Integer porcentajeAporte = 0;
+    private Integer porcentajeAporte;
     @JoinColumn(name = "ID_CENTRO_DE_COSTO", referencedColumnName = "ID")
     @ManyToOne
     private TblCentrosDeCosto idCentroDeCosto;
@@ -72,8 +83,6 @@ public class TblEventos implements Serializable {
     @JoinColumn(name = "ID_USER", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private TblUsers idUser;
-    @Transient
-    private Integer porcentajeDonacion = 0;
 
     public TblEventos() {
     }
@@ -166,7 +175,10 @@ public class TblEventos implements Serializable {
             return false;
         }
         TblEventos other = (TblEventos) object;
-        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -199,15 +211,6 @@ public class TblEventos implements Serializable {
 
     public void setTblEventoDetalleList(List<TblEventoDetalle> tblEventoDetalleList) {
         this.tblEventoDetalleList = tblEventoDetalleList;
-    }
-
-    @Transient
-    public Integer getPorcentajeDonacion() {
-        return 100 - porcentajeAporte;
-    }
-
-    public void setPorcentajeDonacion(Integer porcentajeDonacion) {
-        this.porcentajeAporte = 100 - porcentajeDonacion;
     }
 
 }

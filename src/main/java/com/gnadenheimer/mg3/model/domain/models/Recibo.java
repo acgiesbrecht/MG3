@@ -5,10 +5,18 @@
  */
 package com.gnadenheimer.mg3.model.domain.models;
 
-import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -32,7 +40,7 @@ public class Recibo implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @Column(name = "FECHAHORA")
-    
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime fechahora;
     @Basic(optional = false)
     @Column(name = "NOMBRE")

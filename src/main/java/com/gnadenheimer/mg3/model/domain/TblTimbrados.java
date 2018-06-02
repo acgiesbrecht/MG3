@@ -5,13 +5,25 @@
  */
 package com.gnadenheimer.mg3.model.domain;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -39,12 +51,12 @@ public class TblTimbrados implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "FECHA_INICIO")
-    
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDate fechaInicio;
     @Basic(optional = false)
     @NotNull
     @Column(name = "FECHA_VENCIMIENTO")
-    
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDate fechaVencimiento;
     @Basic(optional = false)
     @NotNull
@@ -159,7 +171,10 @@ public class TblTimbrados implements Serializable {
             return false;
         }
         TblTimbrados other = (TblTimbrados) object;
-        return (this.nro != null || other.nro == null) && (this.nro == null || this.nro.equals(other.nro));
+        if ((this.nro == null && other.nro != null) || (this.nro != null && !this.nro.equals(other.nro))) {
+            return false;
+        }
+        return true;
     }
 
     @Override

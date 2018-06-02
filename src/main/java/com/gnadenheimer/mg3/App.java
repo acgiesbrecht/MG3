@@ -1,9 +1,11 @@
 package com.gnadenheimer.mg3;
 
+import com.gnadenheimer.mg3.ui.login.LoginView;
+import com.gnadenheimer.mg3.ui.login.LoginViewModel;
 import com.gnadenheimer.mg3.ui.main.MainView;
 import com.gnadenheimer.mg3.ui.main.MainViewModel;
-import com.gnadenheimer.mg3.utils.CurrentUser;
 import com.gnadenheimer.mg3.utils.LoginManager;
+import com.gnadenheimer.mg3.utils.Utils;
 import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.ViewTuple;
 import de.saxsys.mvvmfx.cdi.MvvmfxCdiApplication;
@@ -21,6 +23,7 @@ import javafx.stage.WindowEvent;
 import org.apache.derby.drda.NetworkServerControl;
 import org.slf4j.Logger;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.io.File;
 import java.io.InputStream;
@@ -31,18 +34,24 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.prefs.Preferences;
 
+
 public class App extends MvvmfxCdiApplication {
 
-    @Inject
-    CurrentUser currentUser;
     @Inject
     LoginManager loginManager;
     @Inject
     Logger LOGGER;
+    @Inject
+    Utils utils;
 
     Map<String, String> persistenceMap = new HashMap<>();
+
     private static final BorderPane root = new BorderPane();
     public static Stage mainStage;
+    public static Stage getStage() {
+        return mainStage;
+    }
+
     public static Integer periodoFiscal = Preferences.userRoot().node("MG").getInt("PeriodoFiscal", LocalDate.now().getYear());
 
     /**
@@ -50,7 +59,7 @@ public class App extends MvvmfxCdiApplication {
      *
      * @return
      */
-    public static BorderPane getRoot() {
+    public static BorderPane getRootBorderPane() {
         return root;
     }
 
@@ -71,25 +80,21 @@ public class App extends MvvmfxCdiApplication {
             ex.printStackTrace();
         }
 
-        /*TiwulFXUtil.setLocale(new Locale("es", "PY"));
 
-        Scene scene = new Scene(root);
-        TiwulFXUtil.setTiwulFXStyleSheet(scene);
-        stage.setScene(scene);*/
-
-        final ViewTuple<MainView, MainViewModel> tuple = FluentViewLoader.fxmlView(MainView.class).load();
+  //      final ViewTuple<MainView, MainViewModel> tuple = FluentViewLoader.fxmlView(MainView.class).load();
         //final ViewTuple<TblEntidadesView, TblEntidadesViewModel> tuple = FluentViewLoader.fxmlView(TblEntidadesView.class).load();
 
         // Locate View for loaded FXML file
-        final Parent view = tuple.getView();
+        //final Parent view = tuple.getView();
+        //Scene scene = new Scene(view);
 
-        final Scene scene = new Scene(view);
+        Scene scene = new Scene(root);
 
         scene.getStylesheets().add(this.getClass().getResource("/css/main.css").toExternalForm());
 
-        InputStream resourceAsStream = this.getClass().getResourceAsStream("/version.properties");
+        /*InputStream resourceAsStream = this.getClass().getResourceAsStream("/version.properties");
         Properties prop = new Properties();
-        prop.load(resourceAsStream);
+        prop.load(resourceAsStream);*/
 
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
@@ -100,16 +105,16 @@ public class App extends MvvmfxCdiApplication {
         });
 
         stage.getIcons().add(new Image(this.getClass().getResourceAsStream("/images/mg3.png")));
-
+        stage.setScene(scene);
         stage.setMaximized(true);
-        stage.setTitle("MG " + prop.getProperty("project.version") + "." + prop.getProperty("project.build"));
+        stage.setTitle("MG " + utils.getVersion());
         stage.show();
+
 
         //----------------------------------------
 
-
         mainStage = stage;
-        loginManager.showLoginView();
+        loginManager.showStartView();
 
     }
 

@@ -6,14 +6,25 @@
 package com.gnadenheimer.mg3.model.domain;
 
 import com.gnadenheimer.mg3.model.domain.miembros.TblEntidades;
-
-import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import java.io.Serializable;
-import java.util.List;
 
 /**
  *
@@ -171,12 +182,15 @@ public class TblUsers implements Serializable {
             return false;
         }
         TblUsers other = (TblUsers) object;
-        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
-        return "com.gnadenheimer.mg.domain.TblUsers[ id=" + id + " ]";
+        return "com.gnadenheimer.mg3.model.domain.TblUsers[ id=" + id + " ]";
     }
 
     @XmlTransient

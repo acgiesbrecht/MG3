@@ -5,11 +5,21 @@
  */
 package com.gnadenheimer.mg3.model.domain;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.time.LocalDate;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -35,16 +45,16 @@ public class TblEventoCuotas implements Serializable {
     @Column(name = "ID_EVENTO")
     private Integer idEvento;
     @Column(name = "FECHA_1")
-    
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDate fecha1;
     @Column(name = "FECHA_2")
-    
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDate fecha2;
     @Column(name = "FECHA_3")
-    
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDate fecha3;
     @Column(name = "FECHA_4")
-    
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDate fecha4;
     @Column(name = "ID_USER")
     private Integer idUser;
@@ -129,12 +139,15 @@ public class TblEventoCuotas implements Serializable {
             return false;
         }
         TblEventoCuotas other = (TblEventoCuotas) object;
-        return (this.idEvento != null || other.idEvento == null) && (this.idEvento == null || this.idEvento.equals(other.idEvento));
+        if ((this.idEvento == null && other.idEvento != null) || (this.idEvento != null && !this.idEvento.equals(other.idEvento))) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
-        return "com.gnadenheimer.mg.domain.TblEventoCuotas[ idEvento=" + idEvento + " ]";
+        return "com.gnadenheimer.mg3.model.domain.TblEventoCuotas[ idEvento=" + idEvento + " ]";
     }
 
 }

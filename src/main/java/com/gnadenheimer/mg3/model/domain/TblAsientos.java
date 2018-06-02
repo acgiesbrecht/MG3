@@ -5,7 +5,7 @@
  */
 package com.gnadenheimer.mg3.model.domain;
 
-import javafx.beans.property.*;
+import com.gnadenheimer.mg3.utils.LocalDateTimeAttributeConverter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -24,45 +24,58 @@ import java.util.List;
 @Table(name = "TBL_ASIENTOS")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "TblAsientos.findAll", query = "SELECT t FROM TblAsientos t")
-    ,
-    @NamedQuery(name = "TblAsientos.findById", query = "SELECT t FROM TblAsientos t WHERE t.id = :id")
-    ,
-    @NamedQuery(name = "TblAsientos.findByFechahora", query = "SELECT t FROM TblAsientos t WHERE t.fechahora = :fechahora")
-    ,
-    @NamedQuery(name = "TblAsientos.findByObservacion", query = "SELECT t FROM TblAsientos t WHERE t.observacion = :observacion")
-    ,
+    @NamedQuery(name = "TblAsientos.findAll", query = "SELECT t FROM TblAsientos t"),
+    @NamedQuery(name = "TblAsientos.findById", query = "SELECT t FROM TblAsientos t WHERE t.id = :id"),
+    @NamedQuery(name = "TblAsientos.findByFechahora", query = "SELECT t FROM TblAsientos t WHERE t.fechahora = :fechahora"),
+    @NamedQuery(name = "TblAsientos.findByObservacion", query = "SELECT t FROM TblAsientos t WHERE t.observacion = :observacion"),
     @NamedQuery(name = "TblAsientos.findByMonto", query = "SELECT t FROM TblAsientos t WHERE t.monto = :monto")})
 public class TblAsientos implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    private IntegerProperty id = new SimpleIntegerProperty();
-
-    private ObjectProperty<LocalDateTime> fechahora = new SimpleObjectProperty<>();
-
-    private StringProperty observacion = new SimpleStringProperty();
-
-    private IntegerProperty monto = new SimpleIntegerProperty();
-
-    private BooleanProperty asientoManual = new SimpleBooleanProperty();
-
-    private ObjectProperty<List<TblAsientosTemporales>> tblAsientosTemporalesList = new SimpleObjectProperty<>();
-
-    private ObjectProperty<TblCentrosDeCosto> idCentroDeCostoDebe = new SimpleObjectProperty<>();
-
-    private ObjectProperty<TblCentrosDeCosto> idCentroDeCostoHaber = new SimpleObjectProperty<>();
-
-    private ObjectProperty<TblCuentasContables> idCuentaContableHaber = new SimpleObjectProperty<>();
-
-    private ObjectProperty<TblCuentasContables> idCuentaContableDebe = new SimpleObjectProperty<>();
-
-    private ObjectProperty<TblUsers> idUser = new SimpleObjectProperty<>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ID")
+    private Integer id;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "FECHAHORA")
+    @Temporal(TemporalType.TIMESTAMP)
+    @Convert(converter = LocalDateTimeAttributeConverter.class)
+    private LocalDateTime fechahora;
+    @Size(max = 255)
+    @Column(name = "OBSERVACION")
+    private String observacion;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "MONTO")
+    private Integer monto;
+    @Column(name = "ASIENTO_MANUAL")
+    private Boolean asientoManual;
+    @JoinTable(name = "TBL_ASIENTOS_ASIENTOS_TEMPORALES", joinColumns = {
+        @JoinColumn(name = "ID_ASIENTO", referencedColumnName = "ID")}, inverseJoinColumns = {
+        @JoinColumn(name = "ID_ASIENTO_TEMPORAL", referencedColumnName = "ID")})
+    @ManyToMany
+    private List<TblAsientosTemporales> tblAsientosTemporalesList;
+    @JoinColumn(name = "ID_CENTRO_DE_COSTO_DEBE", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private TblCentrosDeCosto idCentroDeCostoDebe;
+    @JoinColumn(name = "ID_CENTRO_DE_COSTO_HABER", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private TblCentrosDeCosto idCentroDeCostoHaber;
+    @JoinColumn(name = "ID_CUENTA_CONTABLE_HABER", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private TblCuentasContables idCuentaContableHaber;
+    @JoinColumn(name = "ID_CUENTA_CONTABLE_DEBE", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private TblCuentasContables idCuentaContableDebe;
+    @JoinColumn(name = "ID_USER", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private TblUsers idUser;
 
     public TblAsientos() {
     }
 
-    /*
     public TblAsientos(Integer id) {
         this.id = id;
     }
@@ -72,152 +85,86 @@ public class TblAsientos implements Serializable {
         this.fechahora = fechahora;
         this.monto = monto;
     }
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "ID")
+
     public Integer getId() {
-        return id.get();
-    }
-
-    public void setId(Integer id) {
-        this.id.set(id);
-    }
-
-    public IntegerProperty idProperty() {
         return id;
     }
 
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "FECHAHORA")
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public LocalDateTime getFechahora() {
-        return fechahora.get();
-    }
-
-    public void setFechahora(LocalDateTime fechahora) {
-        this.fechahora.set(fechahora);
-    }
-
-    public ObjectProperty<LocalDateTime> fechahoraProperty() {
         return fechahora;
     }
 
-    @Size(max = 255)
-    @Column(name = "OBSERVACION")
+    public void setFechahora(LocalDateTime fechahora) {
+        this.fechahora = fechahora;
+    }
+
     public String getObservacion() {
-        return observacion.get();
-    }
-
-    public void setObservacion(String observacion) {
-        this.observacion.set(observacion);
-    }
-
-    public StringProperty observacionProperty() {
         return observacion;
     }
 
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "MONTO")
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
+    }
+
     public Integer getMonto() {
-        return monto.get();
-    }
-
-    public void setMonto(Integer monto) {
-        this.monto.set(monto);
-    }
-
-    public IntegerProperty montoProperty() {
         return monto;
     }
 
+    public void setMonto(Integer monto) {
+        this.monto = monto;
+    }
+
     @XmlTransient
-    @JoinTable(name = "TBL_ASIENTOS_ASIENTOS_TEMPORALES", joinColumns = {
-        @JoinColumn(name = "ID_ASIENTO", referencedColumnName = "ID")}, inverseJoinColumns = {
-        @JoinColumn(name = "ID_ASIENTO_TEMPORAL", referencedColumnName = "ID")})
-    @ManyToMany
     public List<TblAsientosTemporales> getTblAsientosTemporalesList() {
-        return tblAsientosTemporalesList.get();
-    }
-
-    public void setTblAsientosTemporalesList(List<TblAsientosTemporales> tblAsientosTemporalesList) {
-        this.tblAsientosTemporalesList.set(tblAsientosTemporalesList);
-    }
-
-    public ObjectProperty<List<TblAsientosTemporales>> tblAsientosTemporalesListProperty() {
         return tblAsientosTemporalesList;
     }
 
-    @JoinColumn(name = "ID_CENTRO_DE_COSTO_DEBE", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
+    public void setTblAsientosTemporalesList(List<TblAsientosTemporales> tblAsientosTemporalesList) {
+        this.tblAsientosTemporalesList = tblAsientosTemporalesList;
+    }
+
     public TblCentrosDeCosto getIdCentroDeCostoDebe() {
-        return idCentroDeCostoDebe.get();
-    }
-
-    public void setIdCentroDeCostoDebe(TblCentrosDeCosto idCentroDeCostoDebe) {
-        this.idCentroDeCostoDebe.set(idCentroDeCostoDebe);
-    }
-
-    public ObjectProperty<TblCentrosDeCosto> idCentroDeCostoDebeProperty() {
         return idCentroDeCostoDebe;
     }
 
-    @JoinColumn(name = "ID_CENTRO_DE_COSTO_HABER", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
+    public void setIdCentroDeCostoDebe(TblCentrosDeCosto idCentroDeCostoDebe) {
+        this.idCentroDeCostoDebe = idCentroDeCostoDebe;
+    }
+
     public TblCentrosDeCosto getIdCentroDeCostoHaber() {
-        return idCentroDeCostoHaber.get();
-    }
-
-    public void setIdCentroDeCostoHaber(TblCentrosDeCosto idCentroDeCostoHaber) {
-        this.idCentroDeCostoHaber.set(idCentroDeCostoHaber);
-    }
-
-    public ObjectProperty<TblCentrosDeCosto> idCentroDeCostoHaberProperty() {
         return idCentroDeCostoHaber;
     }
 
-    @JoinColumn(name = "ID_CUENTA_CONTABLE_HABER", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
+    public void setIdCentroDeCostoHaber(TblCentrosDeCosto idCentroDeCostoHaber) {
+        this.idCentroDeCostoHaber = idCentroDeCostoHaber;
+    }
+    
     public TblCuentasContables getIdCuentaContableHaber() {
-        return idCuentaContableHaber.get();
-    }
-
-    public void setIdCuentaContableHaber(TblCuentasContables idCuentaContableHaber) {
-        this.idCuentaContableHaber.set(idCuentaContableHaber);
-    }
-
-    public ObjectProperty<TblCuentasContables> idCuentaContableHaberProperty() {
         return idCuentaContableHaber;
     }
 
-    @JoinColumn(name = "ID_CUENTA_CONTABLE_DEBE", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
+    public void setIdCuentaContableHaber(TblCuentasContables idCuentaContableHaber) {
+        this.idCuentaContableHaber = idCuentaContableHaber;
+    }
+
     public TblCuentasContables getIdCuentaContableDebe() {
-        return idCuentaContableDebe.get();
-    }
-
-    public void setIdCuentaContableDebe(TblCuentasContables idCuentaContableDebe) {
-        this.idCuentaContableDebe.set(idCuentaContableDebe);
-    }
-
-    public ObjectProperty<TblCuentasContables> idCuentaContableDebeProperty() {
         return idCuentaContableDebe;
     }
 
-    @JoinColumn(name = "ID_USER", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
+    public void setIdCuentaContableDebe(TblCuentasContables idCuentaContableDebe) {
+        this.idCuentaContableDebe = idCuentaContableDebe;
+    }
+
     public TblUsers getIdUser() {
-        return idUser.get();
+        return idUser;
     }
 
     public void setIdUser(TblUsers idUser) {
-        this.idUser.set(idUser);
-    }
-
-    public ObjectProperty<TblUsers> idUserProperty() {
-        return idUser;
+        this.idUser = idUser;
     }
 
     @Override
@@ -234,33 +181,29 @@ public class TblAsientos implements Serializable {
             return false;
         }
         TblAsientos other = (TblAsientos) object;
-        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
-        return "com.gnadenheimer.mg.domain.TblAsientos[ id=" + id + " ]";
+        return "com.gnadenheimer.mg3.model.domain.TblAsientos[ id=" + id + " ]";
     }
 
     /**
      * @return the asientoManual
      */
-    @Column(name = "ASIENTO_MANUAL")
     public Boolean getAsientoManual() {
-        return asientoManual.get();
+        return asientoManual;
     }
 
     /**
      * @param asientoManual the asientoManual to set
      */
     public void setAsientoManual(Boolean asientoManual) {
-        if (asientoManual != null) {
-            this.asientoManual.set(asientoManual);
-        }
-    }
-
-    public BooleanProperty asientoManualProperty() {
-        return asientoManual;
+        this.asientoManual = asientoManual;
     }
 
 }

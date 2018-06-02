@@ -7,22 +7,25 @@ package com.gnadenheimer.mg3.utils;
 
 import com.gnadenheimer.mg3.model.domain.TblRoles;
 import com.gnadenheimer.mg3.model.domain.TblUsers;
+
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Default;
-import javax.enterprise.inject.Produces;
-import javax.inject.Named;
 
 @ApplicationScoped
-@Named
 public class CurrentUser {
 
     private TblUsers user;
+
+    @PostConstruct
+    public void afterCreate() {
+        System.out.println("User created");
+    }
 
     //private static final CurrentUser currentUser = new CurrentUser();
 
     /* A private Constructor prevents any other
      * class from instantiating.
-     */
+     *
     private CurrentUser() {
     }
 
@@ -34,6 +37,7 @@ public class CurrentUser {
     /**
      * @return the user
      */
+
     public TblUsers getUser() {
         return user;
     }

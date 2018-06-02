@@ -20,8 +20,10 @@ import org.bouncycastle.util.Strings;
 import org.slf4j.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.inject.Singleton;
 import javax.persistence.EntityManager;
 import java.awt.*;
 import java.io.File;
@@ -38,9 +40,8 @@ import java.util.prefs.Preferences;
 /**
  * @author user
  */
-@Named
 @ApplicationScoped
-public class Utils extends Component {
+public class Utils {
 
     @Inject
     CurrentUser currentUser;
@@ -516,11 +517,11 @@ public class Utils extends Component {
         return this.entityManagerFactory;
     }*/
 
-    public String getMGTitle() {
+    public String getVersion() {
         try {
             Properties prop = new Properties();
             prop.load(this.getClass().getResourceAsStream("/version.properties"));
-            return "MG3 " + prop.getProperty("project.version") + "." + prop.getProperty("project.build");
+            return prop.getProperty("project.version") + "." + prop.getProperty("project.build");
         } catch (Exception ex) {
             return "";
         }

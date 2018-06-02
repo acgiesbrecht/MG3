@@ -6,15 +6,29 @@
 package com.gnadenheimer.mg3.model.domain;
 
 import com.gnadenheimer.mg3.model.domain.miembros.TblEntidades;
-
-import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
+import java.time.LocalDateTime;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  *
@@ -40,7 +54,7 @@ public class TblEventoDetalle implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "FECHAHORA")
-    
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime fechahora;
     @Size(max = 255)
     @Column(name = "OBSERVACION")
@@ -178,12 +192,15 @@ public class TblEventoDetalle implements Serializable {
             return false;
         }
         TblEventoDetalle other = (TblEventoDetalle) object;
-        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
-        return "com.gnadenheimer.mg.domain.eventos.TblEventoDetalle[ id=" + id + " ]";
+        return "com.gnadenheimer.mg3.model.domain.eventos.TblEventoDetalle[ id=" + id + " ]";
     }
 
 }

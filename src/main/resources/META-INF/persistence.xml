@@ -1,65 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.1"
-             xmlns="http://xmlns.jcp.org/xml/ns/persistence"
-             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
     <persistence-unit name="mg_PU" transaction-type="RESOURCE_LOCAL">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-        <class>com.gnadenheimer.mg3.model.domain.TblCategoriasArticulos</class>
+        <class>com.gnadenheimer.mg3.model.domain.TblRubrosDdjj</class>
+        <class>com.gnadenheimer.mg3.model.domain.TblTransacciones</class>
+        <class>com.gnadenheimer.mg3.model.domain.TblEventoTipos</class>
         <class>com.gnadenheimer.mg3.model.domain.TblCentrosDeCosto</class>
-        <class>com.gnadenheimer.mg3.model.domain.TblContribuyentes</class>
+        <class>com.gnadenheimer.mg3.model.domain.TblIglesia</class>
+        <class>com.gnadenheimer.mg3.model.domain.TblFacturas</class>
+        <class>com.gnadenheimer.mg3.model.domain.TblTransferencias</class>
+        <class>com.gnadenheimer.mg3.model.domain.TblTimbradosCompras</class>
+        <class>com.gnadenheimer.mg3.model.domain.TblUsers</class>
+        <class>com.gnadenheimer.mg3.model.domain.TblRecibos</class>
+        <class>com.gnadenheimer.mg3.model.domain.TblEventos</class>
         <class>com.gnadenheimer.mg3.model.domain.TblCuentasContables</class>
         <class>com.gnadenheimer.mg3.model.domain.TblDatabaseUpdates</class>
-        <class>com.gnadenheimer.mg3.model.domain.TblFacturas</class>
-        <class>com.gnadenheimer.mg3.model.domain.TblFacturasCompra</class>
-        <class>com.gnadenheimer.mg3.model.domain.TblFormasDePago</class>
-        <class>com.gnadenheimer.mg3.model.domain.TblGrupos</class>
-        <class>com.gnadenheimer.mg3.model.domain.TblIglesia</class>
-        <class>com.gnadenheimer.mg3.model.domain.TblRecibos</class>
+        <class>com.gnadenheimer.mg3.model.domain.TblNotasDeCreditoCompras</class>
+        <class>com.gnadenheimer.mg3.model.domain.TblEventoDetalle</class>
         <class>com.gnadenheimer.mg3.model.domain.TblRoles</class>
-        <class>com.gnadenheimer.mg3.model.domain.TblRubrosDdjj</class>
-        <class>com.gnadenheimer.mg3.model.domain.TblTimbrados</class>
-        <class>com.gnadenheimer.mg3.model.domain.TblTransacciones</class>
-        <class>com.gnadenheimer.mg3.model.domain.TblTransferencias</class>
-        <class>com.gnadenheimer.mg3.model.domain.TblUsers</class>
+        <class>com.gnadenheimer.mg3.model.domain.TblAsientosTemporales</class>
+        <class>com.gnadenheimer.mg3.model.domain.TblCategoriasArticulos</class>
+        <class>com.gnadenheimer.mg3.model.domain.TblTimbradosAutofacturas</class>
+        <class>com.gnadenheimer.mg3.model.domain.TblContribuyentes</class>
+        <class>com.gnadenheimer.mg3.model.domain.TblDonacionesVariasDetalle</class>
+        <class>com.gnadenheimer.mg3.model.domain.TblAutofacturas</class>
+        <class>com.gnadenheimer.mg3.model.domain.TblFacturasCompra</class>
+        <class>com.gnadenheimer.mg3.model.domain.TblRecibosCompra</class>
         <class>com.gnadenheimer.mg3.model.domain.miembros.TblAreasServicioEnIglesia</class>
         <class>com.gnadenheimer.mg3.model.domain.miembros.TblEntidades</class>
-        <class>com.gnadenheimer.mg3.model.domain.miembros.TblMiembrosAlergias</class>
-        <class>com.gnadenheimer.mg3.model.domain.miembros.TblMiembrosCategoriasDePago</class>
-        <class>com.gnadenheimer.mg3.model.domain.miembros.TblMiembrosFamilias</class>
         <class>com.gnadenheimer.mg3.model.domain.miembros.TblMiembrosRelaciones</class>
-        <class>com.gnadenheimer.mg3.model.domain.miembros.TblMiembrosRelacionesRoles</class>
+        <class>com.gnadenheimer.mg3.model.domain.miembros.TblMiembrosFamilias</class>
         <class>com.gnadenheimer.mg3.model.domain.miembros.TblMiembrosRelacionesTipos</class>
-        <class>com.gnadenheimer.mg3.model.domain.models.MiembrosConPagosPendientes</class>
-        <class>com.gnadenheimer.mg3.model.domain.models.PagosMensualesPendientes</class>
+        <class>com.gnadenheimer.mg3.model.domain.miembros.TblMiembrosAlergias</class>
+        <class>com.gnadenheimer.mg3.model.domain.miembros.TblMiembrosRelacionesRoles</class>
+        <class>com.gnadenheimer.mg3.model.domain.miembros.TblMiembrosCategoriasDePago</class>
+        <class>com.gnadenheimer.mg3.model.domain.TblTimbrados</class>
+        <class>com.gnadenheimer.mg3.model.domain.TblAsientos</class>
+        <class>com.gnadenheimer.mg3.model.domain.TblTimbradosNotasDeCredito</class>
         <class>com.gnadenheimer.mg3.model.domain.models.PendientesTotal</class>
         <class>com.gnadenheimer.mg3.model.domain.models.Recibo</class>
+        <class>com.gnadenheimer.mg3.model.domain.models.PagosMensualesPendientes</class>
+        <class>com.gnadenheimer.mg3.model.domain.models.MiembrosConPagosPendientes</class>
         <class>com.gnadenheimer.mg3.model.domain.models.Transferencia</class>
-        <class>com.gnadenheimer.mg3.model.domain.TblAsientos</class>
-        <class>com.gnadenheimer.mg3.model.domain.TblCuentasContablesPorDefecto</class>
-        <class>com.gnadenheimer.mg3.model.domain.TblAutofacturas</class>
-        <class>com.gnadenheimer.mg3.model.domain.TblTimbradosAutofacturas</class>
-        <class>com.gnadenheimer.mg3.model.domain.TblRecibosCompra</class>
-        <class>com.gnadenheimer.mg3.model.domain.TblRecibosCompraFacturasCompra</class>
-        <class>com.gnadenheimer.mg3.model.domain.TblEventos</class>
+        <class>com.gnadenheimer.mg3.model.domain.TblGrupos</class>
+        <class>com.gnadenheimer.mg3.model.domain.TblFormasDePago</class>
         <class>com.gnadenheimer.mg3.model.domain.TblEventoCuotas</class>
-        <class>com.gnadenheimer.mg3.model.domain.TblEventoDetalle</class>
-        <class>com.gnadenheimer.mg3.model.domain.TblEventoTipos</class>
-        <class>com.gnadenheimer.mg3.model.domain.TblAsientosTemporales</class>
+        <class>com.gnadenheimer.mg3.model.domain.TblRecibosCompraFacturasCompra</class>
+        <class>com.gnadenheimer.mg3.model.domain.TblCuentasContablesPorDefecto</class>
+        <class>com.gnadenheimer.mg3.model.domain.TblNotasDeCredito</class>
         <class>com.gnadenheimer.mg3.utils.LocalDateTimeAttributeConverter</class>
         <class>com.gnadenheimer.mg3.utils.LocalDateAttributeConverter</class>
-        <class>com.gnadenheimer.mg3.model.domain.TblTimbradosCompras</class>
-        <class>com.gnadenheimer.mg3.model.domain.TblNotasDeCreditoCompras</class>
-        <class>com.gnadenheimer.mg3.model.domain.TblTimbradosNotasDeCredito</class>
-        <class>com.gnadenheimer.mg3.model.domain.TblNotasDeCredito</class>
-        <class>com.gnadenheimer.mg3.model.domain.TblDonacionesVariasDetalle</class>
+        <class>com.gnadenheimer.mg3.model.domain.miembros.TblEntidadesHistoricoCategorias</class>
+        <class>com.gnadenheimer.mg3.model.domain.TblAportesImporteMensual</class>
+        <class>com.gnadenheimer.mg3.model.domain.miembros.TblAportesImporteMensualSaldoAnterior</class>
         <properties>
-            <property name="javax.persistence.jdbc.url" value=""/>
-            <property name="javax.persistence.jdbc.user" value=""/>
-            <property name="javax.persistence.jdbc.driver" value=""/>
-            <property name="javax.persistence.jdbc.password" value=""/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/mgdb;create=true"/>
+            <property name="javax.persistence.jdbc.user" value="mg"/>
+            <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
+            <property name="javax.persistence.jdbc.password" value="123456"/>
             <property name="eclipselink.jdbc.batch-writing" value="JDBC"/>
-            <property name="eclipselink.logging.level.sql" value="FINE"/>
-            <property name="eclipselink.logging.parameters" value="true"/>
+            <property name="eclipselink.logging.level.sql" value="OFF"/>
+            <property name="eclipselink.logging.parameters" value="false"/>
         </properties>
     </persistence-unit>
 </persistence>

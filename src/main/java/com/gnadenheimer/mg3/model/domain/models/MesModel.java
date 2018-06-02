@@ -8,6 +8,7 @@ package com.gnadenheimer.mg3.model.domain.models;
 import com.gnadenheimer.mg3.utils.Utils;
 
 import javax.inject.Inject;
+import java.time.LocalDate;
 
 /**
  *

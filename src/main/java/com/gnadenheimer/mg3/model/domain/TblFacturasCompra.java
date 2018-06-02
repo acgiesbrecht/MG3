@@ -5,14 +5,30 @@
  */
 package com.gnadenheimer.mg3.model.domain;
 
-import javax.persistence.*;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.List;
 
 /**
  *
@@ -22,38 +38,22 @@ import java.util.List;
 @Table(name = "TBL_FACTURAS_COMPRA")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "TblFacturasCompra.findAll", query = "SELECT t FROM TblFacturasCompra t")
-    ,
-    @NamedQuery(name = "TblFacturasCompra.findById", query = "SELECT t FROM TblFacturasCompra t WHERE t.id = :id")
-    ,
-    @NamedQuery(name = "TblFacturasCompra.findByNro", query = "SELECT t FROM TblFacturasCompra t WHERE t.nro = :nro")
-    ,
-    @NamedQuery(name = "TblFacturasCompra.findByNroTimbrado", query = "SELECT t FROM TblFacturasCompra t WHERE t.nroTimbrado = :nroTimbrado")
-    ,
-    @NamedQuery(name = "TblFacturasCompra.findByVencimientoTimbrado", query = "SELECT t FROM TblFacturasCompra t WHERE t.vencimientoTimbrado = :vencimientoTimbrado")
-    ,
-    @NamedQuery(name = "TblFacturasCompra.findByCondicionContado", query = "SELECT t FROM TblFacturasCompra t WHERE t.condicionContado = :condicionContado")
-    ,
-    @NamedQuery(name = "TblFacturasCompra.findByFechaVencimientoCredito", query = "SELECT t FROM TblFacturasCompra t WHERE t.fechaVencimientoCredito = :fechaVencimientoCredito")
-    ,
-    @NamedQuery(name = "TblFacturasCompra.findByCuotasCredito", query = "SELECT t FROM TblFacturasCompra t WHERE t.cuotasCredito = :cuotasCredito")
-    ,
-    @NamedQuery(name = "TblFacturasCompra.findByFechahora", query = "SELECT t FROM TblFacturasCompra t WHERE t.fechahora = :fechahora")
-    ,
-    @NamedQuery(name = "TblFacturasCompra.findByRazonSocial", query = "SELECT t FROM TblFacturasCompra t WHERE t.razonSocial = :razonSocial")
-    ,
-    @NamedQuery(name = "TblFacturasCompra.findByRuc", query = "SELECT t FROM TblFacturasCompra t WHERE t.ruc = :ruc")
-    ,
-    @NamedQuery(name = "TblFacturasCompra.findByMontoExentas", query = "SELECT t FROM TblFacturasCompra t WHERE t.montoExentas = :montoExentas")
-    ,
-    @NamedQuery(name = "TblFacturasCompra.findByMontoIva5", query = "SELECT t FROM TblFacturasCompra t WHERE t.montoIva5 = :montoIva5")
-    ,
-    @NamedQuery(name = "TblFacturasCompra.findByMontoIva10", query = "SELECT t FROM TblFacturasCompra t WHERE t.montoIva10 = :montoIva10")
-    ,
-    @NamedQuery(name = "TblFacturasCompra.findByIva5", query = "SELECT t FROM TblFacturasCompra t WHERE t.iva5 = :iva5")
-    ,
-    @NamedQuery(name = "TblFacturasCompra.findByIva10", query = "SELECT t FROM TblFacturasCompra t WHERE t.iva10 = :iva10")
-    ,
+    @NamedQuery(name = "TblFacturasCompra.findAll", query = "SELECT t FROM TblFacturasCompra t"),
+    @NamedQuery(name = "TblFacturasCompra.findById", query = "SELECT t FROM TblFacturasCompra t WHERE t.id = :id"),
+    @NamedQuery(name = "TblFacturasCompra.findByNro", query = "SELECT t FROM TblFacturasCompra t WHERE t.nro = :nro"),
+    @NamedQuery(name = "TblFacturasCompra.findByNroTimbrado", query = "SELECT t FROM TblFacturasCompra t WHERE t.nroTimbrado = :nroTimbrado"),
+    @NamedQuery(name = "TblFacturasCompra.findByVencimientoTimbrado", query = "SELECT t FROM TblFacturasCompra t WHERE t.vencimientoTimbrado = :vencimientoTimbrado"),
+    @NamedQuery(name = "TblFacturasCompra.findByCondicionContado", query = "SELECT t FROM TblFacturasCompra t WHERE t.condicionContado = :condicionContado"),
+    @NamedQuery(name = "TblFacturasCompra.findByFechaVencimientoCredito", query = "SELECT t FROM TblFacturasCompra t WHERE t.fechaVencimientoCredito = :fechaVencimientoCredito"),
+    @NamedQuery(name = "TblFacturasCompra.findByCuotasCredito", query = "SELECT t FROM TblFacturasCompra t WHERE t.cuotasCredito = :cuotasCredito"),
+    @NamedQuery(name = "TblFacturasCompra.findByFechahora", query = "SELECT t FROM TblFacturasCompra t WHERE t.fechahora = :fechahora"),
+    @NamedQuery(name = "TblFacturasCompra.findByRazonSocial", query = "SELECT t FROM TblFacturasCompra t WHERE t.razonSocial = :razonSocial"),
+    @NamedQuery(name = "TblFacturasCompra.findByRuc", query = "SELECT t FROM TblFacturasCompra t WHERE t.ruc = :ruc"),
+    @NamedQuery(name = "TblFacturasCompra.findByMontoExentas", query = "SELECT t FROM TblFacturasCompra t WHERE t.montoExentas = :montoExentas"),
+    @NamedQuery(name = "TblFacturasCompra.findByMontoIva5", query = "SELECT t FROM TblFacturasCompra t WHERE t.montoIva5 = :montoIva5"),
+    @NamedQuery(name = "TblFacturasCompra.findByMontoIva10", query = "SELECT t FROM TblFacturasCompra t WHERE t.montoIva10 = :montoIva10"),
+    @NamedQuery(name = "TblFacturasCompra.findByIva5", query = "SELECT t FROM TblFacturasCompra t WHERE t.iva5 = :iva5"),
+    @NamedQuery(name = "TblFacturasCompra.findByIva10", query = "SELECT t FROM TblFacturasCompra t WHERE t.iva10 = :iva10"),
     @NamedQuery(name = "TblFacturasCompra.findByObservacion", query = "SELECT t FROM TblFacturasCompra t WHERE t.observacion = :observacion")})
 public class TblFacturasCompra implements Serializable {
 
@@ -319,12 +319,15 @@ public class TblFacturasCompra implements Serializable {
             return false;
         }
         TblFacturasCompra other = (TblFacturasCompra) object;
-        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
-        return "com.gnadenheimer.mg.domain.TblFacturasCompra[ id=" + id + " ]";
+        return "com.gnadenheimer.mg3.model.domain.TblFacturasCompra[ id=" + id + " ]";
     }
 
     @XmlTransient
