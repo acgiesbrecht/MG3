@@ -7,15 +7,18 @@ package com.gnadenheimer.mg3.utils;
 
 import com.gnadenheimer.mg3.model.domain.TblRoles;
 import com.gnadenheimer.mg3.model.domain.TblUsers;
-
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Default;
+import javax.enterprise.inject.Produces;
+import javax.inject.Named;
 
 @ApplicationScoped
+@Named
 public class CurrentUser {
 
     private TblUsers user;
 
-    private static final CurrentUser currentUser = new CurrentUser();
+    //private static final CurrentUser currentUser = new CurrentUser();
 
     /* A private Constructor prevents any other
      * class from instantiating.
@@ -23,10 +26,10 @@ public class CurrentUser {
     private CurrentUser() {
     }
 
-    /* Static 'instance' method */
+    /* Static 'instance' method
     public static CurrentUser getInstance() {
         return currentUser;
-    }
+    }*/
 
     /**
      * @return the user

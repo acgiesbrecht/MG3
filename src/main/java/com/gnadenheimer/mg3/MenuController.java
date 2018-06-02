@@ -1,8 +1,21 @@
+import com.gnadenheimer.mg3.App;
+import com.gnadenheimer.mg3.utils.CurrentUser;
+import com.gnadenheimer.mg3.utils.LoginManager;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.DirectoryChooser;
+
+import java.io.File;
+import java.net.URL;
+import java.util.ResourceBundle;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- */
+ *
 package com.gnadenheimer.mg3;
 
 import com.gnadenheimer.mg3.utils.CurrentUser;
@@ -24,7 +37,7 @@ import java.util.ResourceBundle;
  * FXML Controller class
  *
  * @author adriang
- */
+ *
 public class MenuController implements Initializable {
 
     CurrentUser currentUser = CurrentUser.getInstance();
@@ -169,3 +182,4 @@ public class MenuController implements Initializable {
     }
 
 }
+*/

@@ -7,11 +7,16 @@ package com.gnadenheimer.mg3.model.domain.models;
 
 import com.gnadenheimer.mg3.utils.Utils;
 
+import javax.inject.Inject;
+
 /**
  *
  * @author user
  */
 public class MesModel {
+
+    @Inject
+    Utils utils;
 
     private Integer id;
     private String descripcion;
@@ -34,7 +39,7 @@ public class MesModel {
      * @return the descripcion
      */
     public String getDescripcion() {        
-        return Utils.getMes(id);
+        return utils.getMes(id);
     }
 
     /**

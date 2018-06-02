@@ -1,12 +1,13 @@
 package com.gnadenheimer.mg3.model.dao;
 
-import com.gnadenheimer.mg3.App;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.gnadenheimer.mg3.utils.InformationDialog;
+import org.slf4j.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import java.io.File;
@@ -17,7 +18,10 @@ import java.util.prefs.Preferences;
 @ApplicationScoped
 public class EntityManagerProducer {
 
-    private static final Logger LOGGER = LogManager.getLogger(EntityManagerProducer.class);
+    @Inject
+    Logger LOGGER;
+    @Inject
+    InformationDialog informationDialog;
 
     @Produces
     public EntityManager createEntityManager() {
@@ -56,7 +60,7 @@ public class EntityManagerProducer {
             persistenceMap.put("backUpDir", Preferences.userRoot().node("MG").get("Datadir", System.getProperty("user.dir") + File.separator + "javadb") + File.separator + "autoBackUp");
             return persistenceMap;
         } catch (Exception exx) {
-            App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), exx.getMessage(), exx);
+            informationDialog.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), exx.getMessage(), exx);
             LOGGER.error(Thread.currentThread().getStackTrace()[1].getMethodName(), exx);
             return null;
         }

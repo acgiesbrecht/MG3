@@ -4,14 +4,14 @@
 <?import javafx.scene.layout.*?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="masterAnchorPane" maxHeight="-Infinity" maxWidth="+Infinity"
             minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.121"
-            fx:controller="com.chortitzer.cin.ui.menu.MenuView">
+            fx:controller="com.gnadenheimer.mg3.ui.menu.MenuView">
     <children>
         <MenuBar AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
                  AnchorPane.topAnchor="0.0">
             <menus>
                 <Menu mnemonicParsing="false" text="Sesión">
                     <items>
-                        <MenuItem fx:id="mnuLogout" mnemonicParsing="false" onAction="#logout" text="Cerrar Sesión"/>
+                        <MenuItem fx:id="mnuLogout" mnemonicParsing="false" text="Cerrar Sesión"/>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Ingresos">
@@ -37,8 +37,7 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Egresos">
                     <items>
-                        <MenuItem fx:id="mnuEgFacturas" mnemonicParsing="false" onAction="#mnuEgFacturas"
-                                  text="Facturas de Compra"/>
+                        <MenuItem fx:id="mnuEgFacturas" mnemonicParsing="false" text="Facturas de Compra"/>
                         <MenuItem fx:id="mnuEgNotaDeCredito" mnemonicParsing="false" text="Nota de Credito de Compra"/>
                         <MenuItem fx:id="mnuEgRecibos" mnemonicParsing="false" text="Recibos de Compra"/>
                         <SeparatorMenuItem mnemonicParsing="false"/>
@@ -49,24 +48,20 @@
                     <items>
                         <MenuItem fx:id="mnuInfR" mnemonicParsing="false" text="Remates"/>
                         <MenuItem fx:id="mnuInfAyC" mnemonicParsing="false" text="Aportes y Colectas"/>
-                        <MenuItem fx:id="mnuInfContabilidad" mnemonicParsing="false" onAction="#mnuInfContabilidad"
-                                  text="Contabilidad"/>
+                        <MenuItem fx:id="mnuInfContabilidad" mnemonicParsing="false" text="Contabilidad"/>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Administración">
                     <items>
-                        <MenuItem fx:id="mnuAdEntidades" mnemonicParsing="false" onAction="#mnuAdEntidades"
-                                  text="Administrar Entidades"/>
+                        <MenuItem fx:id="mnuAdEntidades" mnemonicParsing="false" text="Administrar Entidades"/>
                         <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem fx:id="mnuAdEventos" mnemonicParsing="false" onAction="#mnuAdEventos"
-                                  text="Administrar Eventos"/>
+                        <MenuItem fx:id="mnuAdEventos" mnemonicParsing="false" text="Administrar Eventos"/>
                         <MenuItem fx:id="mnuAdEventosCuotas" mnemonicParsing="false"
                                   text="Administrar Eventos - Cuotas "/>
                         <MenuItem fx:id="mnuAdEventosCategorias" mnemonicParsing="false"
                                   text="Administrar Eventos - Categorias de Articulo"/>
                         <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem fx:id="mnuAdTransferencias" mnemonicParsing="false" onAction="#mnuAdTransferencias"
-                                  text="Administrar Transferencias"/>
+                        <MenuItem fx:id="mnuAdTransferencias" mnemonicParsing="false" text="Administrar Transferencias"/>
                         <MenuItem fx:id="mnuAdRecibos" mnemonicParsing="false" text="Administrar Recibos"/>
                         <SeparatorMenuItem mnemonicParsing="false"/>
                         <MenuItem fx:id="mnuAdTimbrados" mnemonicParsing="false"
@@ -91,11 +86,9 @@
                         <MenuItem fx:id="mnuAdUsuarios" mnemonicParsing="false" text="Administrar Usuarios"/>
                         <MenuItem fx:id="mnuAdGrupos" mnemonicParsing="false" text="Administrar Grupos"/>
                         <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem fx:id="mnuAdConfig" mnemonicParsing="false" onAction="#mnuAdConfig"
-                                  text="Configuracion de Sistema"/>
+                        <MenuItem fx:id="mnuAdConfig" mnemonicParsing="false" text="Configuracion de Sistema"/>
                         <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem fx:id="mnuAdBackUp" mnemonicParsing="false" onAction="#mnuAdBackUp"
-                                  text="Realizar BackUp"/>
+                        <MenuItem fx:id="mnuAdBackUp" mnemonicParsing="false" text="Realizar BackUp"/>
                     </items>
                 </Menu>
             </menus>

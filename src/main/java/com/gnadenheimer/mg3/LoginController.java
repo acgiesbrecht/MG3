@@ -1,8 +1,25 @@
+import com.gnadenheimer.mg3.App;
+import com.gnadenheimer.mg3.model.domain.TblRoles;
+import com.gnadenheimer.mg3.model.domain.TblUsers;
+import com.gnadenheimer.mg3.utils.CurrentUser;
+import com.gnadenheimer.mg3.utils.LoginManager;
+import com.gnadenheimer.mg3.utils.Utils;
+import javafx.application.Platform;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import org.mindrot.jbcrypt.BCrypt;
+
+import javax.persistence.EntityManager;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- */
+ *
 package com.gnadenheimer.mg3;
 
 import com.gnadenheimer.mg3.model.domain.TblRoles;
@@ -28,7 +45,8 @@ import java.util.ResourceBundle;
  * FXML Controller class
  *
  * @author AdminLocal
- */
+ *
+ * /**
 public class LoginController implements Initializable {
 
     CurrentUser currentUser = CurrentUser.getInstance();
@@ -78,7 +96,7 @@ public class LoginController implements Initializable {
      *
      * @param url
      * @param rb
-     */
+     *
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Platform.runLater(() -> {
@@ -93,3 +111,4 @@ public class LoginController implements Initializable {
     }
 
 }
+*/

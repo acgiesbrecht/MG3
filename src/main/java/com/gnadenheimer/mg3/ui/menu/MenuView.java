@@ -3,6 +3,7 @@ package com.gnadenheimer.mg3.ui.menu;
 import com.gnadenheimer.mg3.ViewLoaderTask;
 import com.gnadenheimer.mg3.ui.admin.entidades.TblEntidadesView;
 import com.gnadenheimer.mg3.utils.CurrentUser;
+import com.gnadenheimer.mg3.utils.LoginManager;
 import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
@@ -21,8 +22,7 @@ public class MenuView implements FxmlView<MenuViewModel> {
     CurrentUser currentUser;
     @InjectViewModel
     private MenuViewModel viewModel;
-    @Inject
-    private Stage primaryStage;
+
     @FXML
     private MenuItem mnuInRemates;
     @FXML
@@ -68,27 +68,7 @@ public class MenuView implements FxmlView<MenuViewModel> {
     @FXML
     private MenuItem mnuAdTimbrados;
     @FXML
-    private MenuItem mnuAdFacturas;
-    @FXML
-    private MenuItem mnuAdAutofacturasTimbrados;
-    @FXML
-    private MenuItem mnuAdAutofacturas;
-    @FXML
-    private MenuItem mnuAdNotCreditoTimbrados;
-    @FXML
-    private MenuItem mnuAdNotaCredito;
-    @FXML
-    private MenuItem mnuAdCentrosCosto;
-    @FXML
-    private MenuItem mnuAdPlanCuentas;
-    @FXML
-    private MenuItem mnuAdAsientosManuales;
-    @FXML
-    private MenuItem mnuAdIglesia;
-    @FXML
-    private MenuItem mnuAdUsuarios;
-    @FXML
-    private MenuItem mnuAdGrupos, mnuAdConfig, mnuAdBackUp;
+    private MenuItem mnuAdFacturas, mnuAdAutofacturasTimbrados, mnuAdAutofacturas, mnuAdNotCreditoTimbrados, mnuAdNotaCredito, mnuAdCentrosCosto, mnuAdPlanCuentas, mnuAdAsientosManuales, mnuAdIglesia, mnuAdUsuarios, mnuAdGrupos, mnuAdConfig, mnuAdBackUp;
 
     @FXML
     private MenuItem mnuInfR, mnuInfAyC, mnuInfContabilidad;
@@ -134,8 +114,13 @@ public class MenuView implements FxmlView<MenuViewModel> {
         mnuInfContabilidad.setDisable(!currentUser.hasRole(3));
 
         mnuAdEntidades.setOnAction((event) -> {
-            loadView(TblEntidadesView.class, "Entidades");
+            viewModel.loadView(TblEntidadesView.class, "Entidades");
         });
+
+        mnuLogout.setOnAction((event) -> {
+            viewModel.logout();
+        });
+
 /*
         mnuFacturasFlete.setOnAction((event) -> {
             final ViewTuple<TblBasFacturasFleteView, TblBasFacturasFleteViewModel> tuple = FluentViewLoader.fxmlView(TblBasFacturasFleteView.class).load();
@@ -144,39 +129,5 @@ public class MenuView implements FxmlView<MenuViewModel> {
 */
     }
 
-    private void loadView(Class tClass, String name) {
-        ViewLoaderTask<Parent> loadTask = new ViewLoaderTask<Parent>(tClass) {
-            @Override
-            protected Parent call() {
-                try {
-                    return FluentViewLoader.fxmlView(this.aClass).load().getView();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    return null;
-                }
-            }
-        };
-        loadTask.setOnSucceeded(evento -> {
-            try {
-                setView(loadTask.getValue(), name);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        });
-        new Thread(loadTask).start();
-    }
-
-    private void setView(Parent view, String displayTitle) {
-        try {
-            BorderPane bp = (BorderPane) primaryStage.getScene().getRoot();
-            Properties prop = new Properties();
-            prop.load(this.getClass().getResourceAsStream("/version.properties"));
-            String title = "MG3 " + prop.getProperty("project.version") + "." + prop.getProperty("project.build");
-            primaryStage.setTitle(title + " " + displayTitle);
-            bp.setCenter(view);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
 
 }

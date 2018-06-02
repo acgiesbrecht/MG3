@@ -1,13 +1,39 @@
+import com.gnadenheimer.mg3.App;
+import com.gnadenheimer.mg3.model.domain.TblContribuyentes;
+import com.gnadenheimer.mg3.model.domain.TblFacturas;
+import com.gnadenheimer.mg3.utils.CurrentUser;
+import com.gnadenheimer.mg3.utils.LoginManager;
+import javafx.concurrent.Task;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
+import javafx.stage.DirectoryChooser;
+import org.apache.commons.lang.StringEscapeUtils;
+
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import java.io.File;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ResourceBundle;
+import java.util.prefs.Preferences;
+import java.util.zip.ZipInputStream;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- */
+ *
 package com.gnadenheimer.mg3.controller.admin;
 
 import com.gnadenheimer.mg3.App;
 import com.gnadenheimer.mg3.model.domain.TblContribuyentes;
 import com.gnadenheimer.mg3.model.domain.TblFacturas;
+import com.gnadenheimer.mg3.ui.main.MainView;
 import com.gnadenheimer.mg3.utils.CurrentUser;
 import com.gnadenheimer.mg3.utils.LoginManager;
 import com.gnadenheimer.mg3.utils.Utils;
@@ -19,7 +45,9 @@ import javafx.scene.control.*;
 import javafx.stage.DirectoryChooser;
 import org.apache.commons.lang.StringEscapeUtils;
 import ru.vas7n.va.widgets.MaskField;
+import sun.applet.Main;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.io.File;
 import java.net.URL;
@@ -35,8 +63,15 @@ import java.util.zip.ZipInputStream;
  * FXML Controller class
  *
  * @author AdminLocal
- */
+ *
 public class AdminConfigController implements Initializable {
+
+    @Inject
+    EntityManager entityManager;
+    @Inject
+    Utils utils;
+    @Inject
+    LoginManager loginManager;
 
     @FXML
     private Button cmdDataDirectory;
@@ -77,7 +112,7 @@ public class AdminConfigController implements Initializable {
 
     /**
      * Initializes the controller class.
-     */
+     *
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
@@ -124,9 +159,8 @@ public class AdminConfigController implements Initializable {
             Preferences.userRoot().node("MG").putInt("PeriodoFiscal", cboPeriodoFiscal.getSelectionModel().getSelectedItem());
 
             App.periodoFiscal = cboPeriodoFiscal.getSelectionModel().getSelectedItem();
-            Utils.getInstance().setEntityManagerFactory();
 
-            LoginManager.getInstance().showMainView();
+            loginManager.showMainView();
         } catch (Exception ex) {
             App.showException(this.getClass().getName(), ex.getMessage(), ex);
         }
@@ -156,7 +190,7 @@ public class AdminConfigController implements Initializable {
             testF.setImporteAporte(15000000);
             testF.setImporteDonacion(25000000);
 
-            Utils.getInstance().printFactura(testF);
+            utils.printFactura(testF);
 
         } catch (Exception ex) {
             App.showException(this.getClass().getName(), ex.getMessage(), ex);
@@ -170,7 +204,6 @@ public class AdminConfigController implements Initializable {
             @Override
             public Void call() {
                 try {
-                    EntityManager entityManager = Utils.getInstance().getEntityManagerFactory().createEntityManager();
                     entityManager.getTransaction().begin();
                     String temp = "";
                     Integer count = 0;
@@ -219,3 +252,4 @@ public class AdminConfigController implements Initializable {
     }
 
 }
+*/

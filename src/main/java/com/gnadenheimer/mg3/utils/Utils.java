@@ -16,12 +16,13 @@ import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.type.WhenNoDataTypeEnum;
 import net.sf.jasperreports.view.JasperViewer;
 import org.apache.commons.io.IOUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.bouncycastle.util.Strings;
+import org.slf4j.Logger;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.persistence.EntityManager;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -35,15 +36,20 @@ import java.util.List;
 import java.util.prefs.Preferences;
 
 /**
- *
  * @author user
  */
+@Named
+@ApplicationScoped
 public class Utils extends Component {
 
-    private static final Utils UTILS = new Utils();
-    private static final Logger LOGGER = LogManager.getLogger(Utils.class);
-    CurrentUser currentUser = CurrentUser.getInstance();
-    private EntityManagerFactory entityManagerFactory;
+    @Inject
+    CurrentUser currentUser;
+    @Inject
+    EntityManager entityManager;
+    @Inject
+    Logger logger;
+    @Inject
+    InformationDialog informationDialog;
 
     /* A private Constructor prevents any other
      * class from instantiating.
@@ -51,10 +57,10 @@ public class Utils extends Component {
     private Utils() {
     }
 
-    /* Static 'instance' method */
+    /* Static 'instance' method *
     public static Utils getInstance() {
         return UTILS;
-    }
+    }*/
 
     public List<CuotaModel> getCuotas(TblEventoCuotas eventoCuotas, Integer monto) {
         List<LocalDate> fechas = getCuotasFechas(eventoCuotas);
@@ -125,8 +131,8 @@ public class Utils extends Component {
             persistenceMap.put("backUpDir", Preferences.userRoot().node("MG").get("Datadir", System.getProperty("user.dir") + File.separator + "javadb") + File.separator + "autoBackUp");
             return persistenceMap;
         } catch (Exception exx) {
-            App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), exx.getMessage(), exx);
-            LOGGER.error(Thread.currentThread().getStackTrace()[1].getMethodName(), exx);
+            informationDialog.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), exx.getMessage(), exx);
+            logger.error(Thread.currentThread().getStackTrace()[1].getMethodName(), exx);
             return null;
         }
     }
@@ -172,8 +178,8 @@ public class Utils extends Component {
             jasperPrint.setTopMargin(Integer.getInteger(Preferences.userRoot().node("MG").get("facturaTopMargin", "0")));
             JasperPrintManager.printReport(jasperPrint, false);
         } catch (Exception ex) {
-            App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
-            LOGGER.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
+            informationDialog.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
+            logger.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
         }
     }
 
@@ -208,8 +214,8 @@ public class Utils extends Component {
             jasperPrint.setTopMargin(Integer.getInteger(Preferences.userRoot().node("MG").get("facturaTopMargin", "0")));
             JasperPrintManager.printReport(jasperPrint, false);
         } catch (Exception ex) {
-            App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
-            LOGGER.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
+            informationDialog.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
+            logger.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
         }
     }
 
@@ -241,8 +247,8 @@ public class Utils extends Component {
             jasperPrint.setTopMargin(Integer.getInteger(Preferences.userRoot().node("MG").get("facturaTopMargin", "0")));
             JasperPrintManager.printReport(jasperPrint, false);
         } catch (Exception ex) {
-            App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
-            LOGGER.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
+            informationDialog.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
+            logger.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
         }
     }
 
@@ -269,7 +275,7 @@ public class Utils extends Component {
     public Boolean executeUpdateSQL(String filename, Boolean firstUpdate) {
         Boolean success = false;
         if (firstUpdate) {
-            if (App.showConfirmation("Seguridad", "Se encuentro una actualizacion de la base de datos. Se procedera a hacer un BackUp de sus base de datos existente. Desea proceder?")) {
+            if (informationDialog.showConfirmation("Se encuentro una actualizacion de la base de datos. Se procedera a hacer un BackUp de sus base de datos existente. Desea proceder?", true)) {
                 exectueBackUp(getPersistenceMap().get("backUpDir"));
                 success = executeSQL(filename);
             }
@@ -281,7 +287,7 @@ public class Utils extends Component {
 
     public Boolean executeSQL(String filename) {
         try {
-            Map<String, String> persistenceMap = Utils.getInstance().getPersistenceMap();
+            Map<String, String> persistenceMap = getPersistenceMap();
             Boolean success = false;
             Connection conn = DriverManager.getConnection(persistenceMap.get("javax.persistence.jdbc.url"), persistenceMap.get("javax.persistence.jdbc.user"), persistenceMap.get("javax.persistence.jdbc.password"));
             //JOptionPane.showMessageDialog(null, filename);
@@ -293,8 +299,8 @@ public class Utils extends Component {
                     stmt.executeUpdate(s);
                 } catch (SQLException exx) {
                     success = false;
-                    App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), exx.getMessage(), exx);
-                    LOGGER.error(Thread.currentThread().getStackTrace()[1].getMethodName(), exx);
+                    informationDialog.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), exx.getMessage(), exx);
+                    logger.error(Thread.currentThread().getStackTrace()[1].getMethodName(), exx);
                 }
             }
 
@@ -303,8 +309,8 @@ public class Utils extends Component {
                     stmt.executeUpdate("INSERT INTO TBL_DATABASE_UPDATES (ID) VALUES('" + filename + "')");
                 } catch (SQLException exx) {
                     success = false;
-                    App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), exx.getMessage(), exx);
-                    LOGGER.error(Thread.currentThread().getStackTrace()[1].getMethodName(), exx);
+                    informationDialog.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), exx.getMessage(), exx);
+                    logger.error(Thread.currentThread().getStackTrace()[1].getMethodName(), exx);
                 }
             }
 
@@ -312,8 +318,8 @@ public class Utils extends Component {
             conn.close();
             return success;
         } catch (SQLException | IOException ex) {
-            App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
-            LOGGER.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
+            informationDialog.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
+            logger.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
             return false;
         }
     }
@@ -330,14 +336,14 @@ public class Utils extends Component {
                 cs.execute();
                 cs.close();
             } catch (Exception ex) {
-                LOGGER.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
-                App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
+                logger.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
+                informationDialog.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
             }
-            App.showInfo("BackUp", "BackUp guardado con exito en: " + backupfile);
+            informationDialog.showInfo("BackUp", "BackUp guardado con exito en: " + backupfile);
             return true;
         } catch (Exception ex) {
-            LOGGER.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
-            App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
+            logger.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
+            informationDialog.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
             return false;
         }
     }
@@ -348,8 +354,8 @@ public class Utils extends Component {
             parameters.put("subreportObject", report);
             showReport(reportFile, parameters, landscape);
         } catch (Exception ex) {
-            LOGGER.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
-            App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
+            logger.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
+            informationDialog.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
         }
     }
 
@@ -359,8 +365,8 @@ public class Utils extends Component {
             parameters.put("subSubreportObject", report);
             showReport(reportFile, subReportFile, parameters, landscape);
         } catch (Exception ex) {
-            LOGGER.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
-            App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
+            logger.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
+            informationDialog.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
         }
     }
 
@@ -385,16 +391,16 @@ public class Utils extends Component {
             JasperViewer jReportsViewer = new JasperViewer(jasperPrint, false);
             jReportsViewer.setVisible(true);
         } catch (Exception ex) {
-            LOGGER.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
-            App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
+            logger.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
+            informationDialog.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
         }
     }
 
-    public static String getMesUpperCase(Integer mes) {
+    public String getMesUpperCase(Integer mes) {
         return Strings.toUpperCase(getMes(mes));
     }
 
-    public static String getMes(Integer mes) {
+    public String getMes(Integer mes) {
         switch (mes) {
             case 1:
                 return "Enero";
@@ -425,52 +431,52 @@ public class Utils extends Component {
         }
     }
 
-    public static String generateFacturaNroFull(Integer nro) {
+    public String generateFacturaNroFull(Integer nro) {
         try {
             return String.format("001-001-%07d", nro);
         } catch (Exception ex) {
-            LOGGER.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
-            App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
+            logger.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
+            informationDialog.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
             return "";
         }
     }
 
-    public static String generateNextFacturaNroFull(String nro) {
+    public String generateNextFacturaNroFull(String nro) {
         try {
             String[] s = nro.split("-");
             Integer i = Integer.parseInt(s[2]) + 1;
 
             return String.format(s[0] + "-" + s[1] + "-%07d", i);
         } catch (Exception ex) {
-            LOGGER.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
-            App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
+            logger.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
+            informationDialog.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
             return "";
         }
     }
 
-    public static String generateFacturaNroConEstPtoExp(String est, String ptoExp, Integer nro) {
+    public String generateFacturaNroConEstPtoExp(String est, String ptoExp, Integer nro) {
         try {
             return est + "-" + ptoExp + "-" + String.format("%07d", nro);
         } catch (Exception ex) {
-            LOGGER.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
-            App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
+            logger.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
+            informationDialog.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
             return "";
         }
     }
 
-    public static String generateNextFacturaNroConEstPtoExp(String est, String ptoExp, String nro) {
+    public String generateNextFacturaNroConEstPtoExp(String est, String ptoExp, String nro) {
         try {
             String[] s = nro.split("-");
             Integer i = Integer.parseInt(s[2]) + 1;
             return String.format(est + "-" + ptoExp + "-%07d", i);
         } catch (Exception ex) {
-            LOGGER.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
-            App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
+            logger.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
+            informationDialog.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
             return "";
         }
     }
 
-    public static String completarNroFactura(String nro) {
+    public String completarNroFactura(String nro) {
         try {
             String temp = nro.replace("_", "");
             String[] partes = temp.split("-");
@@ -480,13 +486,13 @@ public class Utils extends Component {
                 return nro;
             }
         } catch (Exception ex) {
-            LOGGER.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
-            App.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
+            logger.error(Thread.currentThread().getStackTrace()[1].getMethodName(), ex);
+            informationDialog.showException(Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage(), ex);
             return "";
         }
     }
 
-    public static String formatFacturaNroLibroIngresos(String nro) {
+    public String formatFacturaNroLibroIngresos(String nro) {
         if (!nro.contains("-")) {
             return generateFacturaNroFull(Integer.parseInt(nro.trim()));
         } else {
@@ -494,19 +500,29 @@ public class Utils extends Component {
         }
     }
 
-    public static LocalDate inicioPeriodoFiscal() {
+    public LocalDate inicioPeriodoFiscal() {
         return LocalDate.of(App.periodoFiscal, Month.JANUARY, 1);
     }
 
-    public static LocalDate finPeriodoFiscal() {
+    public LocalDate finPeriodoFiscal() {
         return LocalDate.of(App.periodoFiscal, Month.DECEMBER, 31);
     }
-
+/*
     public void setEntityManagerFactory() {
         this.entityManagerFactory = Persistence.createEntityManagerFactory("mg_PU", getPersistenceMap());
     }
 
     public EntityManagerFactory getEntityManagerFactory() {
         return this.entityManagerFactory;
+    }*/
+
+    public String getMGTitle() {
+        try {
+            Properties prop = new Properties();
+            prop.load(this.getClass().getResourceAsStream("/version.properties"));
+            return "MG3 " + prop.getProperty("project.version") + "." + prop.getProperty("project.build");
+        } catch (Exception ex) {
+            return "";
+        }
     }
 }
