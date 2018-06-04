@@ -48,6 +48,7 @@ public class App extends MvvmfxCdiApplication {
 
     private static final BorderPane root = new BorderPane();
     public static Stage mainStage;
+
     public static Stage getStage() {
         return mainStage;
     }
@@ -81,7 +82,7 @@ public class App extends MvvmfxCdiApplication {
         }
 
 
-  //      final ViewTuple<MainView, MainViewModel> tuple = FluentViewLoader.fxmlView(MainView.class).load();
+        //      final ViewTuple<MainView, MainViewModel> tuple = FluentViewLoader.fxmlView(MainView.class).load();
         //final ViewTuple<TblEntidadesView, TblEntidadesViewModel> tuple = FluentViewLoader.fxmlView(TblEntidadesView.class).load();
 
         // Locate View for loaded FXML file
@@ -138,9 +139,6 @@ public class App extends MvvmfxCdiApplication {
         Optional<ButtonType> result = alert.showAndWait();
         return result.get() == ButtonType.OK;
     }
-
-
-
 
 
 }
